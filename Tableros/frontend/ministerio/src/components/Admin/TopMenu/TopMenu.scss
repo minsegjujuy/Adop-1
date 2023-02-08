@@ -1,0 +1,17 @@
+.top-menu-admin {
+    &__logo {
+      width: 250px;
+      font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      font-size: medium;
+      background-color: rgb(16, 23, 46)  !important;
+      background-image: linear-gradient(315deg, #2a2a82 0%, #007ffd 74%);
+    }
+    p{
+      color: white
+    }
+  
+    &.icon {
+      margin: 0 !important;
+    }
+  }
+  
