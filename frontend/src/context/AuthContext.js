@@ -45,6 +45,7 @@ export function AuthProvider(props) {
     setToken(token);
     const me = await getMe(token);
     setAuth({ token, me });
+    console.log(me)
     setTimeout(async function () {
       const token = getToken();
       if (token) {

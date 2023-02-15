@@ -5,6 +5,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
+
 from users.api.views import (UserApiViewSet, UserView)
 
 router_user = DefaultRouter()

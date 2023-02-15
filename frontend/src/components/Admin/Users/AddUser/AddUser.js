@@ -124,7 +124,7 @@ export const AddUser= (props) => {
     first_name: "",
     last_name: "",
     password:"",
-    is_active: false,
+    is_active: true,
     is_staff: false,
  }
 }

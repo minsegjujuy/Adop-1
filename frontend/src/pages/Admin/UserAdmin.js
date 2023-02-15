@@ -54,7 +54,7 @@ export function UserAdmin() {
             if (result.isConfirmed) {
               await deleteUser(data.id);
               console.log("hola mundo")
-              // window.location.reload()
+              window.location.reload()
               // setUsers(null);
     
               Swal.fire({
