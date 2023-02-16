@@ -24,27 +24,17 @@ export function LoginAdmin() {
 //   };
 
   return (
-    <>
-        {/* <div className="title-ministerio">
-        <h1>OBSERVATORIO DE SEGURIDAD</h1>
-        <div className="title-ministerio__logo"></div>
-        <img 
-            className="img-ministerio"
-            src="img/LOGO2.png"
-            height="150px"
-            width="100px"
-            alt="SISTEMA DE SANIDAD"
-          />
-        </div> */}
-      <div className="title-ministerio">
-      <h1><img 
+    <div className="Area">
+        <div className="title-ministerio">
+           <h1><img 
             className="img-ministerio"
             src="img/LOGO2.png"
             height="140px"
             width="510px"
             alt="SISTEMA DE SANIDAD"
-          /></h1>
-      </div>
+          />
+           </h1>
+         </div>
       <div className="login-admin">
         <div className="login-admin__content">
           <h1>INICIO DE SESION</h1>
@@ -58,16 +48,20 @@ export function LoginAdmin() {
             //   RECUPERAR CONTRASEÑA
             // </Button> */}
           </div>
-        </div>
-      </div>
-
-      {/* <ModalRecuperarContrasenia
-        show={showModalRecuperarContrasenia}
-        title={"Recuperar contraseña"}
-        children={contentModalRecuperarContrasenia}
-        onClose={openCloseModalRecuperarContrasenia}
-      /> */}
-      
-    </>
+           </div>
+       </div>
+       <ul class="circles">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+            </ul>
+       </div>
   );
 }
