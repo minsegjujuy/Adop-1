@@ -50,6 +50,7 @@ export function LoginAdmin() {
           </div>
            </div>
        </div>
+       <div>
        <ul class="circles">
                     <li></li>
                     <li></li>
@@ -62,6 +63,7 @@ export function LoginAdmin() {
                     <li></li>
                     <li></li>
             </ul>
+       </div>
        </div>
   );
 }
