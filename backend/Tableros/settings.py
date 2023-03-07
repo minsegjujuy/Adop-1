@@ -43,6 +43,15 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'users',
+    'Dependencia',
+    'Ley',
+    'Operativos',
+    'Persona',
+    'Personal',
+    'Procedimiento',
+    'Secuestro',
+    'Servicio',
+    'Vigilancia',
 ]
 
 MIDDLEWARE = [
@@ -90,8 +99,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'Ministerio',
-        'USER': 'postgres',
-        'PASSWORD': 'Mauro123*',
+        'USER': 'root',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '5432'
     }
