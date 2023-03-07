@@ -101,7 +101,7 @@ export const AddUser= (props) => {
         onChange={formik.handleChange}
         error={formik.errors.User?.password}
       />
-      <div className="add-edit-user-form__staff">
+      {/* <div className="add-edit-user-form__staff">
         <Checkbox
           toggle
           checked={formik.values.User?.is_staff}
@@ -110,7 +110,7 @@ export const AddUser= (props) => {
           }}
         />{" "}
         Usuario Staff
-        </div>
+        </div> */}
       <Form.Select
         name="nivel_permiso"
         options={options}

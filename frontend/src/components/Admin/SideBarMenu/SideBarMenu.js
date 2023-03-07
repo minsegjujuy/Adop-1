@@ -3,11 +3,13 @@ import "./SideBarMenu.scss";
 import { Menu, Icon } from "semantic-ui-react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
+import {useUser} from "../../../hooks"
 import { useState, useEffect } from "react";
 
 export function SideBarMenu(props) {
   const { children} = props;
   const { pathname } = useLocation();
+
 
   return (
     <div className="side-menu-admin">
@@ -20,18 +22,27 @@ export function SideBarMenu(props) {
 function MenuLeft(props) {
   const { pathname } = props;
   const { auth } = useAuth();
-  //const [empleados, setEmpleado] = useState(false);
-//   useEffect(() => {
-//     Permiso();
-//   }, []);
+  const {buscarEmpleadoId} = useUser()
+  const [empleados, setEmpleado] = useState(null);
+  useEffect(() => {
+    Permiso();
+  }, []);
 
-//   const Permiso = async () => {
-//     const empleado = await buscarEmpleadoId(auth?.me.id);
-
-//     if (empleado[0].nivel_permiso === "farmaceutico") {
-//       setEmpleado(true);
-//     }
-//   };
+  const Permiso = async () => {
+    const response = await buscarEmpleadoId(auth?.me.id);
+    console.log(response)
+    if (response[0].nivel_permiso === "operador") {
+      setEmpleado("operador");
+    }
+    if (response[0].nivel_permiso === "general") {
+      setEmpleado("gemeral");
+    }
+    if (response[0].nivel_permiso === "administrador") {
+      setEmpleado("administrador");
+    }
+  };
+console.log(auth)
+console.log(empleados)
   return (
     <Menu fixed="left" borderless className="side" vertical>
       {/* <Menu.Item as={Link} to={"/admin"} active={pathname === "/admin"}>
@@ -48,7 +59,7 @@ function MenuLeft(props) {
         Pacientes
       </Menu.Item> */}
 
-      {/* {empleados === true && (
+      {/* {empleados.nivel_permiso ==="operador" && (
         <Menu.Item
           as={Link}
           to={"/admin/farmaceutico"}
@@ -58,19 +69,19 @@ function MenuLeft(props) {
           Pacientes
         </Menu.Item>
       )} */}
-
-      {/* {empleados === false && (
+      
+      {(empleados ==="operador"|| empleados==="general" || auth.me.is_staff) && (
         <Menu.Item
           as={Link}
-          to={"/admin/diabetes"}
-          active={pathname === "/admin/diabetes"}
+          to={"/admin/vigilancia"}
+          active={pathname === "/admin/vigilancia"}
         >
-          <Icon name="hospital" className="icono-side-bar" />
-          Pacientes-Diabetes
+        <Icon name="hospital" className="icono-side-bar"/>
+          Vigilancia
         </Menu.Item>
       )}
-
-      {empleados === false && (
+      
+      {/* {empleados = && (
         <Menu.Item
           as={Link}
           to={"/admin/pacientes"}
@@ -100,6 +111,7 @@ function MenuLeft(props) {
           Usuarios
         </Menu.Item>
       )}
+      
     </Menu>
   );
 }

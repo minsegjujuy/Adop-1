@@ -8,7 +8,7 @@ import "./UserAdmin.scss"
 import Swal from "sweetalert2";
 
 export function UserAdmin() {
-    const {getUsers,loading,users,setUsers,deleteUser} = useUser()
+    const {getUsers,loading,users,setUsers,deleteUser,getempleadoId,auth} = useUser()
     const [titleModal, setTitleModal] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [contentModal, setContentModal] = useState(null);
@@ -36,6 +36,7 @@ export function UserAdmin() {
         );
         openCloseModal();
       };
+      
       const onDeleteUser = async (data) => {
         try {
           Swal.fire({
@@ -90,6 +91,7 @@ export function UserAdmin() {
                 {"Agregar Usuario"}
               </Button>
               </div>
+              
          </div>
       <TableUsers users={users}
                   onDeleteUser={onDeleteUser}

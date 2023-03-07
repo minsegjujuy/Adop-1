@@ -92,4 +92,20 @@ export async function getMeApi(token) {
       throw error;
     }
   }
+  export async function buscarEmpleadoIdApi(id, token) {
+    try {
+      const url = `${BASE_API}/api/empleado_usuario/${id}/`;
+      const params = {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
   
+      const response = await fetch(url, params);
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }

@@ -6,7 +6,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 from users.api.views import (
-    UserApiViewSet, UserView, EmpleadoApiViewSet, EmpleadoCreateAPIView)
+    UserApiViewSet, UserView, EmpleadoApiViewSet, EmpleadoCreateAPIView, EmpleadoUsuarioIdListApiView)
 
 router_user = DefaultRouter()
 
@@ -21,4 +21,6 @@ urlpatterns = [
     path('auth/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('auth/me/', UserView.as_view()),
     path("crear_empleado/", EmpleadoCreateAPIView.as_view(), name="crear empleado"),
+    path("empleado_usuario/<id_usuario>/", EmpleadoUsuarioIdListApiView.as_view(), name="Obtener empleado mediando id de usuario",
+         ),
 ]

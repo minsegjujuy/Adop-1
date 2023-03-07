@@ -90,3 +90,14 @@ class EmpleadoCreateAPIView(CreateAPIView):
                 {"msj": "Empleado creado correctamente"}, status=status.HTTP_201_CREATED
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class EmpleadoUsuarioIdListApiView(ListAPIView):
+    permission_class = [IsAuthenticated]
+    permission_class = [PermisoAdministrador]
+    serializer_class = SetEmpleadoSerializer
+
+    def get_queryset(self):
+        id_usuario = self.kwargs["id_usuario"]
+        if Empleado.objects.filter(User_id=id_usuario).exists():
+            return Empleado.objects.filter(User_id=id_usuario)
