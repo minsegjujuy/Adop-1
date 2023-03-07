@@ -7,7 +7,7 @@ class ProcedimientoSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'fk_servicio',
-            'description',
+            'descripcion',
             'hora',
             'latitud',
             'longitud',
@@ -20,9 +20,10 @@ class ProcedimientoSerializer(serializers.ModelSerializer):
 class ProcedimientoPersonaSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProcedimientoPersona
-        flieds = (
-            'id',
-            'fk_procedimiento',
-            'fk_persona',
-            'detenido',
-        )
+        fields = '__all__'
+        # flieds = [
+        #     'id',
+        #     'fk_procedimiento',
+        #     'fk_persona',
+        #     'detenido',
+        # ]

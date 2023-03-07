@@ -25,6 +25,5 @@ class DiasVigilanciaSerializer(serializers.ModelSerializer):
             'dia',
             'hora_inicio',
             'hora_fin',
-            'dia_completo',
-            'personal'
+            'dia_completo'
         )

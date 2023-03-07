@@ -7,9 +7,9 @@ class Procedimiento (models.Model):
     descripcion = models.TextField(blank=False,null=False)
     hora = models.TimeField()
     latitud = models.DecimalField(null=False,decimal_places=10,max_digits=13)
-    logitud = models.DecimalField(null=False,decimal_places=10,max_digits=13)
+    longitud = models.DecimalField(null=False,decimal_places=10,max_digits=13)
     cant_protagonistas = models.IntegerField()
-    cant_infraccionn = models.IntegerField()
+    cant_infracciones = models.IntegerField()
     cant_arrestados = models.IntegerField()
     
 class ProcedimientoPersona (models.Model):

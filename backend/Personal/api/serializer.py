@@ -14,7 +14,7 @@ class PersonalSerializer(serializers.ModelSerializer):
             'oficio',
             'jerarquia',
             'prestacion_servicios',
-            'funcio',
+            'funcion',
             'escalafon',
             'nombre_apellido',
             'fecha_nacimiento',
