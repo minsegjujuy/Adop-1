@@ -1,1 +1,3 @@
 envs/
+backend/*/migrations/0*.py
+backend/*/migrations/__pucache__

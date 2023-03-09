@@ -105,6 +105,7 @@ DATABASES = {
         'PORT': '5432'
     }
 }
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -151,7 +152,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # USER
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'users.Usuario'
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True

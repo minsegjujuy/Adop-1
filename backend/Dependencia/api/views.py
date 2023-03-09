@@ -4,20 +4,20 @@ from rest_framework import viewsets, permissions
 
 class InspectoraViewSet(viewsets.ModelViewSet):
     queryset = Inspectora.objects.all()
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = InspectoraSerializer
 
 class UnidadRegionalViewSet(viewsets.ModelViewSet):
     queryset = Dependencia.objects.all()
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = DependenciaSerializer
 
 class DependenciaViewSet(viewsets.ModelViewSet):
     queryset = UnidadRegional.objects.all()
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = UnidadRegionalSerializer
 
 class DependenciasOperativosiewSet(viewsets.ModelViewSet):
     queryset = DependenciaOperativos.objects.all()
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = DependenciaOperativosSerializer
