@@ -17,6 +17,7 @@ export function TableUsers(props) {
           <Table.HeaderCell>Apellido</Table.HeaderCell>
           <Table.HeaderCell>Activo</Table.HeaderCell>
           <Table.HeaderCell>Staff</Table.HeaderCell>
+          <Table.HeaderCell>Tipo de Permiso</Table.HeaderCell>
           <Table.HeaderCell></Table.HeaderCell>
         </Table.Row>
       </Table.Header>
@@ -26,24 +27,25 @@ export function TableUsers(props) {
             key={index}
 
           >
-            <Table.Cell>{user.username}</Table.Cell>
-            <Table.Cell>{user.email}</Table.Cell>
-            <Table.Cell>{user.first_name}</Table.Cell>
-            <Table.Cell>{user.last_name}</Table.Cell>
+            <Table.Cell>{user.User.username}</Table.Cell>
+            <Table.Cell>{user.User.email}</Table.Cell>
+            <Table.Cell>{user.User.first_name}</Table.Cell>
+            <Table.Cell>{user.User.last_name}</Table.Cell>
             <Table.Cell className="status">
-              {user?.is_active ? (
+              {user?.User.is_active ? (
                 <Icon name="check" />
               ) : (
                 <Icon name="close" />
               )}
             </Table.Cell>
             <Table.Cell className="status">
-              {user?.is_staff ? (
+              {user?.User.is_staff ? (
                 <Icon name="check" />
               ) : (
                 <Icon name="close" />
               )}
             </Table.Cell>
+            <Table.Cell>{user.nivel_permiso}</Table.Cell>
             <Actions
               user={user}
             //   updateUser={updateUser}

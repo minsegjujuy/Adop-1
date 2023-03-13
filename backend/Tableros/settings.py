@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'rest_framework',
     'corsheaders',
+    'django_filters',
     'users',
     'Dependencia',
     'Ley',
@@ -87,13 +88,14 @@ WSGI_APPLICATION = 'Tableros.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': str(os.path.join(BASE_DIR, "db.sqlite3"))
-    }
-}
+# https: // docs.djangoproject.com/en/3.1/ref/settings/  # databases
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': str(os.path.join(BASE_DIR, "db.sqlite3"))
+#     }
+# }
+
 
 DATABASES = {
     'default': {
@@ -145,7 +147,16 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'Ministerio',
+        'USER': 'postgres',
+        'PASSWORD': 'Mauro123*',
+        'HOST': 'localhost',
+        'PORT': '5432'
+    }
+}
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 

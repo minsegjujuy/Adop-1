@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useAuth } from "./useAuth";
 
-import {getMeApi,getUsersApi,addUserApi,deleteUserApi} from "../api/user"
+import {getMeApi,getUsersApi,addUserApi,deleteUserApi,buscarEmpleadoIdApi} from "../api/user"
 
 export function useUser() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [users, setUsers] = useState(null);
+    const [empleado,setEmpleado] = useState(null)
     const { auth } = useAuth();
 
     const getMe = async (token) => {
@@ -51,6 +52,17 @@ export function useUser() {
       setError(error);
     }
   };
+  const buscarEmpleadoId = async (id) => {
+    try {
+      setLoading(true);
+      const response = await buscarEmpleadoIdApi(id, auth.token);
+      setLoading(false);
+      return response;
+    } catch (error) {
+      setLoading(false);
+      setError(error);
+    }
+  };
     return {
         loading,
         error,
@@ -60,6 +72,8 @@ export function useUser() {
         getUsers,
         addUser,
         deleteUser,
+        buscarEmpleadoId,
+       
     
     }
 }

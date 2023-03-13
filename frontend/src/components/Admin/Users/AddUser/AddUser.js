@@ -12,6 +12,13 @@ export const AddUser= (props) => {
   } = props;
 
    const {addUser} = useUser();
+   const options = [
+    { key: "operador", text: "Operador", value: "operador" },
+    { key: "Administrador", text: "Administrador", value: "administrador" },
+    { key: "General", text: "General", value: "general" },
+    
+   
+  ];
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: Yup.object(newSchema()),
@@ -23,8 +30,8 @@ export const AddUser= (props) => {
         console.log(formValue)
         Swal.fire({
           icon: "info",
-          title: "Creando Individuo",
-          text: "El Individuo se esta creando, aguarde un instate...",
+          title: "Creando Empleado",
+          text: "El Empleado se esta creando, aguarde un instate...",
           showConfirmButton: false,
           showLoaderOnConfirm: true,
           didOpen: () => {
@@ -59,58 +66,58 @@ export const AddUser= (props) => {
   return (
     <Form className="add-edit-user-form" onSubmit={formik.handleSubmit}>
       <Form.Input
-        name="username"
+        name="User.username"
         placeholder="Ingrese un nombre de usuario"
-        value={formik.values.username}
+        value={formik.values.User?.username}
         onChange={formik.handleChange}
-        error={formik.errors.username}
+        error={formik.errors.User?.username}
       />
       <Form.Input
-        name="email"
+        name="User.email"
         placeholder="Ingrese un Correo electronico"
-        value={formik.values.email}
+        value={formik.values.User?.email}
         onChange={formik.handleChange}
-        error={formik.errors.email}
+        error={formik.errors.User?.email}
       />
       <Form.Input
-        name="first_name"
+        name="User.first_name"
         placeholder="Ingrese su nombre "
-        value={formik.values.first_name}
+        value={formik.values.User?.first_name}
         onChange={formik.handleChange}
-        error={formik.errors.first_name}
+        error={formik.errors.User?.first_name}
       />
       <Form.Input
-        name="last_name"
+        name="User.last_name"
         placeholder="Ingrese su apellido"
-        value={formik.values.last_name}
+        value={formik.values.User?.last_name}
         onChange={formik.handleChange}
-        error={formik.errors.last_name}
+        error={formik.errors.User?.last_name}
       />
       <Form.Input
-        name="password"
+        name="User.password"
         placeholder="Ingrese una Contraseña"
         type="password"
-        value={formik.values.password}
+        value={formik.values.User?.password}
         onChange={formik.handleChange}
-        error={formik.errors.password}
+        error={formik.errors.User?.password}
       />
-      <div className="add-edit-user-form__staff">
+      {/* <div className="add-edit-user-form__staff">
         <Checkbox
           toggle
-          checked={formik.values.is_staff}
+          checked={formik.values.User?.is_staff}
           onChange={(_, data) => {
-            formik.setFieldValue("is_staff", data.checked);
+            formik.setFieldValue("User.is_staff", data.checked);
           }}
         />{" "}
-        Usuario Administrador
-        </div>
-      {/* <Form.Select
-        name="sexo"
+        Usuario Staff
+        </div> */}
+      <Form.Select
+        name="nivel_permiso"
         options={options}
-        placeholder="Seleccione Sexo"
-        value={formik.values.sexo}
-        onChange={(_, data) => formik.setFieldValue("sexo", data.value)}
-      /> */}
+        placeholder="Seleccione el tipo de permiso"
+        value={formik.values.nivel_permiso}
+        onChange={(_, data) => formik.setFieldValue("nivel_permiso", data.value)}
+      />
 
       <Button type="submit" primary fluid content={"Crear Usuario"} />
     </Form>
@@ -119,23 +126,26 @@ export const AddUser= (props) => {
 
  function initialValues() {
   return {
-    username:"",
-    email: "",
-    first_name: "",
-    last_name: "",
-    password:"",
-    is_active: false,
-    is_staff: false,
+    User:{username:"",
+          email: "",
+          first_name: "",
+          last_name: "",
+          password:"",
+          is_active: false,
+          is_staff: false,},
+    nivel_permiso: ""
+
  }
 }
  function newSchema() {
   return {
-    username:Yup.string(),
-    email: Yup.string().email(true).required(true),
-    first_name: Yup.string().required(true),
-    last_name: Yup.string().required(true),
-    password: Yup.string().required(true),
-    is_staff: Yup.bool().required(true),
-    is_active: Yup.bool().required(true),
+    // user:{username:Yup.string(),
+    // email: Yup.string().email(true).required(true),
+    // first_name: Yup.string().required(true),
+    // last_name: Yup.string().required(true),
+    // password: Yup.string().required(true),
+    // is_staff: Yup.bool().required(true),
+    // is_active: Yup.bool().required(true),},
+    // nivel_permiso : Yup.string().required
   };
  }
