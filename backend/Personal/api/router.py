@@ -5,6 +5,6 @@ router = routers.DefaultRouter()
 
 # [GET] [POST] api/personal/
 # [UPDATE] [DELETE] api/personal/{id}
-router.register('api/personal', PersonalViewSet, 'personal')
+router.register('personal', PersonalViewSet, 'personal')
 
 urlpatterns = router.urls

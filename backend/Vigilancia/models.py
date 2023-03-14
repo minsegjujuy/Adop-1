@@ -4,6 +4,7 @@ from Servicio.models import TipoServicio
 
 class Vigilancia(models.Model):
     fk_tipo_servicio = models.ForeignKey(TipoServicio, on_delete=models.CASCADE)
+    comisaria = models.CharField(max_length=50, default='')
     objetivo = models.CharField(max_length=50)
     fecha_inicio = models.DateTimeField(null=False)
     fecha_fin  = models.DateTimeField()

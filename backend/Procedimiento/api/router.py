@@ -5,10 +5,10 @@ router = routers.DefaultRouter()
 
 # [GET] [POST] api/procedimientos/
 # [UPDATE] [DELETE] api/procedimientos/{id}
-router.register('api/procedimientos', ProcedimientoViewSet, 'Procedimiento')
+router.register('procedimientos', ProcedimientoViewSet, 'Procedimiento')
 
 # [GET] [POST] api/procedimientosPersonas/
 # [UPDATE] [DELETE] api/procedimientosPersonas/{id}
-router.register('api/procedimientosPersonas', ProcedimientoPersonaViewSet, 'ProcedimientoPersonas')
+router.register('procedimientosPersonas', ProcedimientoPersonaViewSet, 'ProcedimientoPersonas')
 
 urlpatterns = router.urls

@@ -5,6 +5,6 @@ router = routers.DefaultRouter()
 
 # [GET] [POST] api/personas/
 # [UPDATE] [DELETE] api/personas/{id}
-router.register('api/personas', PersonaViewSet, 'personas')
+router.register('personas', PersonaViewSet, 'personas')
 
 urlpatterns = router.urls
