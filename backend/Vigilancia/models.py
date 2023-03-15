@@ -9,7 +9,6 @@ class Vigilancia(models.Model):
     fecha_inicio = models.DateTimeField(null=False)
     fecha_fin  = models.DateTimeField()
     destino = models.CharField(null=False,max_length=50)
-    disposicion = models.CharField(max_length=50)
     longitud = models.DecimalField(decimal_places=10,max_digits=13)
     latitud = models.DecimalField(decimal_places=10,max_digits=13)
 

@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'uwpa8%g^(lh=68o$o7*iatvr*mg$yfqcx2&rz!53+@pnjj4ak9'
+SECRET_KEY = os.environ.get('SECRET_KEY', default='uwpa8%g^(lh=68o$o7*iatvr*mg$yfqcx2&rz!53+@pnjj4ak9')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -157,13 +157,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+LOGIN_URL = '/api/auth/login/'
+
 # USER
 AUTH_USER_MODEL = 'users.Usuario'
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
-
-SECRET_KEY = 'LSRL8bIaIcaHNgHHc8JGOkzzHMz6XFCw'
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": datetime.timedelta(minutes=5),
