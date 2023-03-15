@@ -11,7 +11,6 @@ class VigilanciaSerializer(serializers.ModelSerializer):
             'fecha_inicio',
             'fecha_fin',
             'destino',
-            'disposicion',
             'longitud',
             'latitud',
         )
