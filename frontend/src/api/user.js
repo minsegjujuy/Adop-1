@@ -1,5 +1,29 @@
 import {BASE_API} from "../utils/contants"
 
+export async function logoutApi(token){
+  try{
+    const url = `${BASE_API}/api/auth/logout/`
+    const params = {
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        "Authentication":token,
+      },
+      body: {"token": token,}
+    }
+    const response = await fetch(url,params);
+    if(response.status !== 200){
+      throw new Error(response.error)
+    }
+    const result = await response.json();
+
+    return result;
+    
+  } catch(error){
+    throw error
+  }
+}
+
 export async function loginApi(formValue){
     try{
        const url =`${BASE_API}/api/auth/login/`
@@ -13,7 +37,7 @@ export async function loginApi(formValue){
        }
        const response = await fetch(url, params);
        if (response.status !== 200) {
-        throw new Error("usuario o contraseña incorrecto");
+        throw new Error(response.error);
       }
       const result = await response.json();
 
@@ -24,7 +48,7 @@ export async function loginApi(formValue){
 
 }
 
-export async function getMeApi(token) {
+  export async function getMeApi(token) {
     try {
       const url = `${BASE_API}/api/auth/me/`;
       const params = {
@@ -42,10 +66,10 @@ export async function getMeApi(token) {
 
   export async function getUsersApi(token) {
     try {
-      const url = `${BASE_API}/api/empleados/`;
+      const url = `${BASE_API}/api/usuarios/`;
       const params = {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Token ${token}`,
         },
       };
       const response = await fetch(url, params);

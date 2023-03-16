@@ -1,3 +1,3 @@
 envs/
-backend/*/migrations/0*.py
+migrations/0*.py
 *.pyc

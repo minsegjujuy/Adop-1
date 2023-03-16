@@ -18,7 +18,7 @@ export function HomeAdmin() {
     const [contentModal, setContentModal] = useState(null);
     const [refetch, setRefetch] = useState(false)
     const { pathname } = useLocation();
-    console.log(users)
+    
     useEffect(() => {
         getUsers();
       }, []);

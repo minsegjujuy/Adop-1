@@ -7,11 +7,11 @@ export function TopMenu() {
   const { auth, logout } = useAuth();
 
   const renderName = () => {
-    if (auth?.me?.first_name && auth?.me?.last_name) {
-      return `${auth.me.first_name} ${auth.me.last_name}`;
+    if (auth?.usaurio?.nombres && auth?.usuario?.apellidos) {
+      return `${auth.usuario.nombres} ${auth.usuario.apellidos}`;
     }
     // console.log(auth)
-    return auth?.me?.email;
+    return auth?.usuario?.email;
   };
 
   return (

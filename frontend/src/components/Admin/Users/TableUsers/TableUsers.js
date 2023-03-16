@@ -5,8 +5,7 @@ import "./TableUsers.scss";
 
 
 export function TableUsers(props) {
-  const { users,onDeleteUser} = props;
-  console.log(users)
+  const { users,onDeleteUser} = props;  
   return (
     <Table className="table-users-admin">
       <Table.Header>
@@ -27,25 +26,25 @@ export function TableUsers(props) {
             key={index}
 
           >
-            <Table.Cell>{user.User.username}</Table.Cell>
-            <Table.Cell>{user.User.email}</Table.Cell>
-            <Table.Cell>{user.User.first_name}</Table.Cell>
-            <Table.Cell>{user.User.last_name}</Table.Cell>
+            <Table.Cell>{user.username}</Table.Cell>
+            <Table.Cell>{user.email}</Table.Cell>
+            <Table.Cell>{user.nombres}</Table.Cell>
+            <Table.Cell>{user.apellidos}</Table.Cell>
             <Table.Cell className="status">
-              {user?.User.is_active ? (
+              {user?.usuario_activo ? (
                 <Icon name="check" />
               ) : (
                 <Icon name="close" />
               )}
             </Table.Cell>
             <Table.Cell className="status">
-              {user?.User.is_staff ? (
+              {user?.is_superuser ? (
                 <Icon name="check" />
               ) : (
                 <Icon name="close" />
               )}
             </Table.Cell>
-            <Table.Cell>{user.nivel_permiso}</Table.Cell>
+            <Table.Cell>{user.rol}</Table.Cell>
             <Actions
               user={user}
             //   updateUser={updateUser}

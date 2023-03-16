@@ -1,5 +1,5 @@
 import {AdminLayout} from "../layouts/AdminLayout"
-// import { Home } from "../pages/Client";
+import { Home } from "../pages/Client";
 import { HomeAdmin,UserAdmin} from "../pages/Admin"; 
 import {LoginAdmin} from "../pages/Admin/LoginAdmin"
 
@@ -8,6 +8,11 @@ import {LoginAdmin} from "../pages/Admin/LoginAdmin"
 const routerLogin = [
   {
     path: "/",
+    layout:AdminLayout,
+    component: Home,
+  },
+  {
+    path: "/login",
     layout: AdminLayout,
     component: LoginAdmin,
   },
