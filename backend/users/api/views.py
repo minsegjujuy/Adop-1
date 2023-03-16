@@ -50,6 +50,7 @@ class UserViewSet(viewsets.ModelViewSet):
 class UserView (APIView):
     queryset = Usuario.objects.all()
     serializer_class = UserSerializer
+    
 
 class Login(TokenObtainPairView):
     serializer_class = TokenObtainPairSerializer
@@ -70,7 +71,7 @@ class Login(TokenObtainPairView):
                                 'usuario': TokenSerializer(user).data,
                                 'message':'Inicio de Sesion Exitoso'
                             },
-                            status=status.HTTP_201_CREATED
+                            status=status.HTTP_200_OK
                         )
                     else:
                         all_sessions = Session.objects.filter(expire_date__gte = datetime.datetime.now())
@@ -86,7 +87,7 @@ class Login(TokenObtainPairView):
                                 'usuario': TokenSerializer(user).data,
                                 'mensaje':'inicio de Sesion Existoso'
                             },
-                            status=status.HTTP_201_CREATED
+                            status=status.HTTP_200_OK
                         )
                 return Response({'error':'Contrasenia o Email incorrectos'},status=status.HTTP_400_BAD_REQUEST)
             return Response({'error':'Este usuario no puede iniciar sesion.'},status=status.HTTP_401_UNAUTHORIZED)
@@ -116,3 +117,4 @@ class Logout(APIView):
         except:
             return Response({'error': 'No se ha encontrado token en la peticion'},
                             status=status.HTTP_409_CONFLICT)
+

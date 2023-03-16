@@ -52,17 +52,17 @@ export function useUser() {
       setError(error);
     }
   };
-  const buscarEmpleadoId = async (id) => {
-    try {
-      setLoading(true);
-      const response = await buscarEmpleadoIdApi(id, auth.token);
-      setLoading(false);
-      return response;
-    } catch (error) {
-      setLoading(false);
-      setError(error);
-    }
-  };
+  // const buscarEmpleadoId = async (id) => {
+  //   try {
+  //     setLoading(true);
+  //     const response = await buscarEmpleadoIdApi(id, auth.token);
+  //     setLoading(false);
+  //     return response;
+  //   } catch (error) {
+  //     setLoading(false);
+  //     setError(error);
+  //   }
+  // };
     return {
         loading,
         error,
@@ -72,7 +72,7 @@ export function useUser() {
         getUsers,
         addUser,
         deleteUser,
-        buscarEmpleadoId,
+        // buscarEmpleadoId,
        
     
     }

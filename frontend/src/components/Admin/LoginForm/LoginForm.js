@@ -19,8 +19,9 @@ const [mostrarContrasenia, setMostrarContrasenia] = useState(false);
       try {
         console.log(formValue)
         const response = await loginApi(formValue);
-        const { access } = response;
-        login(access);
+        console.log(response)
+        // const { access } = response;
+        login(response);
         
         toast.success("Ingreso Exitoso", {
           position: toast.POSITION.BOTTOM_CENTER,

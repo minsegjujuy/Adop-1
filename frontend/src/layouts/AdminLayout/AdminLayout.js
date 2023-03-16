@@ -7,8 +7,8 @@ import { TopMenu, SideBarMenu } from "../../components/Admin";
 export function AdminLayout(props) {
    const { children } = props;
    const {auth} = useAuth();
-    
-      if (!auth) return <LoginAdmin />;
+  console.log(auth)
+  if (!auth) return <LoginAdmin />;
   return (
     <div className="admin-layout">
       <div className="admin-layout__menu">

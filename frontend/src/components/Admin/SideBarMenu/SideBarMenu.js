@@ -22,27 +22,27 @@ export function SideBarMenu(props) {
 function MenuLeft(props) {
   const { pathname } = props;
   const { auth } = useAuth();
-  const {buscarEmpleadoId} = useUser()
+  // const {buscarEmpleadoId} = useUser()
   const [empleados, setEmpleado] = useState(null);
   useEffect(() => {
     Permiso();
   }, []);
 
   const Permiso = async () => {
-    const response = await buscarEmpleadoId(auth?.me.id);
-    console.log(response)
-    if (response[0].nivel_permiso === "operador") {
-      setEmpleado("operador");
-    }
-    if (response[0].nivel_permiso === "general") {
-      setEmpleado("gemeral");
-    }
-    if (response[0].nivel_permiso === "administrador") {
-      setEmpleado("administrador");
-    }
+    // const response = await buscarEmpleadoId(auth?.me.id);
+    // console.log(response)
+    // if (response[0].nivel_permiso === "operador") {
+    //   setEmpleado("operador");
+    // }
+    // if (response[0].nivel_permiso === "general") {
+    //   setEmpleado("gemeral");
+    // }
+    // if (response[0].nivel_permiso === "administrador") {
+    //   setEmpleado("administrador");
+    // }
   };
 console.log(auth)
-console.log(empleados)
+// console.log(empleados)
   return (
     <Menu fixed="left" borderless className="side" vertical>
       {/* <Menu.Item as={Link} to={"/admin"} active={pathname === "/admin"}>
@@ -70,7 +70,7 @@ console.log(empleados)
         </Menu.Item>
       )} */}
       
-      {(empleados ==="operador"|| empleados==="general" || auth.me.is_staff) && (
+      {(auth?.me?.rol==="administrador") && (
         <Menu.Item
           as={Link}
           to={"/admin/vigilancia"}
@@ -101,7 +101,7 @@ console.log(empleados)
         Gestion de Contraseña
       </Menu.Item>
 
-      {auth?.me?.is_staff && (
+      {auth?.me?.rol==="administrador" && (
         <Menu.Item
           as={Link}
           to={"/admin/users"}
