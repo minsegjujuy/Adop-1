@@ -23,7 +23,7 @@ function MenuLeft(props) {
   const { pathname } = props;
   const { auth } = useAuth();
   // const {buscarEmpleadoId} = useUser()
-  const [empleados, setEmpleado] = useState(null);
+  // const [empleados, setEmpleado] = useState(null);
   useEffect(() => {
     Permiso();
   }, []);
@@ -41,7 +41,7 @@ function MenuLeft(props) {
     //   setEmpleado("administrador");
     // }
   };
-console.log(auth)
+// console.log(auth)
 // console.log(empleados)
   return (
     <Menu fixed="left" borderless className="side" vertical>

@@ -10,7 +10,7 @@ export function TopMenu() {
     if (auth?.me?.first_name && auth?.me?.last_name) {
       return `${auth.me.first_name} ${auth.me.last_name}`;
     }
-    console.log(auth)
+    // console.log(auth)
     return auth?.me?.email;
   };
 

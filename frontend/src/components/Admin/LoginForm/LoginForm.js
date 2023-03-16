@@ -17,9 +17,9 @@ const [mostrarContrasenia, setMostrarContrasenia] = useState(false);
     validationSchema: Yup.object(validationSchema()),
     onSubmit: async (formValue) => {
       try {
-        console.log(formValue)
+        // console.log(formValue)
         const response = await loginApi(formValue);
-        console.log(response)
+        // console.log(response)
         // const { access } = response;
         login(response);
         

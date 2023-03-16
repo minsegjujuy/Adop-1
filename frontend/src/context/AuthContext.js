@@ -6,35 +6,30 @@ import Swal from "sweetalert2";
 // import { TOKEN, BASE_API } from "../utils/constants";
 
 export const AuthContext = createContext({
-  auth: null,
+  auth: getToken(),
   login: () => null,
   logout: () => null,
 });
 
 export function AuthProvider(props) {
   const { children } = props;
-  const [auth, setAuth] = useState(undefined);
+  const [auth, setAuth] = useState(getToken());
   // const { getMe } = useUser();
 
   useEffect(() => {
     (async () => {
-      const token = getToken();
       console.log(auth)
+      let data = JSON.parse(getToken())
+      const token = data.token;
       if (token) {
-        const me ={
-          username: "Mauro",
-          email:"maurocutipa18@gmail.com",
-          nombres:"xxxxx",
-          apellidos:"lalala",
-          rol:"administrador"
-        };;
-        console.log(auth)
-        if (me.code !== "token_not_valid") {
-          setAuth({ token, me });
-        } else {
-          removeToken();
-          setAuth(null);
-        }
+        const me = data.usuario;
+        console.log(me)
+        // if (me.code !== "token_not_valid") {
+        //   setAuth({ token, me });
+        // } else {
+        //   removeToken();
+        //   setAuth(null);
+        // }
       } else {
         setAuth(null);
       }
@@ -50,15 +45,24 @@ export function AuthProvider(props) {
   };
 
   const login = async (response) => {
-    console.log(response)
-    setToken(response.token);
     const me = response.usuario;
     const token = response.token;
+    const local = {
+      'token': response.token,
+      'usuario':{
+        'username' : response.usuario.username,
+        'email': response.usuario.email,
+        'nombres': response.usuario.nombres,
+        'apellidos': response.usuario.apellidos,
+      },
+      'rol':response.usuario.rol
+    }
+    setToken(JSON.stringify(local));
     setAuth(token,me);
-    setTimeout(async function () {
-      const token = getToken();
-      if (token) {
-        const me = response.usuario;
+    // setTimeout(async function () {
+      // const token = getToken();
+      // if (token) {
+        // const me = response.usuario;
         // if (me.code === "token_not_valid") {
         //   Swal.fire({
         //     icon: "info",
@@ -77,9 +81,9 @@ export function AuthProvider(props) {
         //     }
         //   });
         // }
-      }
-    }, 1810*1000);
-    console.log(response.token);
+      // }
+    // }, 1810*1000);
+    // console.log(response.token);
   };
 
   const valueContext = {
