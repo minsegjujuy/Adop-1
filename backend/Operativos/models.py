@@ -15,7 +15,7 @@ class Operativo(models.Model):
     procedimiento = models.BooleanField(null=False)
     turno = models.CharField(null=False, max_length=10)
     # activar luego de la primera migracion
-    personal = models.ManyToManyField('OperativoPersonal', db_table='operativo_personal', related_name='personal') #comentar para la primera migracion
+    # personal = models.ManyToManyField('OperativoPersonal', db_table='operativo_personal', related_name='personal') #comentar para la primera migracion
 
 class OperativoPersonal(models.Model):
     fk_operativo = models.ForeignKey("Operativos.Operativo", on_delete=models.CASCADE)

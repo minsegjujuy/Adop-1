@@ -44,7 +44,8 @@ from ..authentication_mixins import Authentication
 #             request.data['password'] = request.user.password
 #         return super().update(request, *args, **kwargs)
 
-class UserViewSet(Authentication,viewsets.ModelViewSet):
+class UserViewSet(viewsets.ModelViewSet):
+# class UserViewSet(Authentication,viewsets.ModelViewSet):
     permission_classes = (IsAdminUser,)
     queryset = Usuario.objects.all()    
     serializer_class = UserSerializer

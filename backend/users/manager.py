@@ -1,7 +1,17 @@
 from django.contrib.auth.models import BaseUserManager
 
 class UsuarioManager(BaseUserManager):
-    def create_user(self,email, username, nombres=None, apellidos=None, rol=None, password=None, usuario_activo=True):
+    def create_user(
+            self,email,
+            username,
+            nombres=None,
+            apellidos=None,
+            rol=None,
+            regional=None,
+            jurisdiccion=None,
+            password=None,
+            usuario_activo=True
+    ):
         if not email:
             raise ValueError('El usuario debe tener un correo electronico!')
         
@@ -10,9 +20,14 @@ class UsuarioManager(BaseUserManager):
             email = self.normalize_email(email),
             nombres = nombres,
             apellidos = apellidos,
-            rol = rol, 
+            rol = rol,
+            regional=regional,
+            jurisdiccion=jurisdiccion,
             usuario_activo = usuario_activo
         )
+        
+        if jurisdiccion is None:
+            usuario.jurisdiccion = regional
         
         usuario.set_password(password)
         
