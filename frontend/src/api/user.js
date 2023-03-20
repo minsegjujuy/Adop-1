@@ -81,11 +81,11 @@ export async function loginApi(formValue){
   }
   export async function addUserApi(data, token) {
     try {
-      const url = `${BASE_API}/api/empleados/`;
+      const url = `${BASE_API}/api/usuarios/`;
       const params = {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Token ${token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),

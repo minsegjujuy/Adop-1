@@ -10,32 +10,32 @@ import Swal from "sweetalert2";
 export function CargaVigilancia() {
   console.log("hola mundo")
     // const {getUsers,loading,users,setUsers,deleteUser,getempleadoId,auth} = useUser()
-    // const [titleModal, setTitleModal] = useState(null);
-    // const [showModal, setShowModal] = useState(false);
-    // const [contentModal, setContentModal] = useState(null);
-    // const [refetch, setRefetch] = useState(false)
+    const [titleModal, setTitleModal] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const [contentModal, setContentModal] = useState(null);
+    const [refetch, setRefetch] = useState(false)
 
     // useEffect(() => {
     //     getUsers();
     //   }, []);
       
       
-    // const openCloseModal = () => {
-    //     setShowModal((prev) => !prev);
-    //   };
-    //   const onRefetch = () => setRefetch((prev) => !prev);
+    const openCloseModal = () => {
+        setShowModal((prev) => !prev);
+      };
+      const onRefetch = () => setRefetch((prev) => !prev);
 
-      // const addUser = () => {
-      //   setTitleModal("Nuevo Usuario");
-      //   setContentModal(
-      //     <AddUser
-      //       onClose={openCloseModal}
-      //       Refetch = {onRefetch}
-      //       // addUser={addUser}
-      //     />
-      //   );
-      //   openCloseModal();
-      // };
+      const addHorarios = () => {
+        setTitleModal("Agregar Horarios");
+        setContentModal(
+          // <AddFormHorarios
+          //   onClose={openCloseModal}
+          //   Refetch = {onRefetch}
+          //   // addUser={addUser}
+          // />
+        );
+        openCloseModal();
+      };
       
     //   const onDeleteUser = async (data) => {
     //     try {
