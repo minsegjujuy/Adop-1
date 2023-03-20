@@ -8,6 +8,8 @@ class Usuario(AbstractBaseUser,PermissionsMixin):
     nombres = models.CharField("Nombres", max_length=200,blank=True,null=True)
     apellidos = models.CharField("Apellidos", max_length=200,blank=True,null=True)
     rol = models.CharField("Rol", max_length=50, null=True, blank=True)
+    jurisdiccion = models.CharField("Jurisdiccion", max_length=100, blank=True, null=True)
+    regional = models.IntegerField("Regional", null=True, blank=True)
     usuario_activo = models.BooleanField(default=True)
     
     

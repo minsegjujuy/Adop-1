@@ -11,6 +11,8 @@ class TokenSerializer(serializers.ModelSerializer):
             'nombres',
             'apellidos',
             'rol',
+            'jurisdiccion',
+            'regional',
         ]
 
 class UserSerializer(serializers.ModelSerializer):
@@ -24,6 +26,8 @@ class UserSerializer(serializers.ModelSerializer):
             'apellidos', 
             'password',
             'rol',
+            'jurisdiccion',
+            'regional',
             'is_superuser',
             'usuario_activo'
         ]

@@ -164,6 +164,8 @@ AUTH_USER_MODEL = 'users.Usuario'
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
+TOKEN_EXPIRED_AFTER_MINUTES=datetime.timedelta(minutes=5)
+
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": datetime.timedelta(minutes=5),
     "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=1),
@@ -177,7 +179,7 @@ SIMPLE_JWT = {
     "AUDIENCE": None,
     'ISSUER': None,
     
-    'AUTH_HEADER': ('Bearer',),
+    'AUTH_HEADER': ('Authenticate',),
     'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
     'USER_ID_FIELD':'id',
     'USER_ID_CLAIM': 'user_id',
@@ -190,6 +192,6 @@ SIMPLE_JWT = {
     'TOKEN_USER_CLASS': 'rest_framework_simplejwt.models.TokenUser',
     
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
-    'SLIDING_TOKEN_LIFETIME': datetime.timedelta(minutes=5),
+    "SLIDING_TOKEN_LIFETIME": datetime.timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': datetime.timedelta(days=1)
 }

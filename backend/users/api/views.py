@@ -24,6 +24,8 @@ from .permisos import (
     PermisoFarmaceutico,
 )
 
+from ..authentication_mixins import Authentication
+
 # class UserApiViewSet(ModelViewSet):
 #     permission_classes = [IsAdminUser]
 #     serializer_class = UserSerializer
@@ -43,6 +45,7 @@ from .permisos import (
 #         return super().update(request, *args, **kwargs)
 
 class UserViewSet(viewsets.ModelViewSet):
+# class UserViewSet(Authentication,viewsets.ModelViewSet):
     permission_classes = (IsAdminUser,)
     queryset = Usuario.objects.all()    
     serializer_class = UserSerializer
