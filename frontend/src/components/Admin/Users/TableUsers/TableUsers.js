@@ -17,6 +17,9 @@ export function TableUsers(props) {
           <Table.HeaderCell>Activo</Table.HeaderCell>
           <Table.HeaderCell>Staff</Table.HeaderCell>
           <Table.HeaderCell>Tipo de Permiso</Table.HeaderCell>
+          <Table.HeaderCell>Regional</Table.HeaderCell>
+          <Table.HeaderCell>Jurisdiccion</Table.HeaderCell>
+          
           <Table.HeaderCell></Table.HeaderCell>
         </Table.Row>
       </Table.Header>
@@ -45,6 +48,8 @@ export function TableUsers(props) {
               )}
             </Table.Cell>
             <Table.Cell>{user.rol}</Table.Cell>
+            <Table.Cell>{user.regional}</Table.Cell>
+            <Table.Cell>{user.jurisdiccion}</Table.Cell>
             <Actions
               user={user}
             //   updateUser={updateUser}

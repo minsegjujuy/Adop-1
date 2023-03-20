@@ -93,11 +93,11 @@ export const AddUser= (props) => {
         onChange={(_, data) => formik.setFieldValue("regional", data.value)}
       />
       <Form.Select
-        name="juridiccion"
+        name="jurisdiccion"
         options={options3}
         placeholder="Seleccione la juridiccion "
-        value={formik.values.juridiccion}
-        onChange={(_, data) => formik.setFieldValue("juridiccion", data.value)}
+        value={formik.values.jurisdiccion}
+        onChange={(_, data) => formik.setFieldValue("jurisdiccion", data.value)}
       />
       <Form.Input
         name="username"
@@ -161,7 +161,7 @@ export const AddUser= (props) => {
  function initialValues() {
   return {
     regional:"",
-    juridiccion:"",
+    jurisdiccion:"",
     username:"",
     email: "",
     nombres: "",
