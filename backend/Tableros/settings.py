@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'drf_yasg',
     'corsheaders',
-    'django_filters',
     'rest_framework',
     'rest_framework.authtoken',
     'users',
@@ -102,8 +101,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'Ministerio',
-        'USER': 'postgres',
-        'PASSWORD': 'Mauro123*',
+        'USER': 'root',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '5432'
     }

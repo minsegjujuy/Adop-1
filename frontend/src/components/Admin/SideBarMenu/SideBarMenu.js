@@ -14,18 +14,18 @@ export function SideBarMenu(props) {
   return (
     <div className="side-menu-admin">
       <MenuLeft pathname={pathname} />
-      <div className="contentenido">{children}</div>
+      <div className="contenido">{children}</div>
     </div>
   );
 }
 
 function MenuLeft(props) {
   const { pathname } = props;
-  const { auth } = useAuth();
+  const { auth } =  useAuth();
   // const {buscarEmpleadoId} = useUser()
-  const [empleados, setEmpleado] = useState(null);
+  // const [empleados, setEmpleado] = useState(null);
   useEffect(() => {
-    Permiso();
+    // Permiso();
   }, []);
 
   const Permiso = async () => {
@@ -41,7 +41,6 @@ function MenuLeft(props) {
     //   setEmpleado("administrador");
     // }
   };
-console.log(auth)
 // console.log(empleados)
   return (
     <Menu fixed="left" borderless className="side" vertical>
@@ -59,7 +58,7 @@ console.log(auth)
         Pacientes
       </Menu.Item> */}
 
-      {/* {empleados.nivel_permiso ==="operador" && (
+      {auth?.usuario?.rol ==="operador" && (
         <Menu.Item
           as={Link}
           to={"/admin/farmaceutico"}
@@ -68,9 +67,9 @@ console.log(auth)
           <Icon name="hospital" className="icono-side-bar" />
           Pacientes
         </Menu.Item>
-      )} */}
+      )}
       
-      {(auth?.me?.rol==="administrador") && (
+      {(auth?.usuario?.rol==="administrador") && (
         <Menu.Item
           as={Link}
           to={"/admin/vigilancia"}
@@ -101,7 +100,7 @@ console.log(auth)
         Gestion de Contraseña
       </Menu.Item>
 
-      {auth?.me?.rol==="administrador" && (
+      {auth?.usuario?.rol==="administrador" && (
         <Menu.Item
           as={Link}
           to={"/admin/users"}

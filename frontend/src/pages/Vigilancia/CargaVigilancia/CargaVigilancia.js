@@ -14,8 +14,7 @@ export function CargaVigilancia() {
     // const [showModal, setShowModal] = useState(false);
     // const [contentModal, setContentModal] = useState(null);
     // const [refetch, setRefetch] = useState(false)
-    
-    // console.log(users)
+
     // useEffect(() => {
     //     getUsers();
     //   }, []);

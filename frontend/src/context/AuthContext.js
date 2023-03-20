@@ -3,6 +3,7 @@ import { setToken } from "../api/token";
 import { useUser } from "../hooks/useUser";
 import { getToken, removeToken } from "../api/token";
 import Swal from "sweetalert2";
+import { logoutApi } from "../api/user";
 // import { TOKEN, BASE_API } from "../utils/constants";
 
 export const AuthContext = createContext({
@@ -13,52 +14,57 @@ export const AuthContext = createContext({
 
 export function AuthProvider(props) {
   const { children } = props;
-  const [auth, setAuth] = useState(undefined);
+  const [auth, setAuth] = useState(JSON.parse(getToken()));
+  // const [auth, setAuth] = useState(null);
   // const { getMe } = useUser();
 
   useEffect(() => {
     (async () => {
-      const token = getToken();
-      console.log(auth)
-      if (token) {
-        const me ={
-          username: "Mauro",
-          email:"maurocutipa18@gmail.com",
-          nombres:"xxxxx",
-          apellidos:"lalala",
-          rol:"administrador"
-        };;
-        console.log(auth)
-        if (me.code !== "token_not_valid") {
-          setAuth({ token, me });
+      let data = auth
+      // console.log(data)
+      if(data){
+        const token = data.token;
+        if (token) {
+          const me = data.usuario;
+          // if (me.code !== "token_not_valid") {
+          //   setAuth({ token, me });
+          // } else {
+          //   removeToken();
+          //   setAuth(null);
+          // }
         } else {
-          removeToken();
           setAuth(null);
         }
-      } else {
-        setAuth(null);
       }
     })();
-  }, []);
+  }, [auth]);
 
   const logout = () => {
     if (auth) {
-      window.location.replace("http://localhost:3000/");
       removeToken();
       setAuth(null);
+      logoutApi(auth.token);
+      window.location.replace("http://localhost:3000/login");
     }
   };
 
   const login = async (response) => {
-    console.log(response)
-    setToken(response.token);
-    const me = response.usuario;
-    const token = response.token;
-    setAuth(token,me);
-    setTimeout(async function () {
-      const token = getToken();
-      if (token) {
-        const me = response.usuario;
+    const data = {
+      'token': response.token,
+      'usuario':{
+        'username' : response.usuario.username,
+        'email': response.usuario.email,
+        'nombres': response.usuario.nombres,
+        'apellidos': response.usuario.apellidos,
+        'rol':response.usuario.rol
+      }
+    }
+    setToken(JSON.stringify(data));
+    setAuth(JSON.stringify(data.token));
+    // setTimeout(async function () {
+      // const token = getToken();
+      // if (token) {
+        // const me = response.usuario;
         // if (me.code === "token_not_valid") {
         //   Swal.fire({
         //     icon: "info",
@@ -77,9 +83,11 @@ export function AuthProvider(props) {
         //     }
         //   });
         // }
-      }
-    }, 1810*1000);
-    console.log(response.token);
+      // }
+    // }, 1810*1000);
+    // console.log(response.token);
+    
+    window.location.replace("http://localhost:3000/admin/users");
   };
 
   const valueContext = {
