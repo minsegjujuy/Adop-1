@@ -14,7 +14,7 @@ const routerLogin = [
   {
     path: "/login",
     layout: AdminLayout,
-    component: LoginAdmin,
+    component: HomeAdmin,
   },
   {
     path: "/admin/users",

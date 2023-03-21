@@ -1,6 +1,6 @@
 import React from "react";
 import "./AddVigilancia.scss";
-import { Button, Form } from "semantic-ui-react";
+import { Button, Form, Icon } from "semantic-ui-react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 // import { useAuth} from "../../hooks";
@@ -132,20 +132,28 @@ export function AddVigilancia(props) {
       />
         
     </div>
+    <div class="two fields">
     <div class="field">
       <label>Cantidad de dias</label>
-      <div class="field">
       <Form.Input
        name="cantidad_dias"
        type="number"
-       placeholder="Escriba un objetivo"
+       placeholder="Escriba la cantidad"
        value={formik.values.cantidad_dias}
        onChange={formik.handleChange}
         error={formik.errors.cantidad_dias}
       />
         
+    </div>
+    <div class="field">
+      <label>Asignar turnos</label>
+      <div class="field">
+       <Button className="pencil alternate" positive onClick={()=>console.log("hola mundo")}>
+        <Icon className="pencil alternate"/>
+        </Button>
        </div>
     </div>
+  </div>
   </div>
   <h4 class="ui dividing header">Fechas de Vigilancia</h4>
   <div class="two fields">
