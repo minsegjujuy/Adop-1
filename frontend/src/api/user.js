@@ -48,15 +48,10 @@ export async function loginApi(formValue){
 
 }
 
-  export async function getMeApi(token) {
+  export async function getTokenApi(usuario) {
     try {
-      const url = `${BASE_API}/api/auth/me/`;
-      const params = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      const response = await fetch(url, params);
+      const url = `${BASE_API}/api/auth/refresh-token/?`+ new URLSearchParams({username:usuario});
+      const response = await fetch(url);
       const result = await response.json();
       return result;
     } catch (error) {

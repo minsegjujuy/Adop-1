@@ -1,19 +1,20 @@
 import { useState } from "react";
 import { useAuth } from "./useAuth";
 
-import {getMeApi,getUsersApi,addUserApi,deleteUserApi,buscarEmpleadoIdApi} from "../api/user"
+import {getTokenApi,getUsersApi,addUserApi,deleteUserApi} from "../api/user"
+import { setToken } from "../api/token";
 
 export function useUser() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [users, setUsers] = useState(null);
-    const [empleado,setEmpleado] = useState(null)
     const { auth } = useAuth();
 
-    const getMe = async (token) => {
+    const getMeToken = async (usuario) => {
         try {
-          const response = await getMeApi(token);
-          return response;
+          let response
+          await getTokenApi(usuario).then((token)=>response = token);
+          return await response;
         } catch (error) {
           throw error;
         }
@@ -22,9 +23,20 @@ export function useUser() {
         try {
           setLoading(true)
           const response = await getUsersApi(auth.token);
-          // console.log(response)
-          setLoading(false)
-          setUsers(response)
+          // console.log(response);
+          if(response.expired){
+            let token
+            await getMeToken(auth?.usuario?.username).then((value)=> token =value.token)
+            const new_token={
+              'token': await token,
+              'usuario':auth?.usuario
+            }
+            await setToken(JSON.stringify(new_token))
+            await getUsers();
+          }
+          else
+            setLoading(false)
+            setUsers(response)
         } catch (error) {
           setLoading(false)
           setError(error)
@@ -68,7 +80,7 @@ export function useUser() {
         error,
         users,
         setUsers,
-        getMe,
+        getMeToken,
         getUsers,
         addUser,
         deleteUser,

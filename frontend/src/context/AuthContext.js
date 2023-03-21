@@ -3,7 +3,7 @@ import { setToken } from "../api/token";
 import { useUser } from "../hooks/useUser";
 import { getToken, removeToken } from "../api/token";
 import Swal from "sweetalert2";
-import { logoutApi } from "../api/user";
+import { getTokenApi, logoutApi } from "../api/user";
 // import { TOKEN, BASE_API } from "../utils/constants";
 
 export const AuthContext = createContext({
@@ -23,15 +23,19 @@ export function AuthProvider(props) {
       let data = auth
       // console.log(data)
       if(data){
-        const token = data.token;
-        if (token) {
-          const me = data.usuario;
-          // if (me.code !== "token_not_valid") {
-          //   setAuth({ token, me });
-          // } else {
-          //   removeToken();
-          //   setAuth(null);
+        const usuario = data?.usuario?.username;
+        if (usuario) {
+          // console.log(usuario)
+          // let response
+          // await getTokenApi(usuario).then((token)=> response = token)
+          // const newData = {
+          //   'token': await response.token,
+          //   'usuario': JSON.stringify(data.usuario)
           // }
+          // await console.log(newData)
+          // console.log(JSON.parse(getToken()))
+          // await setToken(JSON.stringify(newData));
+
         } else {
           setAuth(null);
         }
