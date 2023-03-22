@@ -3,7 +3,7 @@ import { setToken } from "../api/token";
 import { useUser } from "../hooks/useUser";
 import { getToken, removeToken } from "../api/token";
 import Swal from "sweetalert2";
-import { getTokenApi, logoutApi } from "../api/user";
+import { logoutApi } from "../api/user";
 // import { TOKEN, BASE_API } from "../utils/constants";
 
 export const AuthContext = createContext({
@@ -15,8 +15,7 @@ export const AuthContext = createContext({
 export function AuthProvider(props) {
   const { children } = props;
   const [auth, setAuth] = useState(JSON.parse(getToken()));
-  // const [auth, setAuth] = useState(null);
-  // const { getMe } = useUser();
+  const { getMeToken } = useUser();
 
   useEffect(() => {
     (async () => {
@@ -25,23 +24,33 @@ export function AuthProvider(props) {
       if(data){
         const usuario = data?.usuario?.username;
         if (usuario) {
-          // console.log(usuario)
-          // let response
-          // await getTokenApi(usuario).then((token)=> response = token)
-          // const newData = {
-          //   'token': await response.token,
-          //   'usuario': JSON.stringify(data.usuario)
-          // }
-          // await console.log(newData)
-          // console.log(JSON.parse(getToken()))
-          // await setToken(JSON.stringify(newData));
+          
+          var response = undefined
+          await getMeToken(usuario).then(token => response = token.token);
+          if(response!==auth.token){
+
+            // TODO: Crear un modal que le pregunte al usuario si desea continuar con la sesion o directamente salir y deslogearse
+            
+            const newData = {
+              'token' : response,
+              'usuario' : data.usuario
+            }
+
+            // console.log(newData)
+
+            // let newData = {}
+            // await getTokenApi(usuario).then((token)=> newData['token'] = token.token)
+            // newData['usuario'] = JSON.stringify(data.usuario)
+
+            setToken(JSON.stringify(newData));
+          }
 
         } else {
           setAuth(null);
         }
       }
     })();
-  }, [auth]);
+  }, [auth, getMeToken]);
 
   const logout = () => {
     if (auth) {

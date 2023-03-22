@@ -8,7 +8,6 @@ from rest_framework.renderers import JSONRenderer
 class Authentication(object):
     user = None
     user_token_expired = False
-    print("errooor")
     
     def get_user(self,request):
         token = get_authorization_header(request).split()

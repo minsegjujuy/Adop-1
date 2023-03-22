@@ -52,8 +52,7 @@ export async function loginApi(formValue){
     try {
       const url = `${BASE_API}/api/auth/refresh-token/?`+ new URLSearchParams({username:usuario});
       const response = await fetch(url);
-      const result = await response.json();
-      return result;
+      return await response.json();
     } catch (error) {
       throw error;
     }

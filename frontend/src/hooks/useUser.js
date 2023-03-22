@@ -14,7 +14,7 @@ export function useUser() {
         try {
           let response
           await getTokenApi(usuario).then((token)=>response = token);
-          return await response;
+          return response;
         } catch (error) {
           throw error;
         }
@@ -28,11 +28,11 @@ export function useUser() {
             let token
             await getMeToken(auth?.usuario?.username).then((value)=> token =value.token)
             const new_token={
-              'token': await token,
+              'token': token,
               'usuario':auth?.usuario
             }
-            await setToken(JSON.stringify(new_token))
-            await getUsers();
+            setToken(JSON.stringify(new_token))
+            // await getUsers();
           }
           else
             setLoading(false)
