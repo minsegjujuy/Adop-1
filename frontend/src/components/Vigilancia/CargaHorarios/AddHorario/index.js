@@ -1,1 +1,1 @@
-export * from "./addhorario"
+export * from "./CargaHorario";

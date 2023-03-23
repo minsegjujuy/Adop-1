@@ -142,6 +142,7 @@ export const AddUser= (props) => {
         value={formik.values.rol}
         onChange={(_, data) => formik.setFieldValue("rol", data.value)}
       />
+      
       <div className="add-edit-user-form__staff">
         <Checkbox
           toggle
@@ -168,7 +169,7 @@ export const AddUser= (props) => {
     apellidos: "",
     password:"",
     rol: "",
-    is_superuser:"false"
+    is_superuser:false,
           // usuario_activo: true,
           // is_superuser: false,
         }
