@@ -1,12 +1,13 @@
 from django.db import models
 from Personal.models import Personal
+from Dependencia.models import Dependencia
 
 # Create your models here.
 class Operativo(models.Model):
     jefe_cargo = models.IntegerField()
     hora_inicio = models.TimeField(null=False)
     hora_final = models.TimeField(null=False)
-    dependenciaOP = models.CharField(max_length=100)
+    # dependencia = models.ForeignKey(Dependencia, on_delete=models.CASCADE)
     fecha = models.DateField(null=False)
     latitud = models.DecimalField(null=False,decimal_places=10,max_digits=13)
     longitud = models.DecimalField(null=False,decimal_places=10,max_digits=13)

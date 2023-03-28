@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password
 from django.contrib.sessions.models import Session
+from django.http import JsonResponse
 
 from users.models import Usuario
 from users.api.serializers import UserSerializer, TokenSerializer
@@ -26,19 +27,54 @@ from ..authentication_mixins import Authentication
 class UserViewSet(Authentication,viewsets.ModelViewSet):
     permission_classes = (IsAdminUser,IsAuthenticated)
     authentication_classes = (JWTAuthentication,TokenAuthentication)
-    queryset = Usuario.objects.all()    
+    queryset = Usuario.objects.all()  
     serializer_class = UserSerializer
+    
+    def partial_update(self, request, *args, **kwargs):
+        password = request.data['password']
 
-class UserView (APIView):
-    permission_classes = (IsAdminUser,IsAuthenticated)
-    authentication_classes = (JWTAuthentication,TokenAuthentication)
-    queryset = Usuario.objects.all()
-    serializer_class = UserSerializer
+        if password:
+            request.data['password'] = make_password(password)
+        else:
+            request.data['password'] = request.user.password
+        return super().update(request, *args, **kwargs)
+    
+    def create(self,request):
+        serializer = UserSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        
+        username = serializer.validated_data.get('username')
+        email = serializer.validated_data.get('email')
+        password = serializer.validated_data.get('password')
+        nombres = serializer.validated_data.get('nombres')
+        apellidos = serializer.validated_data.get('apellidos')
+        rol = serializer.validated_data.get('rol')
+        jurisdiccion = serializer.validated_data.get('jurisdiccion')
+        regional = serializer.validated_data.get('regional')
+        is_superuser = serializer.validated_data.get('is_superuser')
+        
+        usuario = Usuario.objects.create_user(email,username,nombres,apellidos,rol,regional,jurisdiccion,password, is_superuser)
+        
+        data = {
+            'id':usuario.id, 
+            'username':usuario.username,
+            'email':usuario.email,
+            'nombres':usuario.nombres, 
+            'apellidos':usuario.apellidos,
+            'rol':usuario.rol,
+            'jurisdiccion':usuario.jurisdiccion,
+            'regional':usuario.regional,
+            'is_superuser':usuario.is_superuser,
+            'usuario_activo':usuario.usuario_activo
+        }
+        
+        response = JsonResponse(data, safe=False)
+        
+        return response
     
 class RefreshToken(APIView):
     def get(slef,request,*args, **kwargs):
         username = request.GET.get('username')
-        print(username)
         try:
             user_token = Token.objects.get(
                 user=TokenSerializer().Meta.model.objects.filter(username=username).first()
@@ -55,8 +91,8 @@ class Login(TokenObtainPairView):
     serializer_class = TokenObtainPairSerializer
     
     def post(self,request, *args, **kwargs):
-        email = request.data.get('email', '')
-        password = request.data.get('password', '')
+        email = request.data.get('email')
+        password = request.data.get('password')
         try:
             user = authenticate(email = email,password=password)
             if user:

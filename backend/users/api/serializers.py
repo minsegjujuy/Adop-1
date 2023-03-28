@@ -26,9 +26,9 @@ class UserSerializer(serializers.ModelSerializer):
             'nombres', 
             'apellidos',
             'rol',
+            'password',
             'jurisdiccion',
             'regional',
             'is_superuser',
             'usuario_activo'
         ]
-        
