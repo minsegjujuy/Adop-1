@@ -2,7 +2,8 @@ import React from 'react'
 import {HeaderPage} from "../../../components/Admin"
 import {Button} from "semantic-ui-react"
 import {AddVigilancia} from "../../../components/Vigilancia/CargaVigilancia"
-// import {ModalBasic} from "../../components/Common/ModalBasic"
+import {CargaHorario} from "../../../components/Vigilancia/CargaHorarios"
+import {ModalBasic} from "../../../components/Common/ModalBasic"
 import { useEffect,useState } from 'react'
 import "./CargaVigilancia.scss"
 import Swal from "sweetalert2";
@@ -25,14 +26,16 @@ export function CargaVigilancia() {
       };
       const onRefetch = () => setRefetch((prev) => !prev);
 
-      const addHorarios = () => {
+      const addHorarios = (cantidad_dias) => {
         setTitleModal("Agregar Horarios");
+        console.log(cantidad_dias)
         setContentModal(
-          // <AddFormHorarios
-          //   onClose={openCloseModal}
-          //   Refetch = {onRefetch}
-          //   // addUser={addUser}
-          // />
+          <CargaHorario
+            onClose={openCloseModal}
+            Refetch = {onRefetch}
+            cantidad_dias={cantidad_dias}
+            // addUser={addUser}
+          />
         );
         openCloseModal();
       };
@@ -90,14 +93,16 @@ export function CargaVigilancia() {
                     // onDeleteUser={onDeleteUser}
       /> */}
       <div className='form-vigilancia'>
-      <AddVigilancia/>
+      <AddVigilancia
+        addHorarios = {addHorarios}
+      />
       </div>
-      {/* <ModalBasic
+      <ModalBasic
             show={showModal}
             title={titleModal}
             children={contentModal}
             onClose={openCloseModal}
-          /> */}
+          />
     </>
   )
 }

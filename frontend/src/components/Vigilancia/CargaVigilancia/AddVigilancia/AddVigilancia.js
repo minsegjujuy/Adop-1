@@ -8,7 +8,7 @@ import { toast, Flip } from "react-toastify";
 import Swal from "sweetalert2";
 
 export function AddVigilancia(props) {
-    // const {onClose,onRefetch,idUser,comando}=props;
+     const {addHorarios}=props;
     // const {auth}=useAuth();
     // const {actualizar_contra,actualizar_contra_admin} =useContrasena();
     const options = [
@@ -148,7 +148,7 @@ export function AddVigilancia(props) {
     <div class="field">
       <label>Asignar turnos</label>
       <div class="field">
-       <Button className="pencil alternate" positive onClick={()=>console.log("hola mundo")}>
+       <Button className="pencil alternate" positive onClick={()=>addHorarios(formik.values.cantidad_dias)}>
         <Icon className="pencil alternate"/>
         </Button>
        </div>
