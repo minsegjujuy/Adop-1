@@ -1,5 +1,4 @@
 from django.contrib.auth.models import BaseUserManager
-from django.contrib.auth.hashers import make_password
 import users
 
 class UsuarioManager(BaseUserManager):
@@ -45,11 +44,15 @@ class UsuarioManager(BaseUserManager):
         email,
         rol=1,
         password=None):
-        
+        if rol == 1:
+            print(rol)
+            user_rol =  users.models.Rol.objects.get(id=rol)
+        else:
+            user_rol = rol
         usuario = self.create_user(
             email = email,
             username = username,
-            rol = users.models.Rol.objects.get(id=rol),
+            rol = user_rol,
             password = password,
         )
         
