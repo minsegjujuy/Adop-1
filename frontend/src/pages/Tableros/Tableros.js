@@ -1,14 +1,11 @@
 import React from 'react'
-import {HeaderPage} from "../../../components/Admin"
+import {HeaderPage} from "../../components/Admin/"
 import {Button} from "semantic-ui-react"
-import {AddVigilancia} from "../../../components/Vigilancia/CargaVigilancia"
-import {CargaHorario} from "../../../components/Vigilancia/CargaHorarios"
-import {ModalBasic} from "../../../components/Common/ModalBasic"
 import { useEffect,useState } from 'react'
-import "./CargaVigilancia.scss"
+import "./Tableros.scss"
 import Swal from "sweetalert2";
 
-export function CargaVigilancia() {
+export function Tableros() {
   console.log("hola mundo")
     // const {getUsers,loading,users,setUsers,deleteUser,getempleadoId,auth} = useUser()
     const [titleModal, setTitleModal] = useState(null);
@@ -25,22 +22,6 @@ export function CargaVigilancia() {
         setShowModal((prev) => !prev);
       };
       const onRefetch = () => setRefetch((prev) => !prev);
-
-      const addHorarios = (cantidad_dias,setformHorario) => {
-        setTitleModal("Agregar Horarios");
-        console.log(cantidad_dias)
-        setContentModal(
-          <CargaHorario
-            onClose={openCloseModal}
-            Refetch = {onRefetch}
-            cantidad_dias={cantidad_dias}
-            setformHorario={setformHorario}
-            // addUser={addUser}
-          />
-        );
-        openCloseModal();
-      };
-      
     //   const onDeleteUser = async (data) => {
     //     try {
     //       Swal.fire({
@@ -79,7 +60,7 @@ export function CargaVigilancia() {
   return (
     <>
           
-          <HeaderPage title="CARGA DE VIGILANCIA"/>
+          <HeaderPage title="TABLEROS"/>
           <div className='header-page-usuarios'>
           
               {/* <div className='agregar'>
@@ -89,21 +70,23 @@ export function CargaVigilancia() {
               </div>
                */}
          </div>
+
+         
       {/* <TableVigilancia 
                     // users={users}
                     // onDeleteUser={onDeleteUser}
       /> */}
-      <div className='form-vigilancia'>
+      {/* <div className='form-vigilancia'>
       <AddVigilancia
         addHorarios = {addHorarios}
       />
-      </div>
-      <ModalBasic
+      </div> */}
+      {/* <ModalBasic
             show={showModal}
             title={titleModal}
             children={contentModal}
             onClose={openCloseModal}
-          />
+          /> */}
     </>
   )
 }

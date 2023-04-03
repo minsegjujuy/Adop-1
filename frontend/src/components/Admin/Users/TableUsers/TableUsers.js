@@ -5,7 +5,7 @@ import "./TableUsers.scss";
 
 
 export function TableUsers(props) {
-  const { users,onDeleteUser} = props;  
+  const {users,onDeleteUser} = props;  
 
   console.log(users)
   return (

@@ -31,7 +31,7 @@ export function LoginAdmin() {
             src="img/LOGO2.png"
             height="140px"
             width="510px"
-            alt="SISTEMA DE SANIDAD"
+            alt="SISTEMA DE VIGILANCIA"
           />
            </h1>
          </div>

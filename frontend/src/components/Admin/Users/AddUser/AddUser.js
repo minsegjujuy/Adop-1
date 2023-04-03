@@ -47,6 +47,12 @@ export const AddUser= (props) => {
     //   formValue.apellidos = formValue.apellidos.toUpperCase();
       try {
         console.log(formValue)
+        if(formValue.rol==="administrador"){
+          formValue.is_superuser = true
+        }else{
+          formValue.is_superuser=false
+        }
+        console.log(formValue)
         Swal.fire({
           icon: "info",
           title: "Creando Empleado",
@@ -142,7 +148,7 @@ export const AddUser= (props) => {
         value={formik.values.rol}
         onChange={(_, data) => formik.setFieldValue("rol", data.value)}
       />
-      
+      {/* {formik.values.rol==="administrador" &&
       <div className="add-edit-user-form__staff">
         <Checkbox
           toggle
@@ -151,9 +157,9 @@ export const AddUser= (props) => {
             formik.setFieldValue("is_superuser", data.checked);
           }}
         />{" "}
-        Usuario Staff
+        Usuario Staff (Debe tildar la opcion staff)
         </div>
-
+      } */}
       <Button type="submit" primary fluid content={"Crear Usuario"} />
     </Form>
   );

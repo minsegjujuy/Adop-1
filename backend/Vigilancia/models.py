@@ -14,7 +14,6 @@ class Vigilancia(models.Model):
     destino = models.CharField(null=False,max_length=50)
     longitud = models.DecimalField(decimal_places=10,max_digits=13)
     latitud = models.DecimalField(decimal_places=10,max_digits=13)
-
 class DiasVigilancia(models.Model):
     fk_vigilancia = models.ForeignKey('Vigilancia', on_delete=models.CASCADE)
     fk_personal = models.ForeignKey(Personal, on_delete=models.CASCADE)

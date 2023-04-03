@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "./AddVigilancia.scss";
-import { Button, Form, Icon } from "semantic-ui-react";
+import { Button, Form, Icon,Checkbox } from "semantic-ui-react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 // import { useAuth} from "../../hooks";
@@ -9,19 +9,45 @@ import Swal from "sweetalert2";
 
 export function AddVigilancia(props) {
      const {addHorarios}=props;
+     const [formHorario,setformHorario] = useState(null)
     // const {auth}=useAuth();
     // const {actualizar_contra,actualizar_contra_admin} =useContrasena();
-    const options = [
-      { key: "operador", text: "Operador", value: "operador" },
-      { key: "Administrador", text: "Administrador", value: "administrador" },
-      { key: "General", text: "General", value: "general" },]
+    const motivos = [
+      { key: "1", text: "Violencia de genero", value: "Violencia de genero" },
+      { key: "2", text: "Edificio Publico", value: "Edificio Publico" },
+      { key: "3", text: "Funcionarios Publicos", value: "Funcionarios Publicos" },
+      { key: "4", text: "Proteccion de Personas", value: "Proteccion de Personas" },]
+    
+      const servicios = [
+        { key: "1", text: "Vigilancia de externa", value: "Vigilancia externa" },
+        { key: "2", text: "Vigilancia interna", value: "Vigilancia interna" },
+        { key: "3", text: "Custodia de Bienes", value: "Custodia de Bienes" },
+        { key: "4", text: "Custodia de Detenidos", value: "Custodia de Detenidos" },]
 
+        const recursos = [
+          { key: "1", text: "Auto", value: "Auto" },
+          { key: "2", text: "Camioneta", value: "Camioneta" },
+          { key: "3", text: "Moto", value: "Moto" },
+          { key: "4", text: "Bicicleta", value: "Bicicleta" },
+          { key: "5", text: "Equino", value: "Equino" },
+          { key: "6", text: "Carpa Azul", value: "Carpa Azul" },
+          { key: "7", text: "Canes", value: "Canes" },
+          { key: "8", text: "Otro", value: "Otro" }]
+  
+
+
+      // const options = options3?.map((tipo, index) => ({
+      //   value: tipo.value,
+      //   key: `${tipo} ${index}`,
+      //   text: tipo.text,
+      // }));
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: Yup.object(validationSchema()),
     onSubmit: async (formValue) => {
       try {
-       
+         console.log(formHorario)
+         console.log(formValue)
     //    if(formValue.aux===formValue.nuevacontraseña){
     //     if(comando==="contra"){
     //       const form2 = {
@@ -99,7 +125,7 @@ export function AddVigilancia(props) {
       <div class="field">
       <Form.Select
         name="motivo"
-        options={options}
+        options={motivos}
         placeholder="Seleccione el motivo"
         value={formik.values.motivo}
         onChange={(_, data) => formik.setFieldValue("motivo", data.value)}
@@ -113,7 +139,7 @@ export function AddVigilancia(props) {
     <div class="fields">
     <Form.Select
         name="tipo_servicio"
-        options={options}
+        options={servicios}
         placeholder="Seleccione el tipo de servicio "
         value={formik.values.tipo_servicio}
         onChange={(_, data) => formik.setFieldValue("tipo_servicio", data.value)}
@@ -133,7 +159,7 @@ export function AddVigilancia(props) {
         
     </div>
     <div class="two fields">
-    <div class="field">
+       <div class="field">
       <label>Cantidad de dias</label>
       <Form.Input
        name="cantidad_dias"
@@ -148,7 +174,7 @@ export function AddVigilancia(props) {
     <div class="field">
       <label>Asignar turnos</label>
       <div class="field">
-       <Button className="pencil alternate" positive onClick={()=>addHorarios(formik.values.cantidad_dias)}>
+       <Button className="pencil alternate" positive onClick={()=>addHorarios(formik.values.cantidad_dias,setformHorario)}>
         <Icon className="pencil alternate"/>
         </Button>
        </div>
@@ -168,9 +194,11 @@ export function AddVigilancia(props) {
       />
         
     </div>
+    <div class="two fields">
+    {formik.values.fecha_indefinida===false &&
     <div class="field">
+      
       <label>Fecha fin de vigilancia</label>
-      <div class="field">
       <Form.Input
        name="fecha_fin"
        type="date"
@@ -178,9 +206,25 @@ export function AddVigilancia(props) {
        onChange={formik.handleChange}
         error={formik.errors.fecha_fin}
       />
-        
+
+    </div>
+}
+    <div class="field">
+      <label>Fecha de fin de vigilancia indefinida</label>
+      <div class="field">
+      <div className="add-edit-user-form__staff">
+        <Checkbox
+          toggle
+          checked={formik.values.fecha_indefinida}
+          onChange={(_, data) => {
+            formik.setFieldValue("fecha_indefinida", data.checked);
+          }}
+        />{" "}
+        Indefinida
+        </div>
        </div>
     </div>
+  </div>
   </div>
   <div class="two fields">
     <div class="field">
@@ -229,7 +273,7 @@ export function AddVigilancia(props) {
       <div class="field">
       <Form.Select
         name="recursos"
-        options={options}
+        options={recursos}
         placeholder="Seleccione los recursos "
         value={formik.values.recursos}
         onChange={(_, data) => formik.setFieldValue("recursos", data.value)}
@@ -266,25 +310,35 @@ export function AddVigilancia(props) {
        </div>
     </div>
   </div>
-  
-  <Button type="submit" primary fluid content={"Crear Vigilancia"} />
+  <div className="boton_crear_vigilancia">
+  <Button className="positive button" type="submit" content={"Crear Vigilancia"}  />
+  </div>
 </Form>
   );
 }
 
-function initialValues(id,comando) {
+function initialValues() {
   return {
-    nuevacontraseña: "",
-    aux:"",
-    password:"",
-    id:"",
-
+    juridiccion: "",
+    motivo:"",
+    tipo_servicio:"",
+    objetivo:"",
+    cantidad_dias:"",
+    fecha_inicio:"01/01/2010",
+    fecha_fin: null,
+    fecha_indefinida:false,
+    hora_inicio:"",
+    hora_fin:"",
+    personal_afectado:"",
+    recursos:"",
+    latitud:"",
+    longitud:"",
   };
 }
 
 function validationSchema() {
   return {
-    password: Yup.string().required(true),
-    nuevacontraseña: Yup.string().required(true),
+    // password: Yup.string().required(true),
+    // nuevacontraseña: Yup.string().required(true),
   };
 }
