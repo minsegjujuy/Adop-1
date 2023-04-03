@@ -1,5 +1,6 @@
 from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.hashers import make_password
+import users
 
 class UsuarioManager(BaseUserManager):
     def create_user(
@@ -32,8 +33,6 @@ class UsuarioManager(BaseUserManager):
         #     usuario.jurisdiccion = regional
         
         # print(password)
-        password = make_password(password)
-        # print(password)
         usuario.set_password(password)
         
         usuario.save()
@@ -44,13 +43,13 @@ class UsuarioManager(BaseUserManager):
         self, 
         username, 
         email,
-        rol=0,
+        rol=1,
         password=None):
         
         usuario = self.create_user(
             email = email,
             username = username,
-            rol = rol,
+            rol = users.models.Rol.objects.get(id=rol),
             password = password,
         )
         

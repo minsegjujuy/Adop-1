@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from ..models import MotivoVigilancia,Vigilancia, DiasVigilancia
+from ..models import Motivo,Vigilancia, DiasVigilancia
 
 class MotivoVigilanciaSerializer(serializers.ModelSerializer):
     class Meta:
-        model = MotivoVigilancia
+        model = Motivo
         fields = (
             'id',
             'motivo'

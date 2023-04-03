@@ -1,4 +1,4 @@
-from ..models import MotivoVigilancia,Vigilancia, DiasVigilancia
+from ..models import Motivo,Vigilancia, DiasVigilancia
 from Dependencia.models import Dependencia, UnidadRegional
 from Servicio.models import Servicio
 
@@ -11,10 +11,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-class MotivoVigilanciaViewSet(viewsets.ModelViewSet):
+class MotivoViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     authentication_classes = (JWTAuthentication,TokenAuthentication)
-    queryset = MotivoVigilancia.objects.all()    
+    queryset = Motivo.objects.all()    
     serializer_class = MotivoVigilanciaSerializer
 
 class VigilanciaViewSet(viewsets.ModelViewSet):

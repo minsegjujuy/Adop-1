@@ -3,12 +3,12 @@ from Servicio.models import Servicio
 from Personal.models import Personal
 from Dependencia.models import Dependencia
 
-class MotivoVigilancia(models.Model):
+class Motivo(models.Model):
     motivo = models.CharField(max_length=22)
 
 class Vigilancia(models.Model):
     fk_jurisdiccion = models.ForeignKey(Dependencia, on_delete=models.CASCADE)
-    fk_motivo = models.ForeignKey('MotivoVigilancia', on_delete=models.CASCADE, null=True)
+    fk_motivo = models.ForeignKey('Motivo', on_delete=models.CASCADE, null=True)
     fk_servicio = models.ForeignKey(Servicio, on_delete=models.CASCADE, null=True)
     regional = models.CharField(max_length=50, default='')
     objetivo = models.TextField()

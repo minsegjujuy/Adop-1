@@ -1,4 +1,4 @@
-from ...models import MotivoVigilancia
+from ...models import Motivo
 import json
 
 def seed_data():
@@ -12,7 +12,7 @@ def seed_data():
         fields = obj['fields']
 
         if model == 'app.Motivo':
-            MotivoVigilancia.objects.create(
+            Motivo.objects.create(
                 id = obj['pk'],
                 motivo = fields['motivo']
             )

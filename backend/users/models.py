@@ -13,8 +13,8 @@ class Usuario(AbstractBaseUser,PermissionsMixin):
     nombres = models.CharField("Nombres", max_length=200,blank=True,null=True)
     apellidos = models.CharField("Apellidos", max_length=200,blank=True,null=True)
     rol = models.ForeignKey('Rol', null=False, on_delete=models.CASCADE)
-    jurisdiccion = models.ForeignKey(Dependencia,name="jurisdiccion", null=True, on_delete=models.CASCADE)
-    unidad_regional = models.ForeignKey(UnidadRegional,name="unidad_regional", null=True, on_delete=models.CASCADE)
+    jurisdiccion = models.ForeignKey(Dependencia,name="jurisdiccion", null=True, default=None, on_delete=models.CASCADE)
+    unidad_regional = models.ForeignKey(UnidadRegional,name="unidad_regional", null=True, default=None, on_delete=models.CASCADE)
     usuario_activo = models.BooleanField(default=True)
     
     
