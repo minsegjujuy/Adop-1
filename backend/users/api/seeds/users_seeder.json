@@ -1,0 +1,47 @@
+[
+    {
+        "model": "app.Rol",
+        "pk": 1,
+        "fields": {
+            "rol": "ADMINISTRADOR"
+        }
+    },
+    {
+        "model": "app.Rol",
+        "pk": 2,
+        "fields": {
+            "rol": "GENERAL"
+        }
+    },
+    {
+        "model": "app.Rol",
+        "pk": 3,
+        "fields": {
+            "rol": "OPERADOR"
+        }
+    },
+    {
+        "model": "app.Usuario",
+        "pk": 1,
+        "fields": {
+            "username": "root",
+            "email": "root@root.com",
+            "password": "root",
+            "rol": 1
+        }
+    },
+    {
+        "model": "app.Usuario",
+        "pk": 2,
+        "fields": {
+            "username": "samuel",
+            "email": "samuel@example.com",
+            "nombres": "samuel elias",
+            "apellidos": "paredes",
+            "rol": 2,
+            "unidad_regional": 1,
+            "jurisdiccion" : 4,
+            "password": "root"
+        }
+    }
+]

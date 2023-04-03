@@ -1,15 +1,20 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin
 from .manager import UsuarioManager
+from Dependencia.models import Dependencia, UnidadRegional
+
+class Rol(models.Model):
+    rol = models.CharField(max_length=13, unique=True)
 
 class Usuario(AbstractBaseUser,PermissionsMixin):
+    id = models.AutoField(primary_key=True)
     username = models.CharField('Nombre de Usuario', max_length=100, unique=True)
     email = models.EmailField('Correo Electronico', max_length=254, unique=True)
     nombres = models.CharField("Nombres", max_length=200,blank=True,null=True)
     apellidos = models.CharField("Apellidos", max_length=200,blank=True,null=True)
-    rol = models.CharField("Rol", max_length=50, null=True, blank=True)
-    jurisdiccion = models.CharField("Jurisdiccion", max_length=100, blank=True, null=True)
-    regional = models.IntegerField("Regional", null=True, blank=True)
+    rol = models.ForeignKey('Rol', null=False, on_delete=models.CASCADE)
+    jurisdiccion = models.ForeignKey(Dependencia,name="jurisdiccion", null=True, on_delete=models.CASCADE)
+    unidad_regional = models.ForeignKey(UnidadRegional,name="unidad_regional", null=True, on_delete=models.CASCADE)
     usuario_activo = models.BooleanField(default=True)
     
     
