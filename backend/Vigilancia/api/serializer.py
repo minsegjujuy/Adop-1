@@ -6,8 +6,11 @@ class VigilanciaSerializer(serializers.ModelSerializer):
         model = Vigilancia
         fields = (
             'id',
+            'regional',
+            'motivo',
             'fk_tipo_servicio',
             'objetivo',
+            'cant_dias',
             'fecha_inicio',
             'fecha_fin',
             'destino',
@@ -21,8 +24,10 @@ class DiasVigilanciaSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'fk_vigilancia',
+            'fk_personal'
             'dia',
             'hora_inicio',
             'hora_fin',
+            'turno',
             'dia_completo'
         )

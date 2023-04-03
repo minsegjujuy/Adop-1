@@ -1,10 +1,11 @@
 from django.db import models
 from Servicio.models import TipoServicio
 from Personal.models import Personal
+from Dependencia.models import Dependencia
 
 class Vigilancia(models.Model):
     regional = models.CharField(max_length=50, default='')
-    jurisdiccion = models.CharField(max_length=50, default='')
+    jurisdiccion = models.ForeignKey(Dependencia, on_delete=models.CASCADE)
     motivo = models.CharField(max_length=50,default='')
     fk_tipo_servicio = models.ForeignKey(TipoServicio, on_delete=models.CASCADE)
     objetivo = models.TextField()

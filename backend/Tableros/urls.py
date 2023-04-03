@@ -23,16 +23,24 @@ urlpatterns = [
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     
-    
+    # User and Auth
     path('api/',include('users.api.routes-auth')),
     path('api/',include('users.api.router')),
-    path('api/',include('Dependencia.api.router')),
-    # path('api/',include('Ley.api.router')),
-    # path('api/',include('Operativos.api.router')),
+    
+    # Persona and Personal
     path('api/',include('Persona.api.router')),
     path('api/',include('Personal.api.router')),
+    
+    # Dependencia
+    path('api/',include('Dependencia.api.router')),
+    
+    # Vigilancia and Servicios
+    path('api/',include('Vigilancia.api.router')),
+    path('api/',include('Servicio.api.router')),
+    
+        
     # path('api/',include('Procedimiento.api.router')),
     # path('api/',include('Secuestro.api.router')),
-    path('api/',include('Servicio.api.router')),
-    path('api/',include('Vigilancia.api.router')),
+    # path('api/',include('Operativos.api.router')),
+    # path('api/',include('Ley.api.router')),
 ]

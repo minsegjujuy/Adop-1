@@ -1,0 +1,1545 @@
+[    
+    {
+        "model": "app.UnidadRegional",
+        "pk": "1",
+        "fields": {
+            "unidad_regional": "Unidad Regional 1"
+        }
+    },
+    {
+        "model": "app.UnidadRegional",
+        "pk": "2",
+        "fields": {
+            "unidad_regional": "Unidad Regional 2"
+        }
+    },
+    {
+        "model": "app.UnidadRegional",
+        "pk": "3",
+        "fields": {
+            "unidad_regional": "Unidad Regional 3"
+        }
+    },
+    {
+        "model": "app.UnidadRegional",
+        "pk": "4",
+        "fields": {
+            "unidad_regional": "Unidad Regional 4"
+        }
+    },
+    {
+        "model": "app.UnidadRegional",
+        "pk": "5",
+        "fields": {
+            "unidad_regional": "Unidad Regional 5"
+        }
+    },
+    {
+        "model": "app.UnidadRegional",
+        "pk": "6",
+        "fields": {
+            "unidad_regional": "Unidad Regional 6"
+        }
+    },
+    {
+        "model": "app.UnidadRegional",
+        "pk": "7",
+        "fields": {
+            "unidad_regional": "Unidad Regional 7"
+        }
+    },
+    {
+        "model": "app.UnidadRegional",
+        "pk": "8",
+        "fields": {
+            "unidad_regional": "Unidad Regional 8"
+        }
+    },
+
+
+    {
+        "model": "app.Dependencia",
+        "pk": "1",
+        "fields": {
+            "fk_unidad_regional": 1,
+            "fk_inspectora": null,
+            "jurisdiccion": "Central de Policia de la Provincia de Jujuy"
+        }
+    },
+    {
+        "model": "app.Dependencia",
+        "pk": "2",
+        "fields": {
+            "fk_unidad_regional": 1,
+            "fk_inspectora": null,
+            "jurisdiccion": "Centro de Violencia Fliar. y de Genero N° 2"
+        }
+    },
+    { 
+        "model": "app.Dependencia",
+        "pk": "3",
+        "fields": {
+            "fk_unidad_regional": 1,
+            "fk_inspectora": null,
+            "jurisdiccion": "Dir. Gral. de Investigaciones"
+        }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "4",
+            "fields": {
+                "fk_unidad_regional": 1,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dir. Gral. de Narcotráfico"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "5",
+            "fields": {
+                "fk_unidad_regional": 1,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Alto La Viña"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "6",
+            "fields": {
+                "fk_unidad_regional": 1,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Lozano"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "7",
+            "fields": {
+                "fk_unidad_regional": 1,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 1° Centro"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "8",
+            "fields": {
+                "fk_unidad_regional": 1,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 2° Gorriti"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "9",
+            "fields": {
+                "fk_unidad_regional": 1,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 3° Chijra"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "10",
+            "fields": {
+                "fk_unidad_regional": 1,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 30° Mariano Moreno"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "11",
+            "fields": {
+                "fk_unidad_regional": 1,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 31° Cnel. Arias"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "12",
+            "fields": {
+                "fk_unidad_regional": 1,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 32° Malvinas Arg."
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "13",
+            "fields": {
+                "fk_unidad_regional": 1,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 34° V. J. De Reyes"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "14",
+            "fields": {
+                "fk_unidad_regional": 1,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 4° Cuyaya"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "15",
+            "fields": {
+                "fk_unidad_regional": 1,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 44° Villa San Martín"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "16",
+            "fields": {
+                "fk_unidad_regional": 1,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 49° Los Huaicos"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "17",
+            "fields": {
+                "fk_unidad_regional": 1,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 5° Ciudad De Nieva "
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "18",
+            "fields": {
+                "fk_unidad_regional": 1,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 50° Campo Verde"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "19",
+            "fields": {
+                "fk_unidad_regional": 1,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 51° 18 De Noviembre"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "20",
+            "fields": {
+                "fk_unidad_regional": 1,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 54° Yala"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "21",
+            "fields": {
+                "fk_unidad_regional": 1,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 55° Los Perales"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "22",
+            "fields": {
+                "fk_unidad_regional": 1,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 59° Crio. Gral. Yapura"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "23",
+            "fields": {
+                "fk_unidad_regional": 1,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 6° Almirante Brown"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "24",
+            "fields": {
+                "fk_unidad_regional": 1,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 61° El Chingo"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "25",
+            "fields": {
+                "fk_unidad_regional": 1,
+                "fk_inspectora": null,
+                "jurisdiccion": "Sub Cría. San Francisco De Álava"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "26",
+            "fields": {
+                "fk_unidad_regional": 1,
+                "fk_inspectora": null,
+                "jurisdiccion": "Unidad Regional 1"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "27",
+            "fields": {
+                "fk_unidad_regional": 2,
+                "fk_inspectora": null,
+                "jurisdiccion": "Bomberos UR-2"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "28",
+            "fields": {
+                "fk_unidad_regional": 2,
+                "fk_inspectora": null,
+                "jurisdiccion": "Brigada De Investigaciones UR 2"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "29",
+            "fields": {
+                "fk_unidad_regional": 2,
+                "fk_inspectora": null,
+                "jurisdiccion": "Brigada De Narcotráfico UR-2"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "30",
+            "fields": {
+                "fk_unidad_regional": 2,
+                "fk_inspectora": null,
+                "jurisdiccion": "Caballería UR-2"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "31",
+            "fields": {
+                "fk_unidad_regional": 2,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. El Fuerte"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "32",
+            "fields": {
+                "fk_unidad_regional": 2,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Lote Barro Negro"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "33",
+            "fields": {
+                "fk_unidad_regional": 2,
+                "fk_inspectora": null,
+                "jurisdiccion": "Infantería UR-2"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "34",
+            "fields": {
+                "fk_unidad_regional": 2,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 10° El Piquete"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "35",
+            "fields": {
+                "fk_unidad_regional": 2,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 25° La Esperanza"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "36",
+            "fields": {
+                "fk_unidad_regional": 2,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 26° Eliseo Mones"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "37",
+            "fields": {
+                "fk_unidad_regional": 2,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 27° La Mendieta"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "38",
+            "fields": {
+                "fk_unidad_regional": 2,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 28° El Arenal"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "39",
+            "fields": {
+                "fk_unidad_regional": 2,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 35° San José"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "40",
+            "fields": {
+                "fk_unidad_regional": 2,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 36° Palma Sola"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "41",
+            "fields": {
+                "fk_unidad_regional": 2,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 48° Patricios."
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "42",
+            "fields": {
+                "fk_unidad_regional": 2,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 52° La Merced"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "43",
+            "fields": {
+                "fk_unidad_regional": 2,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 53° Rodeíto"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "44",
+            "fields": {
+                "fk_unidad_regional": 2,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 9° San Pedro"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "45",
+            "fields": {
+                "fk_unidad_regional": 2,
+                "fk_inspectora": null,
+                "jurisdiccion": "Unidad Regional 2"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "46",
+            "fields": {
+                "fk_unidad_regional": 3,
+                "fk_inspectora": null,
+                "jurisdiccion": "Bomberos UR-3"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "47",
+            "fields": {
+                "fk_unidad_regional": 3,
+                "fk_inspectora": null,
+                "jurisdiccion": "Brigada de Investigaciones UR-3"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "48",
+            "fields": {
+                "fk_unidad_regional": 3,
+                "fk_inspectora": null,
+                "jurisdiccion": "Brigada de Narcotráfico UR-3"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "49",
+            "fields": {
+                "fk_unidad_regional": 3,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Cátua"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "50",
+            "fields": {
+                "fk_unidad_regional": 3,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. El Moreno"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "51",
+            "fields": {
+                "fk_unidad_regional": 3,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Olaroz Chico"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "52",
+            "fields": {
+                "fk_unidad_regional": 3,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Puesto Sey"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "53",
+            "fields": {
+                "fk_unidad_regional": 3,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Sumay Pacha"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "54",
+            "fields": {
+                "fk_unidad_regional": 3,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Tres Cruces"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "55",
+            "fields": {
+                "fk_unidad_regional": 3,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Tumbaya"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "56",
+            "fields": {
+                "fk_unidad_regional": 3,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Uquía"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "57",
+            "fields": {
+                "fk_unidad_regional": 3,
+                "fk_inspectora": null,
+                "jurisdiccion": "Infantería UR-3"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "58",
+            "fields": {
+                "fk_unidad_regional": 3,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 12° Volcán"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "59",
+            "fields": {
+                "fk_unidad_regional": 3,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 14° Tilcara"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "60",
+            "fields": {
+                "fk_unidad_regional": 3,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 15° Humahuaca"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "61",
+            "fields": {
+                "fk_unidad_regional": 3,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 20° Susques"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "62",
+            "fields": {
+                "fk_unidad_regional": 3,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 37° Maimará"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "63",
+            "fields": {
+                "fk_unidad_regional": 3,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 38° El Aguilar"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "64",
+            "fields": {
+                "fk_unidad_regional": 3,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 57° Purmamarca"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "65",
+            "fields": {
+                "fk_unidad_regional": 3,
+                "fk_inspectora": null,
+                "jurisdiccion": "Sub Cría. Huacalera"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "66",
+            "fields": {
+                "fk_unidad_regional": 3,
+                "fk_inspectora": null,
+                "jurisdiccion": "Unidad Regional 3"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "67",
+            "fields": {
+                "fk_unidad_regional": 4,
+                "fk_inspectora": null,
+                "jurisdiccion": "Bomberos UR-4"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "68",
+            "fields": {
+                "fk_unidad_regional": 4,
+                "fk_inspectora": null,
+                "jurisdiccion": "Brigada de Investigaciones UR-4"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "69",
+            "fields": {
+                "fk_unidad_regional": 4,
+                "fk_inspectora": null,
+                "jurisdiccion": "Brigada de Narcotrafico UR-4"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "70",
+            "fields": {
+                "fk_unidad_regional": 4,
+                "fk_inspectora": null,
+                "jurisdiccion": "Caballería UR-4"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "71",
+            "fields": {
+                "fk_unidad_regional": 4,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Caimancito"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "72",
+            "fields": {
+                "fk_unidad_regional": 4,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. El Bananal"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "73",
+            "fields": {
+                "fk_unidad_regional": 4,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. El Chalican"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "74",
+            "fields": {
+                "fk_unidad_regional": 4,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Santa Ana"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "75",
+            "fields": {
+                "fk_unidad_regional": 4,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Terminal"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "76",
+            "fields": {
+                "fk_unidad_regional": 4,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Valle Colorado"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "77",
+            "fields": {
+                "fk_unidad_regional": 4,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Vinalito"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "78",
+            "fields": {
+                "fk_unidad_regional": 4,
+                "fk_inspectora": null,
+                "jurisdiccion": "Infanteria UR-4"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "79",
+            "fields": {
+                "fk_unidad_regional": 4,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 11° Libertador"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "80",
+            "fields": {
+                "fk_unidad_regional": 4,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 13° Valle Grande"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "81",
+            "fields": {
+                "fk_unidad_regional": 4,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 22° Yuto"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "82",
+            "fields": {
+                "fk_unidad_regional": 4,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 24° Ledesma"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "83",
+            "fields": {
+                "fk_unidad_regional": 4,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 39° H.S.Guerra"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "84",
+            "fields": {
+                "fk_unidad_regional": 4,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 40° Fraile Pintado"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "85",
+            "fields": {
+                "fk_unidad_regional": 4,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 41° Calilegua"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "86",
+            "fields": {
+                "fk_unidad_regional": 4,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 42° Caimancito"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "87",
+            "fields": {
+                "fk_unidad_regional": 4,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 43° El Talar"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "88",
+            "fields": {
+                "fk_unidad_regional": 4,
+                "fk_inspectora": null,
+                "jurisdiccion": "Unidad Regional 4"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "89",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Bomberos UR-5"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "90",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Brigada De Investigaciónes UR-5"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "91",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Brigada De Narcotráfico UR-5" 
+            }
+    },
+    {
+        "model": "app.Dependencia",
+            "pk": "92",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Centro de Violencia Fliar. y de Genero N° 3"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "93",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Abra Laite"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "94",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Barrios"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "95",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Cangrejillos"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "96",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Casabindo"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "97",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Casira"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "98",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Cienega De Paicone"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "99",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Coranzulí"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "100",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. El Angosto"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "101",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. La Intermedia"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "102",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Lagunas Del Farallón"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "103",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Liviara"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "104",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Llullochayoc"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "105",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Mina Pirquitas"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "106",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Oratorio"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "107",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Orosmayo"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "108",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Paicone"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "109",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Puerto del Márquez"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "110",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Pumahuasi"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "111",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. San Juan de Misa Rumi"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "112",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Tusaquillas"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "113",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Infantería UR-5"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "114",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 16° Abra Pampa"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "115",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 17 La Quiaca"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "116",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 18° Santa Catalina"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "117",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 19° Rinconada"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "118",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Sub Cria. Cieneguillas"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "119",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Sub Cria. Yavi"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "120",
+            "fields": {
+                "fk_unidad_regional": 5,
+                "fk_inspectora": null,
+                "jurisdiccion": "Unidad Regional 5"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "121",
+            "fields": {
+                "fk_unidad_regional": 6,
+                "fk_inspectora": null,
+                "jurisdiccion": "Bomberos UR-6"
+            }
+    },
+    {
+        "model": "app.Dependencia",
+            "pk": "122",
+            "fields": {
+                "fk_unidad_regional": 6,
+                "fk_inspectora": null,
+                "jurisdiccion":  "Brigada de Investigaciones - El Carmen"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "123",
+            "fields": {
+                "fk_unidad_regional": 6,
+                "fk_inspectora": null,
+                "jurisdiccion": "Brigada de Investigaciones - Perico"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "124",
+            "fields": {
+                "fk_unidad_regional": 6,
+                "fk_inspectora": null,
+                "jurisdiccion": "Brigada De Narcotráfico UR-6"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "125",
+            "fields": {
+                "fk_unidad_regional": 6,
+                "fk_inspectora": null,
+                "jurisdiccion": "Caballería UR-6"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "126",
+            "fields": {
+                "fk_unidad_regional": 6,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. El Chamical"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "127",
+            "fields": {
+                "fk_unidad_regional": 6,
+                "fk_inspectora": null,
+                "jurisdiccion": "Infantería UR-6"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "128",
+            "fields": {
+                "fk_unidad_regional": 6,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 21° Perico"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "129",
+            "fields": {
+                "fk_unidad_regional": 6,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 29° Monterrico"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "130",
+            "fields": {
+                "fk_unidad_regional": 6,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 45° Pampa Blanca"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "131",
+            "fields": {
+                "fk_unidad_regional": 6,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 58° San Roque"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "132",
+            "fields": {
+                "fk_unidad_regional": 6,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 60° La Paz"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "133",
+            "fields": {
+                "fk_unidad_regional": 6,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 64° Puesto Viejo"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "134",
+            "fields": {
+                "fk_unidad_regional": 6,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 7° San Antonio"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "135",
+            "fields": {
+                "fk_unidad_regional": 6,
+                "fk_inspectora": null,
+                "jurisdiccion": "Secc. 8° El Carmen"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "136",
+            "fields": {
+                "fk_unidad_regional": 6,
+                "fk_inspectora": null,
+                "jurisdiccion": "Sub Cria. Agua Calientes"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "137",
+            "fields": {
+                "fk_unidad_regional": 6,
+                "fk_inspectora": null,
+                "jurisdiccion": "Sub Cria. La Ovejería"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "138",
+            "fields": {
+                "fk_unidad_regional": 6,
+                "fk_inspectora": null,
+                "jurisdiccion": "Sub Cria. La Posta"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "139",
+            "fields": {
+                "fk_unidad_regional": 6,
+                "fk_inspectora": null,
+                "jurisdiccion": "Sub Cria. San Juan"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "140",
+            "fields": {
+                "fk_unidad_regional": 6,
+                "fk_inspectora": null,
+                "jurisdiccion": "Unidad Regional 6"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "141",
+            "fields": {
+                "fk_unidad_regional": 7,
+                "fk_inspectora": null,
+                "jurisdiccion": "Brigada de Investigaciones UR-7"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "142",
+            "fields": {
+                "fk_unidad_regional": 7,
+                "fk_inspectora": null,
+                "jurisdiccion": "Brigada de Narcotráfico UR-7"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "143",
+            "fields": {
+                "fk_unidad_regional": 7,
+                "fk_inspectora": null,
+                "jurisdiccion": "Caballería UR-7"
+            }
+    },
+    {
+        "model": "app.Dependencia",
+            "pk": "144",
+            "fields": {
+                "fk_unidad_regional": 7,
+                "fk_inspectora": null,
+                "jurisdiccion": "Centro de Violencia Fliar. y de Genero N° 1"
+            }
+    },
+    {
+        "model": "app.Dependencia",
+            "pk": "145",
+            "fields": {
+                "fk_unidad_regional": 7,
+                "fk_inspectora": null,
+                "jurisdiccion": "Comando de Seg. y Prev. Ciudadana UR-7"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "146",
+            "fields": {
+                "fk_unidad_regional": 7,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Los Alisos"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "147",
+            "fields": {
+                "fk_unidad_regional": 7,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Nueva Terminal"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "148",
+            "fields": {
+                "fk_unidad_regional": 7,
+                "fk_inspectora": null,
+                "jurisdiccion": "Dto. Policial Túpac Amaru"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+            "pk": "149",
+            "fields": {
+                "fk_unidad_regional": 7,
+                "fk_inspectora": null,
+                "jurisdiccion": "Infantería UR-7"
+            }
+    },
+    { 
+        "model": "app.Dependencia",
+        "pk": "150",
+        "fields": {
+            "fk_unidad_regional": 7,
+            "fk_inspectora": null,
+            "jurisdiccion": "Secc. 33° Alto Comedero"
+        }
+    },
+    { 
+        "model": "app.Dependencia",
+        "pk": "151",
+        "fields": {
+            "fk_unidad_regional": 7,
+            "fk_inspectora": null,
+            "jurisdiccion": "Secc. 46° Aeroparque"
+        }
+    },
+    { 
+        "model": "app.Dependencia",
+        "pk": "152",
+        "fields": {
+            "fk_unidad_regional": 7,
+            "fk_inspectora": null,
+            "jurisdiccion": "Secc. 56° ATSA"
+        }
+    },
+    { 
+        "model": "app.Dependencia",
+        "pk": "153",
+        "fields": {
+            "fk_unidad_regional": 7,
+            "fk_inspectora": null,
+            "jurisdiccion": "Secc. 62° Sargento Cabral"
+        }
+    },
+    { 
+        "model": "app.Dependencia",
+        "pk": "154",
+        "fields": {
+            "fk_unidad_regional": 7,
+            "fk_inspectora": null,
+            "jurisdiccion": "Secc. 63° 18 Ha."
+        }
+    },
+    { 
+        "model": "app.Dependencia",
+        "pk": "155",
+        "fields": {
+            "fk_unidad_regional": 7,
+            "fk_inspectora": null,
+            "jurisdiccion": "Sub Cria. 150 Ha."
+        }
+    },
+    { 
+        "model": "app.Dependencia",
+        "pk": "156",
+        "fields": {
+            "fk_unidad_regional": 7,
+            "fk_inspectora": null,
+            "jurisdiccion": "Unidad Regional 7"
+        }
+    },
+    { 
+        "model": "app.Dependencia",
+        "pk": "157",
+        "fields": {
+            "fk_unidad_regional": 8,
+            "fk_inspectora": null,
+            "jurisdiccion": "Brigada De Investigaciones UR-8"
+        }
+    },
+    { 
+        "model": "app.Dependencia",
+        "pk": "158",
+        "fields": {
+            "fk_unidad_regional": 8,
+            "fk_inspectora": null,
+            "jurisdiccion": "Brigada de Narcotráfico UR-8"
+        }
+    },
+    {
+        "model": "app.Dependencia",
+        "pk": "159",
+        "fields": {
+            "fk_unidad_regional": 8,
+            "fk_inspectora": null,
+            "jurisdiccion": "Comando de Seg. y Prev. Ciudadana UR-8"
+        }
+    },
+    { 
+        "model": "app.Dependencia",
+        "pk": "160",
+        "fields": {
+            "fk_unidad_regional": 8,
+            "fk_inspectora": null,
+            "jurisdiccion": "Dto. Carahunco"
+        }
+    },
+    { 
+        "model": "app.Dependencia",
+        "pk": "161",
+        "fields": {
+            "fk_unidad_regional": 8,
+            "fk_inspectora": null,
+            "jurisdiccion": "Dto. El Remate"
+        }
+    },
+    { 
+        "model": "app.Dependencia",
+        "pk": "162",
+        "fields": {
+            "fk_unidad_regional": 8,
+            "fk_inspectora": null,
+            "jurisdiccion": "Secc. 23°  Pálpala"
+        }
+    },
+    { 
+        "model": "app.Dependencia",
+        "pk": "163",
+        "fields": {
+            "fk_unidad_regional": 8,
+            "fk_inspectora": null,
+            "jurisdiccion": "Secc. 47° Paso De Jama"
+        }
+    },
+    { 
+        "model": "app.Dependencia",
+        "pk": "164",
+        "fields": {
+            "fk_unidad_regional": 8,
+            "fk_inspectora": null,
+            "jurisdiccion": "Sub Cría. Río Blanco" 
+        }
+    },
+    { 
+        "model": "app.Dependencia",
+        "pk": "165",
+        "fields": {
+            "fk_unidad_regional": 8,
+            "fk_inspectora": null,
+            "jurisdiccion": "Unidad Regional 8" 
+        }
+    }
+]

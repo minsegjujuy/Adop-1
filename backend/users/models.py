@@ -1,6 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin,BaseUserManager
-from .manager import UsuarioManager       
+from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin
+from .manager import UsuarioManager
 
 class Usuario(AbstractBaseUser,PermissionsMixin):
     username = models.CharField('Nombre de Usuario', max_length=100, unique=True)
