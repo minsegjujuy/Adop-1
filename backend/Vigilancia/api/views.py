@@ -7,6 +7,7 @@ from .serializer import VigilanciaSerializer, DiasVigilanciaSerializer, MotivoVi
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+from django.http import JsonResponse
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -82,6 +83,40 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
         data['latitud']= serializer_data['latitud']
         
         return Response(data)
+    
+    def create(self, request, *args, **kwargs):
+        serializer = VigilanciaSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        fk_jurisdiccion = serializer.validated_data.get('fk_jurisdiccion')
+        fk_motivo = serializer.validated_data.get('fk_motivo')
+        fk_tipo_servicio = serializer.validated_data.get('fk_tipo_servicio')
+        fk_tipo_recurso = serializer.validated_data.get('fk_tipo_recurso')
+        regional = serializer.validated_data.get('regional')
+        objetivo = serializer.validated_data.get('objetivo')
+        cant_dias = serializer.validated_data.get('cant_dias')
+        fecha_inicio = serializer.validated_data.get('fecha_inicio')
+        fecha_fin = serializer.validated_data.get('fecha_fin')
+        destino = serializer.validated_data.get('destino')
+        longitud = serializer.validated_data.get('longitud')
+        latitud = serializer.validated_data.get('latitud')
+        
+        Vigilancia.objects.create(
+            fk_jurisdiccion = fk_jurisdiccion,
+            fk_motivo = fk_motivo,
+            fk_tipo_servicio = fk_tipo_servicio,
+            fk_tipo_recurso = fk_tipo_recurso,
+            regional = regional,
+            objetivo = objetivo,
+            cant_dias = cant_dias,
+            fecha_inicio = fecha_inicio,
+            fecha_fin = fecha_fin,
+            destino = destino,
+            longitud = longitud,
+            latitud = latitud
+        )
+        
+        respuesta = {'msj':'Vigilancia creada exitosamente!'}
+        return JsonResponse(respuesta, safe=False,status = status.HTTP_201_CREATED)
     
 class DiasVigilanciaViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
