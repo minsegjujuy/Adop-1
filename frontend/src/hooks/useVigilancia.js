@@ -1,6 +1,6 @@
 import {addVigilanciaApi} from "../api/vigilancia"
 
-export function useUser() {
+export function useVigilancia() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { auth } = useAuth();

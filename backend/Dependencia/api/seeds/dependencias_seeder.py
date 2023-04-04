@@ -4,13 +4,8 @@ import json
 
 def seed_data():
     
-<<<<<<< HEAD
-    print("Loading data...")
-    with open('Dependencia/api/seeds/dependencias_seeder.json',encoding='utf-8') as json_file:
-=======
     print("Seeding UURR data...")
     with open('Dependencia/api/seeds/dependencias_seeder.json', encoding='utf-8') as json_file:
->>>>>>> c77b6906ddae36739148f4963314243575654dd6
         data = json_file.read()
         
     for obj in json.loads(data):

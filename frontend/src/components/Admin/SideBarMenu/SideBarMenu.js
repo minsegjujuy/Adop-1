@@ -46,7 +46,7 @@ function MenuLeft(props) {
         Pacientes
       </Menu.Item> */}
 
-      {auth?.usuario?.rol === "operador" && (
+      {/* {auth?.usuario?.rol === "operador" && (
         <Menu.Item
           as={Link}
           to={"/admin/farmaceutico"}
@@ -55,9 +55,9 @@ function MenuLeft(props) {
           <Icon name="hospital" className="icono-side-bar" />
           Pacientes
         </Menu.Item>
-      )}
+      )} */}
 
-      {auth?.usuario?.rol === "administrador" && (
+      {auth?.usuario?.rol === 1 && (
         <Menu.Item
           as={Link}
           to={"/admin/vigilancia"}
@@ -117,7 +117,7 @@ function MenuLeft(props) {
       */}
       </Menu.Item>
 
-      {auth?.usuario?.rol === "administrador" && (
+      {auth?.usuario?.rol === 1 && (
         <Menu.Item
           as={Link}
           to={"/admin/users"}

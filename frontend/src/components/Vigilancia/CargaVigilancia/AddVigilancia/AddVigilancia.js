@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./AddVigilancia.scss";
 import { Button, Form, Icon,Checkbox } from "semantic-ui-react";
+import {useVigilancia} from "../../../../hooks"
 import { useFormik } from "formik";
 import * as Yup from "yup";
 // import { useAuth} from "../../hooks";
@@ -10,29 +11,31 @@ import Swal from "sweetalert2";
 export function AddVigilancia(props) {
      const {addHorarios}=props;
      const [formHorario,setformHorario] = useState(null)
+     const {addVigilancia} = useVigilancia()
     // const {auth}=useAuth();
     // const {actualizar_contra,actualizar_contra_admin} =useContrasena();
     const motivos = [
-      { key: "1", text: "Violencia de genero", value: "Violencia de genero" },
-      { key: "2", text: "Edificio Publico", value: "Edificio Publico" },
-      { key: "3", text: "Funcionarios Publicos", value: "Funcionarios Publicos" },
-      { key: "4", text: "Proteccion de Personas", value: "Proteccion de Personas" },]
+      { key: "1", text: "Violencia de genero", value: 1 },
+      { key: "2", text: "Edificio Publico", value: 2 },
+      { key: "3", text: "Funcionarios Publicos", value: 3 },
+      { key: "4", text: "Proteccion de Personas", value: 4 },]
     
       const servicios = [
-        { key: "1", text: "Vigilancia de externa", value: "Vigilancia externa" },
-        { key: "2", text: "Vigilancia interna", value: "Vigilancia interna" },
-        { key: "3", text: "Custodia de Bienes", value: "Custodia de Bienes" },
-        { key: "4", text: "Custodia de Detenidos", value: "Custodia de Detenidos" },]
+        { key: "1", text: "Vigilancia de externa", value: 1 },
+        { key: "2", text: "Vigilancia interna", value: 2 },
+        { key: "3", text: "Custodia de Bienes", value: 3 },
+        { key: "4", text: "Custodia de Detenidos", value: 4 },
+        { key: "4", text: "Vigilancia de Persona", value: 5 }]
 
         const recursos = [
-          { key: "1", text: "Auto", value: "Auto" },
-          { key: "2", text: "Camioneta", value: "Camioneta" },
-          { key: "3", text: "Moto", value: "Moto" },
-          { key: "4", text: "Bicicleta", value: "Bicicleta" },
-          { key: "5", text: "Equino", value: "Equino" },
-          { key: "6", text: "Carpa Azul", value: "Carpa Azul" },
-          { key: "7", text: "Canes", value: "Canes" },
-          { key: "8", text: "Otro", value: "Otro" }]
+          { key: "1", text: "Auto", value: 1 },
+          { key: "2", text: "Camioneta", value: 2 },
+          { key: "3", text: "Moto", value: 3 },
+          { key: "4", text: "Bicicleta", value: 4 },
+          { key: "5", text: "Equino", value: 5 },
+          { key: "6", text: "Carpa Azul", value: 6 },
+          { key: "7", text: "Canes", value: 7 },
+          { key: "8", text: "Otro", value: 8 }]
   
 
 
@@ -46,8 +49,25 @@ export function AddVigilancia(props) {
     validationSchema: Yup.object(validationSchema()),
     onSubmit: async (formValue) => {
       try {
+        const objeto={
+          fk_juridiccion: formValue.juridiccion,
+         fk_motivo:formValue.motivo,
+         fk_servicio:formValue.tipo_servicio,
+         objetivo:formValue.objetivo,
+         cant_dias:0,
+         fecha_inicio:formValue.fecha_inicio,
+         fecha_fin: formValue.fecha_fin,
+         destino:formValue.destino,
+         recursos:formValue.recursos,
+         latitud:formValue.latitud,
+         longitud:formValue.longitud,}
+        if(formValue.fecha_indefinida===true){
+          objeto.fecha_fin=null
+         }
+
          console.log(formHorario)
-         console.log(formValue)
+         console.log(objeto)
+         const response = await addVigilancia(objeto)
     //    if(formValue.aux===formValue.nuevacontraseña){
     //     if(comando==="contra"){
     //       const form2 = {
@@ -226,16 +246,16 @@ export function AddVigilancia(props) {
     </div>
   </div>
   </div>
-  <div class="two fields">
+  {/* <div class="two fields">
     <div class="field">
       <label>Hora de inicio</label>
       <Form.Input
-        name="hora_inicial"
+        name="hora_inicio"
         type="time"
-        placeholder="Ingrese hora inicial"
-        value={formik.values.hora_inicial}
+        placeholder="Ingrese hora inicio"
+        value={formik.values.hora_inicio}
         onChange={formik.handleChange}
-        error={formik.errors.hora_inicial}
+        error={formik.errors.hora_inicio}
       />
         
     </div>
@@ -243,28 +263,27 @@ export function AddVigilancia(props) {
       <label>Hora final</label>
       <div class="field">
       <Form.Input
-        name="hora_final"
+        name="hora_fin"
         type="time"
         placeholder="Ingrese hora final"
-        value={formik.values.hora_final}
+        value={formik.values.hora_fin}
         onChange={formik.handleChange}
-        error={formik.errors.hora_final}
+        error={formik.errors.hora_fin}
       />
         
        </div>
     </div>
-  </div>
+  </div> */}
   <h4 class="ui dividing header">Personal</h4>
   <div class="two fields">
     <div class="field">
-      <label>Personal Afectado</label>
+      <label>Destino</label>
       <Form.Input
-        name="personal_afectado"
-        type="number"
-        placeholder="Indique la cantidad de personal afectado"
-        value={formik.values.personal_afectado}
+        name="destino"
+        placeholder="Indique el destino"
+        value={formik.values.destino}
         onChange={formik.handleChange}
-        error={formik.errors.personal_afectado}
+        error={formik.errors.destino}
       />
         
     </div>
@@ -327,9 +346,9 @@ function initialValues() {
     fecha_inicio:"01/01/2010",
     fecha_fin: null,
     fecha_indefinida:false,
-    hora_inicio:"",
-    hora_fin:"",
-    personal_afectado:"",
+    // hora_inicio:"",
+    // hora_fin:"",
+    destino:"",
     recursos:"",
     latitud:"",
     longitud:"",
