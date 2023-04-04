@@ -1,3 +1,5 @@
+import {BASE_API} from "../utils/contants"
+
 export async function addVigilanciaApi(data, token) {
     try {
       const url = `${BASE_API}/api/vigilancias/`;

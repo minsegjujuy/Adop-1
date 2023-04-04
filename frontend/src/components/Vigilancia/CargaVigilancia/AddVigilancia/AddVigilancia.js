@@ -36,6 +36,16 @@ export function AddVigilancia(props) {
           { key: "6", text: "Carpa Azul", value: 6 },
           { key: "7", text: "Canes", value: 7 },
           { key: "8", text: "Otro", value: 8 }]
+
+          const regionales = [
+            { key: "1", text: "URR 1", value: 1 },
+            { key: "2", text: "URR 2", value: 2 },
+            { key: "3", text: "URR 3", value: 3 },
+            { key: "4", text: "URR 4", value: 4 },
+            { key: "5", text: "URR 5", value: 5 },
+            { key: "6", text: "URR 6", value: 6 },
+            { key: "7", text: "URR 7", value: 7 },
+            { key: "8", text: "URR 8", value: 8 }]
   
 
 
@@ -127,6 +137,23 @@ export function AddVigilancia(props) {
 
   return (
     <Form class="ui form" onSubmit={formik.handleSubmit}>
+       <div class="field">
+      <label>Regional</label>
+      <Form.Select
+                fluid
+                name="regional"
+                options={regionales}
+                placeholder="Seleccione la regional"
+                value={formik.values.regional}
+                onChange={(_, data) =>
+                  formik.setFieldValue(
+                    "regional",
+                    data.value
+                  )
+                }
+              />
+        
+    </div>
    <div class="two fields">
     <div class="field">
       <label>Juridiccion</label>
@@ -338,6 +365,7 @@ export function AddVigilancia(props) {
 
 function initialValues() {
   return {
+    regional:"",
     juridiccion: "",
     motivo:"",
     tipo_servicio:"",

@@ -1,4 +1,6 @@
 import {addVigilanciaApi} from "../api/vigilancia"
+import { useState } from "react";
+import {useAuth} from "../hooks"
 
 export function useVigilancia() {
     const [loading, setLoading] = useState(true);
