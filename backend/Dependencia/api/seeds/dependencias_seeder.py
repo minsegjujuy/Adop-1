@@ -5,7 +5,7 @@ import json
 def seed_data():
     
     print("Loading data...")
-    with open('Dependencia/api/seeds/dependencias_seeder.json') as json_file:
+    with open('Dependencia/api/seeds/dependencias_seeder.json',encoding='utf-8') as json_file:
         data = json_file.read()
         
     for obj in json.loads(data):
