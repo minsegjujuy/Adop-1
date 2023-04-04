@@ -9,13 +9,13 @@ class TipoServicioViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     authentication_classes = (JWTAuthentication,TokenAuthentication)
     queryset = TipoServicio.objects.all()
-    serializer_class = ServicioSerializer
+    serializer_class = TipoServicioSerializer
 
 class ServicioViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     authentication_classes = (JWTAuthentication,TokenAuthentication)
     queryset = Servicio.objects.all()
-    serializer_class = TipoServicioSerializer
+    serializer_class = ServicioSerializer
 
 class RecursoViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)

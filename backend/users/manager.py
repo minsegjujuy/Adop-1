@@ -1,66 +1,58 @@
 from django.contrib.auth.models import BaseUserManager
-from django.contrib.auth.hashers import make_password
+import users
 
 class UsuarioManager(BaseUserManager):
     def create_user(
             self,
             email,
             username,
-            nombres,
-            apellidos,
-            rol,
-            regional,
-            jurisdiccion,
-            password,
-            administrador=False
+            nombres=None,
+            apellidos=None,
+            rol=None,
+            unidad_regional=None,
+            jurisdiccion=None,
+            password=None,
+            is_superuser=False
     ):
         if not email:
             raise ValueError('El usuario debe tener un correo electronico!')
         
-        print(rol)
+        usuario = self.model(
+            username = username, 
+            email = self.normalize_email(email),
+            nombres = nombres,
+            apellidos = apellidos,
+            rol = rol,
+            unidad_regional=unidad_regional,
+            jurisdiccion=jurisdiccion,
+            is_superuser = is_superuser
+        )
         
-        if rol == 'administrador' or rol == 'general' or rol == 'operador':
-                    
-            usuario = self.model(
-                username = username, 
-                email = self.normalize_email(email),
-                nombres = nombres,
-                apellidos = apellidos,
-                rol = rol,
-                regional=regional,
-                jurisdiccion=jurisdiccion,
-                is_superuser = administrador
-            )
-            
-            if jurisdiccion is None:
-                usuario.jurisdiccion = regional
-            
-            print(password)
-            password = make_password(password)
-            print(password)
-            usuario.set_password(password)
-            
-            usuario.save()
-            
-            return usuario
-        else:
-            raise ValueError('El rol ingresado no existe')
+        # if jurisdiccion is None:
+        #     usuario.jurisdiccion = regional
+        
+        # print(password)
+        usuario.set_password(password)
+        
+        usuario.save()
+        
+        return usuario
     
     def create_superuser(
         self, 
         username, 
-        email, 
-        nombres=None, 
-        apellidos=None, 
-        rol='administrador', 
+        email,
+        rol=1,
         password=None):
-        
+        if rol == 1:
+            print(rol)
+            user_rol =  users.models.Rol.objects.get(id=rol)
+        else:
+            user_rol = rol
         usuario = self.create_user(
             email = email,
-            username = username, 
-            nombres = nombres, 
-            apellidos = apellidos,
-            rol = rol,
+            username = username,
+            rol = user_rol,
             password = password,
         )
         

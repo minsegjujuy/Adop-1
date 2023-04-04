@@ -6,7 +6,6 @@ class TipoServicioSerializer(serializers.ModelSerializer):
         model = TipoServicio
         fields = (
             'id',
-            'fk_servicio',
             'tipo_servicio',
         )
 
@@ -15,6 +14,8 @@ class ServicioSerializer(serializers.ModelSerializer):
         model = Servicio
         fields = (
             'id',
+            'fk_tipo_servicio',
+            'fk_tipo_recurso',
             'fk_operativo',
             'cant_recursos',
         )
@@ -24,6 +25,5 @@ class RecursoSerializer(serializers.ModelSerializer):
         model = TipoRecurso
         fields = (
             'id',
-            'fk_servicio',
             'tipo_recurso',
         )

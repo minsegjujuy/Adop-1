@@ -1,14 +1,23 @@
 from rest_framework import serializers
-from ..models import Vigilancia, DiasVigilancia
+from ..models import Motivo,Vigilancia, DiasVigilancia
+
+class MotivoVigilanciaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Motivo
+        fields = (
+            'id',
+            'motivo'
+        )
 
 class VigilanciaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vigilancia
         fields = (
             'id',
+            'fk_jurisdiccion',
+            'fk_motivo',
+            'fk_servicio',
             'regional',
-            'motivo',
-            'fk_tipo_servicio',
             'objetivo',
             'cant_dias',
             'fecha_inicio',

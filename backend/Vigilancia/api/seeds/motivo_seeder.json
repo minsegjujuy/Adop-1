@@ -1,0 +1,30 @@
+[
+    {
+        "model": "app.Motivo",
+        "pk": 1,
+        "fields": {
+            "motivo": "VIOLENCIA DE GENERO"
+        }
+    },
+    {
+        "model": "app.Motivo",
+        "pk": 2,
+        "fields": {
+            "motivo": "EDIFICIO PUBLICO"
+        }
+    },
+    {
+        "model": "app.Motivo",
+        "pk": 3,
+        "fields": {
+            "motivo": "FUNCIONARIOS PUBLICOS"
+        }
+    },
+    {
+        "model": "app.Motivo",
+        "pk": 4,
+        "fields": {
+            "motivo": "PROTECCION DE PERSONAS"
+        }
+    }
+]

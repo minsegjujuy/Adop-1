@@ -3,8 +3,8 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.sessions.models import Session
 from django.http import JsonResponse
 
-from users.models import Usuario
-from users.api.serializers import UserSerializer, TokenSerializer
+from users.models import Usuario, Rol
+from users.api.serializers import UserSerializer, TokenSerializer, RolSerializer
 
 from rest_framework import status, viewsets
 from rest_framework.views import APIView
@@ -23,6 +23,12 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 import datetime
 
 from ..authentication_mixins import Authentication
+
+class RolViewSet(Authentication, viewsets.ModelViewSet):
+    permission_classes = (IsAdminUser,IsAuthenticated)
+    authentication_classes = (JWTAuthentication,TokenAuthentication)
+    queryset = Rol.objects.all()  
+    serializer_class = RolSerializer
 
 class UserViewSet(Authentication,viewsets.ModelViewSet):
     permission_classes = (IsAdminUser,IsAuthenticated)
@@ -53,7 +59,16 @@ class UserViewSet(Authentication,viewsets.ModelViewSet):
         regional = serializer.validated_data.get('regional')
         is_superuser = serializer.validated_data.get('is_superuser')
         
-        usuario = Usuario.objects.create_user(email,username,nombres,apellidos,rol,regional,jurisdiccion,password, is_superuser)
+        usuario = Usuario.objects.create_user(
+                        email=email,
+                        username=username,
+                        nombres=nombres,
+                        apellidos=apellidos,
+                        rol=rol,
+                        unidad_regional=regional,
+                        jurisdiccion=jurisdiccion,
+                        password=password,
+                        is_superuser=is_superuser)
         
         data = {
             'id':usuario.id, 

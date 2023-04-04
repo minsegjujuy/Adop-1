@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
-    'users',
     'Dependencia',
     'Ley',
     'Operativos',
@@ -53,6 +52,7 @@ INSTALLED_APPS = [
     'Secuestro',
     'Servicio',
     'Vigilancia',
+    'users',
 ]
 
 MIDDLEWARE = [

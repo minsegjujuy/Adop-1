@@ -1,0 +1,93 @@
+[
+    {
+        "model": "app.TipoServicio",
+        "pk": 1,
+        "fields": {
+            "tipo_servicio": "VIGILANCIA EXTERNA"
+        }
+    },
+    {
+        "model": "app.TipoServicio",
+        "pk": 2,
+        "fields": {
+            "tipo_servicio": "VIGILANCIA INTERNA"
+        }
+    },
+    {
+        "model": "app.TipoServicio",
+        "pk": 3,
+        "fields": {
+            "tipo_servicio": "VIGILANCIA DE BIENES"
+        }
+    },
+    {
+        "model": "app.TipoServicio",
+        "pk": 4,
+        "fields": {
+            "tipo_servicio": "VIGILANCIA DE DETENIDOS"
+        }
+    },
+    {
+        "model": "app.TipoServicio",
+        "pk": 5,
+        "fields": {
+            "tipo_servicio": "VIGILANCIA DE PERSONA"
+        }
+    },
+    {
+        "model": "app.TipoRecurso",
+        "pk": 1,
+        "fields": {
+            "tipo_recurso": "AUTO"
+        }
+    },
+    {
+        "model": "app.TipoRecurso",
+        "pk": 2,
+        "fields": {
+            "tipo_recurso": "CAMIONETA"
+        }
+    },
+    {
+        "model": "app.TipoRecurso",
+        "pk": 3,
+        "fields": {
+            "tipo_recurso": "MOTO"
+        }
+    },
+    {
+        "model": "app.TipoRecurso",
+        "pk": 4,
+        "fields": {
+            "tipo_recurso": "BICICLETA"
+        }
+    },
+    {
+        "model": "app.TipoRecurso",
+        "pk": 5,
+        "fields": {
+            "tipo_recurso": "EQUINO"
+        }
+    },
+    {
+        "model": "app.TipoRecurso",
+        "pk": 6,
+        "fields": {
+            "tipo_recurso": "CARPA AZUL"
+        }
+    },
+    {
+        "model": "app.TipoRecurso",
+        "pk": 7,
+        "fields": {
+            "tipo_recurso": "CANES"
+        }
+    },
+    {
+        "model": "app.TipoRecurso",
+        "pk": 8,
+        "fields": {
+            "tipo_recurso": "OTRO"
+        }
+    }
+]
