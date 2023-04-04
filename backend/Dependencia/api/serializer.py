@@ -25,8 +25,7 @@ class DependenciaSerializer(serializers.ModelSerializer):
             'id',
             'fk_unidad_regional',
             'fk_inspectora',
-            'jurisdicciones_op',
-            'operativos'
+            'jurisdiccion'
             )
         read_only_fields = ('id',)
 

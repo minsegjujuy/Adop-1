@@ -37,7 +37,7 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
             data = {}
             data['id']=vigilancia['id']
             data['jurisdiccion']= Dependencia.objects.get(id=vigilancia['fk_jurisdiccion']).jurisdiccion
-            data['motivo']= MotivoVigilancia.objects.get(id=vigilancia['fk_motivo']).motivo
+            data['motivo']= Motivo.objects.get(id=vigilancia['fk_motivo']).motivo
             try:
                 data['servicio']=Servicio.objects.get(id=vigilancia['fk_servicio']).servicio
             except:
@@ -67,7 +67,7 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
        
         data['id']=serializer_data['id']
         data['jurisdiccion']= Dependencia.objects.get(id=serializer_data['fk_jurisdiccion']).jurisdiccion
-        data['motivo']= MotivoVigilancia.objects.get(id=serializer_data['fk_motivo']).motivo
+        data['motivo']= Motivo.objects.get(id=serializer_data['fk_motivo']).motivo
         try:
             data['servicio']=Servicio.objects.get(id=serializer_data['fk_servicio']).servicio
         except:
@@ -88,3 +88,21 @@ class DiasVigilanciaViewSet(viewsets.ModelViewSet):
     authentication_classes = (JWTAuthentication,TokenAuthentication)
     queryset = DiasVigilancia.objects.all()    
     serializer_class = DiasVigilanciaSerializer
+    
+    # def list(self, request):
+    #     serializer = DiasVigilanciaSerializer(self.queryset, many=True)
+    #     resuesta = []
+    #     for dvig in serializer.data:
+    #         data = {}
+    #         data['id']=dvig['id']
+    #         data['fk_vigilancia']=dvig['fk_vigilancia']
+    #         data['fk_personal']=dvig['fk_personal']
+    #         data['dia']=dvig['dia']
+    #         data['hora_inicio']=dvig['hora_inicio']
+    #         data['hora_fin']=dvig['hora_fin']
+    #         data['turno']=dvig['turno']
+    #         data['dia_completo']=dvig['dia_completo']
+            
+    #         resuesta.append(data)
+        
+    #     return Response(resuesta)
