@@ -135,7 +135,14 @@ class Login(TokenObtainPairView):
                             token = Token.objects.create(user=user)
                             usuario = TokenSerializer(user).data
                             datos = {}
-                            datos=usuario['username'],usuario['email'],usuario['nombres'],usuario['apellidos'],Rol.objects.get(id=usuario['rol']).rol.lower(),usuario['jurisdiccion'],usuario['unidad_regional'],usuario['is_superuser']
+                            datos['username'] = usuario['username']
+                            datos['email'] = usuario['email']
+                            datos['nombres'] = usuario['nombres']
+                            datos['apellidos'] = usuario['apellidos']
+                            datos['rol'] = Rol.objects.get(id=usuario['rol']).rol.lower()
+                            datos['jurisdiccion'] = usuario['jurisdiccion']
+                            datos['unidad_regional'] = usuario['unidad_regional']
+                            datos['is_superuser'] = usuario['is_superuser']
                             print(datos)
                             return Response({
                                     'token': token.key,
