@@ -133,9 +133,13 @@ class Login(TokenObtainPairView):
                                         session.delete();
                             token.delete();
                             token = Token.objects.create(user=user)
+                            usuario = TokenSerializer(user).data
+                            datos = {}
+                            datos=usuario['username'],usuario['email'],usuario['nombres'],usuario['apellidos'],Rol.objects.get(id=usuario['rol']).rol.lower(),usuario['jurisdiccion'],usuario['unidad_regional'],usuario['is_superuser']
+                            print(datos)
                             return Response({
                                     'token': token.key,
-                                    'usuario': TokenSerializer(user).data,
+                                    'usuario': datos,
                                     'mensaje':'inicio de Sesion Existoso'
                                 },
                                 status=status.HTTP_200_OK

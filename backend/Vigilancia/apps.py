@@ -14,5 +14,5 @@ class VigilanciaConfig(AppConfig):
             if kwargs['using'] == 'default':
                 seed_data()
 
-        # Registra la señal
-        pre_migrate.connect(migrate_callback, sender=self)
+            # Registra la señal
+            pre_migrate.connect(migrate_callback, sender=self)
