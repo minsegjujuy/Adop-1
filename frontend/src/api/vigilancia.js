@@ -20,3 +20,35 @@ export async function addVigilanciaApi(data, token) {
       throw error;
     }
   }
+  export async function getJurisdicciones(token) {
+    try {
+      const url = `${BASE_API}/api/unidades_regionales/`;
+      const params = {
+        method: "GET",
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      };
+      const response = await fetch(url, params);
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+  export async function getVigilancias(token) {
+    try {
+      const url = `${BASE_API}/api/vigilancias/`;
+      const params = {
+        method: "GET",
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      };
+      const response = await fetch(url, params);
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }

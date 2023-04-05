@@ -50,7 +50,7 @@ export function TableUsers(props) {
               )}
             </Table.Cell>
             <Table.Cell>{user.rol}</Table.Cell>
-            <Table.Cell>{user.regional}</Table.Cell>
+            <Table.Cell>{user.unidad_regional}</Table.Cell>
             <Table.Cell>{user.jurisdiccion}</Table.Cell>
             <Actions
               user={user}

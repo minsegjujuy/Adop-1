@@ -2,8 +2,10 @@ import React from 'react'
 import {HeaderPage} from "../../../components/Admin"
 import {Button} from "semantic-ui-react"
 import {AddVigilancia} from "../../../components/Vigilancia/CargaVigilancia"
+import {TableVigilancia} from "../../../components/Vigilancia/TableVigilancia"
 import {CargaHorario} from "../../../components/Vigilancia/CargaHorarios"
 import {ModalBasic} from "../../../components/Common/ModalBasic"
+import {useVigilancia} from "../../../hooks"
 import { useEffect,useState } from 'react'
 import "./CargaVigilancia.scss"
 import Swal from "sweetalert2";
@@ -11,13 +13,14 @@ import Swal from "sweetalert2";
 export function CargaVigilancia() {
   console.log("hola mundo")
     // const {getUsers,loading,users,setUsers,deleteUser,getempleadoId,auth} = useUser()
+    const {get_vigilancia,vigilancias} = useVigilancia()
     const [titleModal, setTitleModal] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [contentModal, setContentModal] = useState(null);
     const [refetch, setRefetch] = useState(false)
 
     // useEffect(() => {
-    //     getUsers();
+    //     get_vigilancia();
     //   }, []);
       
       
@@ -26,20 +29,20 @@ export function CargaVigilancia() {
       };
       const onRefetch = () => setRefetch((prev) => !prev);
 
-      const addHorarios = (cantidad_dias,setformHorario) => {
-        setTitleModal("Agregar Horarios");
-        console.log(cantidad_dias)
-        setContentModal(
-          <CargaHorario
-            onClose={openCloseModal}
-            Refetch = {onRefetch}
-            cantidad_dias={cantidad_dias}
-            setformHorario={setformHorario}
-            // addUser={addUser}
-          />
-        );
-        openCloseModal();
-      };
+      // const addHorarios = (cantidad_dias,setformHorario) => {
+      //   setTitleModal("Agregar Horarios");
+      //   console.log(cantidad_dias)
+      //   setContentModal(
+      //     <CargaHorario
+      //       onClose={openCloseModal}
+      //       Refetch = {onRefetch}
+      //       cantidad_dias={cantidad_dias}
+      //       setformHorario={setformHorario}
+      //       // addUser={addUser}
+      //     />
+      //   );
+      //   openCloseModal();
+      // };
       
     //   const onDeleteUser = async (data) => {
     //     try {
@@ -90,12 +93,11 @@ export function CargaVigilancia() {
                */}
          </div>
       {/* <TableVigilancia 
-                    // users={users}
+                    vigilancias={vigilancias}
                     // onDeleteUser={onDeleteUser}
       /> */}
       <div className='form-vigilancia'>
       <AddVigilancia
-        addHorarios = {addHorarios}
       />
       </div>
       <ModalBasic

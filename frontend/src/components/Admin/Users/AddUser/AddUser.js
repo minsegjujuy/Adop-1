@@ -13,9 +13,9 @@ export const AddUser= (props) => {
 
    const {addUser} = useUser();
    const options = [
-    { key: "operador", text: "Operador", value: "operador" },
-    { key: "Administrador", text: "Administrador", value: "administrador" },
-    { key: "General", text: "General", value: "general" },
+    { key: "Administrador", text: "Administrador", value: 1 },
+    { key: "operador", text: "Operador", value: 2 },
+    { key: "General", text: "General", value: 3 },
     
    
   ];
@@ -30,13 +30,13 @@ export const AddUser= (props) => {
     { key: "Regional 8", text: "Regional 8", value: "8" },
   ];
   const options3 = [
-    { key: "Juridiccion 1", text: "Juridiccion 1", value: "1" },
-    { key: "Juridiccion 2", text: "Juridiccion 2", value: "2" },
-    { key: "Juridiccion 3", text: "Juridiccion 3", value: "3" },
-    { key: "Juridiccion 4", text: "Juridiccion 4", value: "4" },
-    { key: "Juridiccion 5", text: "Juridiccion 5", value: "5" },
-    { key: "Juridiccion 6", text: "Juridiccion 6", value: "6" },
-    { key: "Juridiccion 7", text: "Juridiccion 7", value: "7" },
+    { key: "Juridiccion 1", text: "Juridiccion 1", value: 1 },
+    { key: "Juridiccion 2", text: "Juridiccion 2", value: 2 },
+    { key: "Juridiccion 3", text: "Juridiccion 3", value: 3 },
+    { key: "Juridiccion 4", text: "Juridiccion 4", value: 4 },
+    { key: "Juridiccion 5", text: "Juridiccion 5", value: 5 },
+    { key: "Juridiccion 6", text: "Juridiccion 6", value: 6 },
+    { key: "Juridiccion 7", text: "Juridiccion 7", value: 7 },
   ];
   const formik = useFormik({
     initialValues: initialValues(),
@@ -65,7 +65,7 @@ export const AddUser= (props) => {
         });
         const resultado = await addUser(formValue);
         console.log(resultado)
-        if (resultado.id) {
+        if (resultado.msj) {
           Swal.fire({
             title: "Individuo agregado Correctamente!",
             text: resultado.msj,

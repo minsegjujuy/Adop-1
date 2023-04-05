@@ -19,12 +19,9 @@ class Vigilancia(models.Model):
     destino = models.CharField(null=False,max_length=50)
     longitud = models.DecimalField(decimal_places=10,max_digits=13)
     latitud = models.DecimalField(decimal_places=10,max_digits=13)
-<<<<<<< HEAD
-=======
     # activar luego de la primera migracion
     # dias_vigilancias = models.ManyToManyField('DiasVigilancia', db_table='vigilancia_diasvigilancia', related_name='dias_vigilancias') #comentar para la primera migracion
 
->>>>>>> 1cedd5633c1a7c8c2fbb9e517314aa5d326b4513
 class DiasVigilancia(models.Model):
     fk_vigilancia = models.ForeignKey('Vigilancia', on_delete=models.CASCADE)
     fk_personal = models.ForeignKey(Personal, on_delete=models.CASCADE, null=True)
