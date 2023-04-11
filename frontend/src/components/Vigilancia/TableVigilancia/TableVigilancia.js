@@ -38,7 +38,7 @@ export function TableVigilancia(props) {
             <Table.Cell>{vigilancia.objetivo}</Table.Cell>
             <Table.Cell>{vigilancia.cant_dias}</Table.Cell>
             <Table.Cell>{vigilancia.fecha_inicio.slice(0, 10)}</Table.Cell>
-            <Table.Cell>{vigilancia.fecha_fin.slice(0,10)}</Table.Cell>
+            <Table.Cell>{vigilancia.fecha_fin? vigilancia.fecha_fin.slice(0,10):"indefinida"}</Table.Cell>
             <Table.Cell>{vigilancia.latitud}</Table.Cell>
             <Table.Cell>{vigilancia.longitud}</Table.Cell>
             

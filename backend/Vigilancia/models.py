@@ -21,7 +21,7 @@ class Vigilancia(models.Model):
     longitud = models.DecimalField(decimal_places=10,max_digits=13)
     latitud = models.DecimalField(decimal_places=10,max_digits=13)
     # activar luego de la primera migracion
-    dias_vigilancias = models.ManyToManyField('DiasVigilancia', db_table='vigilancia_diasvigilancia', related_name='dias_vigilancias') #comentar para la primera migracion
+    # dias_vigilancias = models.ManyToManyField('DiasVigilancia', db_table='vigilancia_diasvigilancia', related_name='dias_vigilancias') #comentar para la primera migracion
     
     # def save(self, *args, **kwargs):
     #     with open('BaseDeDatos/script_triggers.sql', encoding='utf-8') as sql_script:
