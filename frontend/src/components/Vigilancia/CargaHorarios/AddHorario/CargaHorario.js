@@ -7,7 +7,8 @@ import * as Yup from "yup";
 import "./CargaHorario.scss"
 
 export const CargaHorario = (props) => {
-  const { onClose, cantidad_dias, setformHorario } = props;
+  const { onClose, fecha_fin } = props;
+  const {dias_dif,setdias_dif} = useState(null)
   //   const { addFranja, obtenerFranjas } = usePacienteDiabetes();
 
   // const arreglo = [
@@ -20,8 +21,24 @@ export const CargaHorario = (props) => {
   //   },
   // ];
   // const arreglo2 = definirVector(arreglo, cantidad_dias);
-  const today = new Date();
+  
+ 
+  
+  const today = new Date()
   const dia_semana = today.getDay();
+  let dia = ("0" + today.getDate()).slice(-2);
+  let mes = ("0" + (today.getMonth() + 1)).slice(-2);
+  let anio = today.getFullYear().toString();
+  let fechaformateada = anio + '-' + mes + '-' + dia;
+
+  const fecha1= new Date(fechaformateada)
+  const fecha2= new Date(fecha_fin)
+  const unDia = 24 * 60 * 60 * 1000; // número de milisegundos en un día
+  const diffFechas = Math.abs(fecha2 - fecha1); // diferencia de milisegundos entre las fechas
+  const diferencia=Math.floor(diffFechas / unDia); // redondea hacia abajo al número entero más cercano
+
+  const cant_semanas=Math.floor(diferencia/7)
+  const dias_ult_semana= diferencia % 7
 
   const dias = [
     { key: "1", text: "Lunes", value: "Lunes" },
@@ -31,9 +48,17 @@ export const CargaHorario = (props) => {
     { key: "5", text: "Viernes", value: "Viernes" },
   ];
 
-  // useEffect(() => {
-  //   definirVector(arreglo,cantidad_dias)
-  // }, []);
+  //  useEffect(() => {
+  //      setdias_dif( Difdias(fecha1,fecha2));
+  //     }, []);
+      
+  
+  let turnos=[];
+  // const arreglo2=definirVector(turnos,cant_semanas,dias_ult_semana)
+//     useEffect(() => {
+//   definirVector(turnos,cant_semanas,dias_ult_semana)
+// }, []);
+  
 
   const formik = useFormik({
     initialValues: initialValues(),
@@ -45,7 +70,53 @@ export const CargaHorario = (props) => {
         // console.log(cantidad_dias);
         // console.log(formValue);
         // setformHorario(formValue);
-        console.log(dia_semana)
+        // console.log(dia_semana)
+       
+        for (let i = 0; i < cant_semanas; i++){
+                if(formValue.lunes===true){
+                  turnos.push("lunes")
+                }
+                if(formValue.martes===true){
+                    turnos.push("martes")
+                  }
+                  if(formValue.miercoles===true){
+                      turnos.push("miercoles")
+                    }
+                  if(formValue.jueves===true){
+                        turnos.push("jueves")
+                      }
+                        if(formValue.viernes===true){
+                          turnos.push("viernes")
+                        }
+                          if(formValue.sabado===true){
+                            turnos.push("sabado")
+                          }
+                            if(formValue.domingo===true){
+                              turnos.push("domingo")
+                            }
+                  
+                  
+                
+              //  turnos[i].lunes=formValue.lunes
+              //  turnos[i].martes=formValue.martes
+              //  turnos[i].miercoles=formValue.miercoles
+              //  turnos[i].jueves=formValue.jueves
+              //  turnos[i].viernes=formValue.lunes
+              //  turnos[i].sabado=formValue.sabado
+              //  turnos[i].domingo=formValue.domingo
+       }
+
+       const formValue2={
+        turno:turnos,
+        turno_completo:formValue.turno_completo,
+        hora_inicio:formValue.hora_inicio,
+        hora_fin:formValue.hora_fin
+       }
+        console.log(fechaformateada)
+        console.log(diferencia)
+        console.log(cant_semanas)
+        console.log(dias_ult_semana)
+        console.log(formValue2)
         onClose();
       } catch (error) {}
     },
@@ -254,17 +325,23 @@ function initialValues(Turnos) {
     hora_fin:"",
   };
 }
-function definirVector(arreglo, cantidad_dias) {
-  for (let i = 0; i < cantidad_dias; i++) {
-    arreglo[i] = {
-      turno_completo: false,
-      hora_inicial: "",
-      hora_final: "",
-      fecha_vigilancia: "",
-      dia_semana: "",
-    };
+function definirVector(turno,cant_semanas,cant_dias) {
+  if(cant_dias!==0){
+    cant_semanas=cant_semanas+1
   }
-  return arreglo;
+  for (let index = 0; index < cant_semanas; index++) {
+            turno[index]={
+              lunes:false,
+              martes:false,
+              miercoles:false,
+              jueves:false,
+              viernes:false,
+              sabado:false,
+              domingo:false,
+            }
+    
+  }
+  return turno
 }
 function newSchema() {
   return {

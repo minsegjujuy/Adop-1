@@ -78,7 +78,7 @@ class UserViewSet(Authentication,viewsets.ModelViewSet):
             'apellidos':usuario.apellidos,
             'rol':usuario.rol,
             'jurisdiccion':usuario.jurisdiccion,
-            'regional':usuario.regional,
+            'regional':usuario.unidad_regional,
             'is_superuser':usuario.is_superuser,
             'usuario_activo':usuario.usuario_activo
         }

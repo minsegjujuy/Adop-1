@@ -20,14 +20,14 @@ export const AddUser= (props) => {
    
   ];
   const options2 = [
-    { key: "Regional 1", text: "Regional 1", value: "1" },
-    { key: "Regional 2", text: "Regional 2", value: "2" },
-    { key: "Regional 3", text: "Regional 3", value: "3" },
-    { key: "Regional 4", text: "Regional 4", value: "4" },
-    { key: "Regional 5", text: "Regional 5", value: "5" },
-    { key: "Regional 6", text: "Regional 6", value: "6" },
-    { key: "Regional 7", text: "Regional 7", value: "7" },
-    { key: "Regional 8", text: "Regional 8", value: "8" },
+    { key: "Regional 1", text: "Regional 1", value: 1 },
+    { key: "Regional 2", text: "Regional 2", value: 2 },
+    { key: "Regional 3", text: "Regional 3", value: 3 },
+    { key: "Regional 4", text: "Regional 4", value: 4 },
+    { key: "Regional 5", text: "Regional 5", value: 5 },
+    { key: "Regional 6", text: "Regional 6", value: 6 },
+    { key: "Regional 7", text: "Regional 7", value: 7 },
+    { key: "Regional 8", text: "Regional 8", value: 8 },
   ];
   const options3 = [
     { key: "Juridiccion 1", text: "Juridiccion 1", value: 1 },
@@ -45,8 +45,9 @@ export const AddUser= (props) => {
     onSubmit: async (formValue) => {
     //   formValue.nombres = formValue.nombres.toUpperCase();
     //   formValue.apellidos = formValue.apellidos.toUpperCase();
+    console.log(formValue)
       try {
-        console.log(formValue)
+        
         if(formValue.rol==="administrador"){
           formValue.is_superuser = true
         }else{
