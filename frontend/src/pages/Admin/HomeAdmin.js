@@ -2,7 +2,8 @@ import React from 'react'
 import {HeaderPage} from "../../components/Admin/"
 import {TableVigilancia} from "../../components/Vigilancia/TableVigilancia"
 import {CargaVigilancia} from "../Vigilancia"
-import {useUser} from "../../hooks"
+import {CargaHorario} from "../../components/Vigilancia/CargaHorarios"
+import {useUser,useVigilancia} from "../../hooks"
 import {Button,Form} from "semantic-ui-react"
 import { useFormik } from "formik";
 import { Link, useLocation } from "react-router-dom";
@@ -11,8 +12,9 @@ import { useEffect,useState } from 'react'
 import "./HomeAdmin.scss"
 import Swal from "sweetalert2";
 
+
 export function HomeAdmin() {
-    const {getUsers,loading,users,setUsers,deleteUser,getempleadoId,auth} = useUser()
+    const {get_vigilancia,vigilancias} = useVigilancia()
     const [titleModal, setTitleModal] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [contentModal, setContentModal] = useState(null);
@@ -20,7 +22,7 @@ export function HomeAdmin() {
     const { pathname } = useLocation();
     
     useEffect(() => {
-        getUsers();
+        get_vigilancia();
       }, []);
       
       
@@ -28,6 +30,22 @@ export function HomeAdmin() {
         setShowModal((prev) => !prev);
       };
       const onRefetch = () => setRefetch((prev) => !prev);
+
+      const addHorarios = (fecha_fin) => {
+        setTitleModal("Agregar Horarios");
+        // console.log(cantidad_dias)
+        setContentModal(
+          <CargaHorario
+            onClose={openCloseModal}
+            Refetch = {onRefetch}
+            fecha_fin={fecha_fin}
+            // cantidad_dias={cantidad_dias}
+            // setformHorario={setformHorario}
+            // addUser={addUser}
+          />
+        );
+        openCloseModal();
+      };
 
       // const addUser = () => {
       //   setTitleModal("Nuevo Usuario");
@@ -41,40 +59,40 @@ export function HomeAdmin() {
       //   openCloseModal();
       // };
       
-      const onDeleteUser = async (data) => {
-        try {
-          Swal.fire({
-            icon: "question",
-            iconColor: "lightblue",
-            title: "Eliminar Usuario",
-            text: "¿Estas seguro que quieres eliminar este empleado?",
-            showCancelButton: true,
-            showConfirmButton: true,
-            confirmButtonText: "confirmar",
-            cancelButtonText: "cancelar",
-            reverseButtons: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-          }).then(async (result) => {
-            if (result.isConfirmed) {
-              await deleteUser(data.id);
-              console.log("hola mundo")
-              window.location.reload()
-              // setUsers(null);
+      // const onDeleteUser = async (data) => {
+      //   try {
+      //     Swal.fire({
+      //       icon: "question",
+      //       iconColor: "lightblue",
+      //       title: "Eliminar Usuario",
+      //       text: "¿Estas seguro que quieres eliminar este empleado?",
+      //       showCancelButton: true,
+      //       showConfirmButton: true,
+      //       confirmButtonText: "confirmar",
+      //       cancelButtonText: "cancelar",
+      //       reverseButtons: true,
+      //       confirmButtonColor: "#3085d6",
+      //       cancelButtonColor: "#d33",
+      //     }).then(async (result) => {
+      //       if (result.isConfirmed) {
+      //         await deleteUser(data.id);
+      //         console.log("hola mundo")
+      //         window.location.reload()
+      //         // setUsers(null);
     
-              Swal.fire({
-                title: "Empleado Eliminado!",
-                text: "El empleado fue eliminado",
-                icon: "success",
-                showConfirmButton: true,
-                timer: 3000,
-              });
-            }
-          });
-        } catch (error) {
-          console.error(error);
-        }
-      };
+      //         Swal.fire({
+      //           title: "Empleado Eliminado!",
+      //           text: "El empleado fue eliminado",
+      //           icon: "success",
+      //           showConfirmButton: true,
+      //           timer: 3000,
+      //         });
+      //       }
+      //     });
+      //   } catch (error) {
+      //     console.error(error);
+      //   }
+      // };
       const formik = useFormik({
         // initialValues: initialValues(),
         // validationSchema: Yup.object(newSchame()),
@@ -131,8 +149,8 @@ export function HomeAdmin() {
               
          </div>
       <TableVigilancia 
-                    // users={users}
-                    // onDeleteUser={onDeleteUser}
+            vigilancias={vigilancias}
+            addHorarios={addHorarios}
       />
       <ModalBasic
             show={showModal}

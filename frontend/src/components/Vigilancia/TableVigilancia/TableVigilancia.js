@@ -5,13 +5,13 @@ import "./TableVigilancia.scss";
 
 
 export function TableVigilancia(props) {
-//   const { } = props;
+  const {vigilancias,addHorarios } = props;
  
   return (
     <Table className="table-users-admin">
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell>Id Vigilancia</Table.HeaderCell>
+          <Table.HeaderCell>Regional</Table.HeaderCell>
           <Table.HeaderCell>Comisaria</Table.HeaderCell>
           <Table.HeaderCell>Motivo</Table.HeaderCell>
           <Table.HeaderCell>Tipo de Servicio</Table.HeaderCell>
@@ -25,54 +25,49 @@ export function TableVigilancia(props) {
           <Table.HeaderCell></Table.HeaderCell>
         </Table.Row>
       </Table.Header>
-      {/* <Table.Body>
-        {map(users, (user, index) => (
+      <Table.Body>
+        {map(vigilancias, (vigilancia, index) => (
           <Table.Row
             key={index}
 
-          >
-            <Table.Cell>{user.User.username}</Table.Cell>
-            <Table.Cell>{user.User.email}</Table.Cell>
-            <Table.Cell>{user.User.first_name}</Table.Cell>
-            <Table.Cell>{user.User.last_name}</Table.Cell>
-            <Table.Cell className="status">
-              {user?.User.is_active ? (
-                <Icon name="check" />
-              ) : (
-                <Icon name="close" />
-              )}
-            </Table.Cell>
-            <Table.Cell className="status">
-              {user?.User.is_staff ? (
-                <Icon name="check" />
-              ) : (
-                <Icon name="close" />
-              )}
-            </Table.Cell>
-            <Table.Cell>{user.nivel_permiso}</Table.Cell>
+          > 
+             <Table.Cell>{vigilancia.regional}</Table.Cell>
+            <Table.Cell>{vigilancia.jurisdiccion}</Table.Cell>
+            <Table.Cell>{vigilancia.motivo}</Table.Cell>
+            <Table.Cell>{vigilancia.servicio}</Table.Cell>
+            <Table.Cell>{vigilancia.objetivo}</Table.Cell>
+            <Table.Cell>{vigilancia.cant_dias}</Table.Cell>
+            <Table.Cell>{vigilancia.fecha_inicio.slice(0, 10)}</Table.Cell>
+            <Table.Cell>{vigilancia.fecha_fin.slice(0,10)}</Table.Cell>
+            <Table.Cell>{vigilancia.latitud}</Table.Cell>
+            <Table.Cell>{vigilancia.longitud}</Table.Cell>
+            
             <Actions
-              user={user}
+              // user={user}
+               addHorarios={addHorarios}
+               fecha_fin={vigilancia.fecha_fin.slice(0,10)}
             //   updateUser={updateUser}
-               onDeleteUser={onDeleteUser}
+              //  onDeleteUser={onDeleteUser}
               
             />
           </Table.Row>
         ))}
-      </Table.Body> */}
+      </Table.Body>
     </Table>
   );
 }
 
 function Actions(props) {
-  const { user, updateUser, onDeleteUser } = props;
+  const { addHorarios,fecha_fin} = props;
   return (
     <Table.Cell textAlign="right">
             
-      <Button icon onClick={() => updateUser(user,"contra")}>
-        <Icon name="pencil" />
+      <Button positive icon onClick={() => addHorarios(fecha_fin)}>
+        {/* <Icon className="green" name="pencil" /> */}
+        Turnos
       </Button>
 
-      <Button icon negative onClick={() => onDeleteUser(user)}>
+      <Button icon negative onClick={()=>console.log("hola mundo")}>
         <Icon name="close" />
       </Button>
     </Table.Cell>

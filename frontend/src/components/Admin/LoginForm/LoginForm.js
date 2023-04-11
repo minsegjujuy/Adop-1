@@ -19,7 +19,7 @@ const [mostrarContrasenia, setMostrarContrasenia] = useState(false);
       try {
         // console.log(formValue)
         const response = await loginApi(formValue);
-        // console.log(response)
+        console.log(response)
         // const { access } = response;
         login(response);
         

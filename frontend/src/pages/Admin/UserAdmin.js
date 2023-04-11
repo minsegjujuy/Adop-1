@@ -74,7 +74,7 @@ export function UserAdmin() {
   return (
     <>
           
-          <HeaderPage title="USUARIOS"/>
+          <HeaderPage title="GESTION DE USUARIOS"/>
           <div className='header-page-usuarios'>
           {/* <Button 
           type="button"

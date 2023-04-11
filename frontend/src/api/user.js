@@ -95,11 +95,11 @@ export async function loginApi(formValue){
   }
   export async function deleteUserApi(id, token) {
     try {
-      const url = `${BASE_API}/api/empleados/${id}/`;
+      const url = `${BASE_API}/api/usuarios/${id}/`;
       const params = {
         method: "DELETE",
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Token ${token}`,
         },
       };
   

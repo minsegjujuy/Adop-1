@@ -1,8 +1,11 @@
-import {addVigilanciaApi} from "../api/vigilancia"
+import {addVigilanciaApi,getJurisdicciones,getVigilancias} from "../api/vigilancia"
+import { useState } from "react";
+import {useAuth} from "../hooks"
 
-export function useUser() {
+export function useVigilancia() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [vigilancias, setVigilancias] = useState(null);
     const { auth } = useAuth();
 
       const addVigilancia = async (data) => {
@@ -17,7 +20,31 @@ export function useUser() {
           
         }
       };
-   
+      const get_jurisdicciones = async (data) => {
+        try {
+          setLoading(true);
+          const resultado = await getJurisdicciones(auth.token);
+          setLoading(false);
+          return resultado;
+        } catch (error) {
+          setLoading(false);
+          setError(error);
+          
+        }
+      };
+      const get_vigilancia = async (data) => {
+        try {
+          setLoading(true);
+          const resultado = await getVigilancias(auth.token);
+          console.log(resultado)
+          setLoading(false);
+          setVigilancias(resultado)
+        } catch (error) {
+          setLoading(false);
+          setError(error);
+          
+        }
+      };
   // const buscarEmpleadoId = async (id) => {
   //   try {
   //     setLoading(true);
@@ -32,7 +59,10 @@ export function useUser() {
     return {
         loading,
         error,
+        vigilancias,
         addVigilancia,
+        get_jurisdicciones,
+        get_vigilancia,
         
        
     
