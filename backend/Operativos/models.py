@@ -7,7 +7,7 @@ class Operativo(models.Model):
     jefe_cargo = models.IntegerField()
     hora_inicio = models.TimeField(null=False)
     hora_final = models.TimeField(null=False)
-    # dependencia = models.ForeignKey(Dependencia, on_delete=models.CASCADE)
+    jurisdiccion = models.ForeignKey(Dependencia, on_delete=models.CASCADE, null=True)
     fecha = models.DateField(null=False)
     latitud = models.DecimalField(null=False,decimal_places=10,max_digits=13)
     longitud = models.DecimalField(null=False,decimal_places=10,max_digits=13)
@@ -16,7 +16,7 @@ class Operativo(models.Model):
     procedimiento = models.BooleanField(null=False)
     turno = models.CharField(null=False, max_length=10)
     # activar luego de la primera migracion
-    # personal = models.ManyToManyField('OperativoPersonal', db_table='operativo_personal', related_name='personal') #comentar para la primera migracion
+    personal = models.ManyToManyField('OperativoPersonal', db_table='operativo_personal', related_name='personal') #comentar para la primera migracion
 
 class OperativoPersonal(models.Model):
     fk_operativo = models.ForeignKey("Operativos.Operativo", on_delete=models.CASCADE)

@@ -34,7 +34,7 @@ class DiasVigilanciaSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'fk_vigilancia',
-            'fk_personal'
+            'fk_personal',
             'dia',
             'hora_inicio',
             'hora_fin',

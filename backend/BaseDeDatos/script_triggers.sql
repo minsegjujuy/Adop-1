@@ -58,19 +58,19 @@ EXECUTE FUNCTION disminuir_cant_dias_func();
 
 -- prueba de triggers
 
-INSERT INTO public."Vigilancia_diasvigilancia" 
-	(dia,hora_inicio,hora_fin,turno,dia_completo,fk_personal_id,fk_vigilancia_id)
-	VALUES ('2023-03-31', NULL, NULL, NULL, TRUE, DEFAULT,1)
+-- INSERT INTO public."Vigilancia_diasvigilancia" 
+-- 	(dia,hora_inicio,hora_fin,turno,dia_completo,fk_personal_id,fk_vigilancia_id)
+-- 	VALUES ('2023-03-31', NULL, NULL, NULL, TRUE, DEFAULT,1)
 	
-DELETE FROM public."Vigilancia_diasvigilancia" WHERE id=13;
+-- DELETE FROM public."Vigilancia_diasvigilancia" WHERE id=13;
 
-UPDATE public."Vigilancia_vigilancia" SET cant_dias = 0 WHERE id=1;
+-- UPDATE public."Vigilancia_vigilancia" SET cant_dias = 0 WHERE id=1;
 
 
 
-DROP TRIGGER tr_aumentar_cant_dias on public."Vigilancia_diasvigilancia";
-DROP TRIGGER tr_disminuir_cant_dias on public."Vigilancia_diasvigilancia";
-DROP FUNCTION aumentar_cant_dias_func;
-DROP FUNCTION disminuir_cant_dias_func;
+-- DROP TRIGGER tr_aumentar_cant_dias on public."Vigilancia_diasvigilancia";
+-- DROP TRIGGER tr_disminuir_cant_dias on public."Vigilancia_diasvigilancia";
+-- DROP FUNCTION aumentar_cant_dias_func;
+-- DROP FUNCTION disminuir_cant_dias_func;
 
-DROP FUNCTION update_cant_dias;
+-- DROP FUNCTION update_cant_dias;
