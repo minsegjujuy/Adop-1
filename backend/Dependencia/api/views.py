@@ -14,14 +14,14 @@ class InspectoraViewSet(viewsets.ModelViewSet):
 class UnidadRegionalViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     authentication_classes = (JWTAuthentication,TokenAuthentication)
-    queryset = Dependencia.objects.all()    
-    serializer_class = DependenciaSerializer
+    queryset = UnidadRegional.objects.all()    
+    serializer_class = UnidadRegionalSerializer
 
 class DependenciaViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     authentication_classes = (JWTAuthentication,TokenAuthentication)
-    queryset = UnidadRegional.objects.all()    
-    serializer_class = UnidadRegionalSerializer
+    queryset = Dependencia.objects.all()    
+    serializer_class = DependenciaSerializer
 
 class DependenciasOperativosiewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)

@@ -22,7 +22,7 @@ export async function addVigilanciaApi(data, token) {
   }
   export async function getJurisdicciones(token) {
     try {
-      const url = `${BASE_API}/api/unidades_regionales/`;
+      const url = `${BASE_API}/api/dependencias/`;
       const params = {
         method: "GET",
         headers: {
@@ -31,6 +31,7 @@ export async function addVigilanciaApi(data, token) {
       };
       const response = await fetch(url, params);
       const result = await response.json();
+      console.log(result);
       return result;
     } catch (error) {
       throw error;

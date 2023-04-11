@@ -34,14 +34,28 @@
         "model": "app.Usuario",
         "pk": 2,
         "fields": {
-            "username": "samuel",
-            "email": "samuel@example.com",
-            "nombres": "samuel elias",
-            "apellidos": "paredes",
+            "username": "operador",
+            "email": "operador@operador.com",
+            "nombres": "operador",
+            "apellidos": "operador",
+            "rol": 3,
+            "unidad_regional": 1,
+            "jurisdiccion" : 4,
+            "password": "operador"
+        }
+    },
+    {
+        "model": "app.Usuario",
+        "pk": 3,
+        "fields": {
+            "username": "general",
+            "email": "general@general.com",
+            "nombres": "general",
+            "apellidos": "general",
             "rol": 2,
             "unidad_regional": 1,
             "jurisdiccion" : 4,
-            "password": "root"
+            "password": "general"
         }
     }
 ]

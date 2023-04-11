@@ -45,6 +45,7 @@ export function TableVigilancia(props) {
             <Actions
               // user={user}
                addHorarios={addHorarios}
+               fecha_inicio={vigilancia.fecha_inicio.slice(0,10)}
                fecha_fin={vigilancia.fecha_fin.slice(0,10)}
             //   updateUser={updateUser}
               //  onDeleteUser={onDeleteUser}
@@ -58,11 +59,11 @@ export function TableVigilancia(props) {
 }
 
 function Actions(props) {
-  const { addHorarios,fecha_fin} = props;
+  const { addHorarios,fecha_fin,fecha_inicio} = props;
   return (
     <Table.Cell textAlign="right">
             
-      <Button positive icon onClick={() => addHorarios(fecha_fin)}>
+      <Button positive icon onClick={() => addHorarios(fecha_fin,fecha_inicio)}>
         {/* <Icon className="green" name="pencil" /> */}
         Turnos
       </Button>
