@@ -1,0 +1,217 @@
+**django-tools.cache** contains two cache related things:
+
+* smooth cache backends
+* per-site cache middleware
+
+
+== smooth cache backends
+
+Same as django cache backends, but you can sooth renew the content by call {{{cache.smooth_update()}}} depend on the current system load.
+
+Using the django cache framework can save processing-overhead.
+The problem is Validation/Invalidation of cache items.
+
+One simple solution: Do 'cache.clear()' every time the data changed. This ensures that everything is always up to date.
+But an empty cache causes very high load when many requests are at the same time.
+
+With the "smooth cache backends" it's not needed to clear the complete cache. It renew out dated entries variable based on the system load.
+The cache would be updated more quickly if system load is low than under heavy load.
+
+The idea is simple:
+* save the timestamp when item added to the cache
+* save the "last change" timestamp with {{{cache.smooth_update()}}}
+* check in {{{cache.get()}}} if and how long this item is out-dated
+* re-use or delete a out-dated item depend on {{{os.getloadavg()[0]}}}
+
+The smooth cache backends works like the origin Django backends. The API is the same.
+There is only the public method **smooth_update()** added to the origin cache backends.
+
+=== usage
+
+If something changed (e.g. a cms page) call {{{cache.smooth_update()}}}, e.g:
+{{{
+def edit_foobar(request):
+    if request.method == 'POST':
+        form = MyForm(request.POST)
+        if form.is_valid():
+            form.save()          
+            try:
+                cache.smooth_update() # Save "last change" timestamp in django-tools SmoothCacheBackend
+            except AttributeError:
+                # Fallback if no SmoothCacheBackend used -> clean the complete cache
+                cache.clear()
+            
+            # redirect somewhere
+    ...
+}}}
+
+=== settings
+
+==== setup backends
+{{{
+CACHES = {
+    'default': {
+        'BACKEND': 'django_tools.cache.smooth_cache_backends.SmoothFileBasedCache',
+        'LOCATION': '/var/tmp/django_cache',
+        'TIMEOUT': 3600 # current value is only a example, it should be a very long time ;)
+    }
+}
+CACHE_MIDDLEWARE_SECONDS = 3600 # current value is only a example, it should be a very long time ;)
+}}}
+
+Existing backends:
+
+| FileBasedCache | django_tools.cache.smooth_cache_backends.SmoothFileBasedCache
+| DatabaseCache  | django_tools.cache.smooth_cache_backends.SmoothDatabaseCache
+| LocMemCache    | django_tools.cache.smooth_cache_backends.SmoothLocMemCache
+| MemcachedCache | django_tools.cache.smooth_cache_backends.SmoothMemcachedCache
+| PyLibMCCache   | django_tools.cache.smooth_cache_backends.SmoothPyLibMCCache
+
+
+==== SMOOTH_CACHE_TIMES
+(//tuple//)
+This is the information between out-date time and system load.
+The defaults are:
+{{{
+SMOOTH_CACHE_TIMES = (
+    # load value, max age in sec.
+    (0, 5), #          < 0.1 ->  5sec
+    (0.1, 10), #   0.1 - 0.5 -> 10sec
+    (0.5, 30), #   0.5 - 1.0 -> 30sec
+    (1.0, 60), #   1.0 - 1.5 ->  1Min
+    (1.5, 120), #  1.5 - 2.0 ->  2Min
+    (2.0, 300), #  2.0 - 3.0 ->  5Min
+    (3.0, 900), #  3.0 - 4.0 -> 15Min
+    (4.0, 3600), #     > 4.0 ->  1h
+)
+}}}
+These defaults are just probably devised ;)
+
+==== SMOOTH_CACHE_CHANGE_TIME
+(//String//, default: {{{DJANGO_TOOLS_SMOOTH_CACHE_CHANGE_TIME}}})
+Cache key value to store the "last change timestamp"
+
+==== SMOOTH_CACHE_UPDATE_TIMESTAMP
+(//Integer//, default: {{{10}}})
+Time in seconds to update the "last change timestamp" from cache.
+**Note:**
+The timestamp would be stored in the class, too. But this value would not be synced in multi-process environments.
+So we put/get the timestamp into the cache for sync over all processes.
+But to safe processing-overhead, we don't fetch the current value from the cache every time.
+
+
+
+
+
+== per-site cache middleware
+
+Similar to [[https://docs.djangoproject.com/en/1.4/topics/cache/#the-per-site-cache|django UpdateCacheMiddleware and FetchFromCacheMiddleware]],
+but has some enhancements:        
+ * Skip cookies and attributes like response.csrf_processing_done
+ * ignores {{{response['Vary']}}}
+ * Check if 'csrfmiddlewaretoken' is in content
+ * stores information about request/response count and cache hits (see //cache information// below)
+
+The cache key would be generated with:
+ * request.get_full_path()
+ * request.LANGUAGE_CODE
+ * settings.SITE_ID
+
+=== usage
+
+add this to your settings:
+{{{
+MIDDLEWARE_CLASSES = (
+    ...
+    'django_tools.cache.site_cache_middleware.UpdateCacheMiddleware',
+    ...
+    'django_tools.cache.site_cache_middleware.FetchFromCacheMiddleware',
+    ...
+)
+}}}
+**Notes:**
+ * "update" must be the first in the list and "fetch" at the last. (see also [[https://docs.djangoproject.com/en/1.4/topics/cache/#order-of-middleware-classes|Order of MIDDLEWARE_CLASSES]])
+ * django.middleware.locale.LocaleMiddleware must be insert before cache middleware
+
+ 
+=== settings
+
+==== CACHE_MIDDLEWARE_ANONYMOUS_ONLY
+(//Boolean//, default: {{{False}}})
+If ==True: Don't cache for authenticated users.
+
+==== CACHE_CALLBACK
+(//String//, e.g.: "my_project.cache.cache_callback", default: {{{None}}})
+Path to a call back function for checking if request/response should be caches.
+e.g.:
+{{{
+from django_tools.cache.site_cache_middleware import logger # Maybe use a own logger
+
+def cache_callback(request, response=None):
+    if request.GET:
+        logger.debug("Don't cache request with GET query: %s" % repr(request.GET))
+        return False
+
+    if response and getattr(response, 'disable_cache', False):
+        logger.debug("Don't cache because response.disable_cache==True")
+        return False
+
+    return True
+}}}
+
+==== RUN_WITH_DEV_SERVER
+(//Boolean//, default: {{{"runserver" in sys.argv}}})
+Are we run with the django developer server? If yes, we do some more checks:
+ * Don't cache STATIC files. ({{{request.path}}} starts with {{{settings.STATIC_URL}}})
+ * raise error if a {{{ {% csrf_token %} }}} would be stored into the cache (e.g. view dosn't use {{{@csrf_protect}}} decorator)
+
+==== CACHE_EXTRA_DEBUG
+(//Boolean//, default: {{{False}}})
+creates more {{{logger.debug()}}} output
+
+==== COUNT_UPDATE_CACHE, COUNT_FETCH_FROM_CACHE, COUNT_IN_CACHE
+(Add these values are //Boolean// and the defaults are {{{False}}})
+
+The middlewares can store some informations:
+* total number of requests
+* total number cache hits
+
+* **COUNT_UPDATE_CACHE** activate counting in //UpdateCacheMiddleware//.
+* **COUNT_FETCH_FROM_CACHE** activate counting in //FetchFromCacheMiddleware//.
+* **COUNT_IN_CACHE** count global via cache, too. (see below)
+
+Theses counter are stored in two ways:
+* into a local dict (not valid values in multi-process environments)
+* into the cache
+
+//into a local dict// is the default ({{{settings.COUNT_IN_CACHE==False}}}), because it's very fast and costs almost no performance. The disadvantage is, that the values are only valid for the current process.
+
+In the //into the cache// solution the valued would be stored into the cache. This costs more or less performances, depend on the used cache backend.
+
+To get the information e.g.:
+{{{
+from django.core.cache import cache
+
+from django_tools.cache.site_cache_middleware import LOCAL_CACHE_INFO,\
+    CACHE_REQUESTS, CACHE_REQUEST_HITS, CACHE_RESPONSES, CACHE_RESPONSE_HITS
+
+def my_view(request):
+    ...
+    context = {
+        # from FetchFromCacheMiddleware (if settings.COUNT_FETCH_FROM_CACHE != True: all values are None):
+        "local_cache_requests": LOCAL_CACHE_INFO["requests"],
+        "local_cache_request_hits": LOCAL_CACHE_INFO["request hits"],
+        "global_cache_requests": cache.get(CACHE_REQUESTS),
+        "global_cache_request_hits":  cache.get(CACHE_REQUEST_HITS),
+
+        # from UpdateCacheMiddleware (if settings.COUNT_UPDATE_CACHE != True: all values are None):
+        "local_cache_responses": LOCAL_CACHE_INFO["responses"],
+        "local_cache_response_hits": LOCAL_CACHE_INFO["response hits"],
+        "global_cache_responses": cache.get(CACHE_RESPONSES),
+        "global_cache_response_hits":  cache.get(CACHE_RESPONSE_HITS),
+    }
+    ...
+}}}
+Notes:
+* relevant count values are {{{None}}} if counting is deactivated.
+* {{{LOCAL_CACHE_INFO}}} is a normal {{{dict}}}, so you can put it directly into the context etc.

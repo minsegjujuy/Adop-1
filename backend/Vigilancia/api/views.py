@@ -15,27 +15,26 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 class MotivoViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     authentication_classes = (JWTAuthentication,TokenAuthentication)
-    queryset = Motivo.objects.all()    
+    # queryset = Motivo.objects.all()    
     serializer_class = MotivoVigilanciaSerializer
 
 class VigilanciaViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     authentication_classes = (JWTAuthentication,TokenAuthentication)
-    queryset = Vigilancia.objects.all()    
+    queryset = Vigilancia.objects.all()
     serializer_class = VigilanciaSerializer
     
     def list(self, request):
         usuario = request.user
-        print(usuario.jurisdiccion.id)
         serializer = VigilanciaSerializer(self.queryset, many=True)
-        print(serializer.data)
+        
         if usuario.rol.rol == 'OPERADOR':
-            for vigilancia in serializer.data:
-                if vigilancia.fk_jurisdiccion != usuario.jurisdiccion:
-                    serializer.data.pop(vigilancia, None)
-        # print(serializer)
+            datos = [x for x in serializer.data if x['fk_jurisdiccion']==usuario.jurisdiccion.id]
+        else:
+            datos = serializer.data
+
         resuesta = []
-        for vigilancia in serializer.data:
+        for vigilancia in datos:
             data = {}
             data['id']=vigilancia['id']
             data['jurisdiccion']= Dependencia.objects.get(id=vigilancia['fk_jurisdiccion']).jurisdiccion

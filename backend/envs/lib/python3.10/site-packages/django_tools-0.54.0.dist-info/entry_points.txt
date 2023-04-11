@@ -1,0 +1,5 @@
+[console_scripts]
+dev_server=django_tools_test_project.manage:start_test_server
+django_tools_selenium=django_tools.selenium.cli:main
+publish=django_tools.publish:publish
+
