@@ -141,9 +141,9 @@ export function HomeAdmin() {
           >
             {"AGREGAR NUEVA VIGILANCIA"}
           </Button>
-          <Button onClick={()=>addHorarios()}>
+          {/* <Button onClick={()=>addHorarios(constrfecha_inicio="2023-04-01",fecha_fin=null)}>
             asignar
-          </Button>
+          </Button> */}
         </div>
       </div>
       <TableVigilancia vigilancias={vigilancias} addHorarios={addHorarios} />

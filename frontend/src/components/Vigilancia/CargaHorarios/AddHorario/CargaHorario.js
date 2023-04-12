@@ -15,6 +15,7 @@ import "./CargaHorario.scss";
 
 export const CargaHorario = (props) => {
   const { onClose, fecha_fin,fecha_inicio } = props;
+  
   //   const { addFranja, obtenerFranjas } = usePacienteDiabetes();
 
   // const arreglo = [
@@ -36,7 +37,7 @@ export const CargaHorario = (props) => {
   // let fechaformateada = anio + "-" + mes + "-" + dia;
 
   const fecha1 = new Date(fecha_inicio);
-  const fecha2 = new Date(fecha_fin);
+  const fecha2 = new Date(fecha_fin? fecha_fin:"2026-01-01");
   const unDia = 24 * 60 * 60 * 1000; // número de milisegundos en un día
   const diffFechas = Math.abs(fecha2 - fecha1); // diferencia de milisegundos entre las fechas
   const diferencia = Math.floor(diffFechas / unDia); // redondea hacia abajo al número entero más cercano
@@ -123,7 +124,7 @@ export const CargaHorario = (props) => {
 
         const formValue2 = {
           
-          turno:[{cant_semanas},{turnos},{ultima_semana:ultima_semana}],
+          turno:[fecha_fin? cant_semanas:1,{turnos},fecha_fin? ultima_semana:[]],
           turno_completo: formValue.turno_completo,
           hora_inicio: formValue.hora_inicio,
           hora_fin: formValue.hora_fin,

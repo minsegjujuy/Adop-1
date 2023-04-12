@@ -16,7 +16,7 @@ export function TableVigilancia(props) {
           <Table.HeaderCell>Motivo</Table.HeaderCell>
           <Table.HeaderCell>Tipo de Servicio</Table.HeaderCell>
           <Table.HeaderCell>Objetivo</Table.HeaderCell>
-          <Table.HeaderCell>Dias</Table.HeaderCell>
+          {/* <Table.HeaderCell>Dias</Table.HeaderCell> */}
           <Table.HeaderCell>Fecha de inicio</Table.HeaderCell>
           <Table.HeaderCell>Fecha de fin</Table.HeaderCell>
           <Table.HeaderCell>Latitud</Table.HeaderCell>
@@ -36,7 +36,7 @@ export function TableVigilancia(props) {
             <Table.Cell>{vigilancia.motivo}</Table.Cell>
             <Table.Cell>{vigilancia.servicio}</Table.Cell>
             <Table.Cell>{vigilancia.objetivo}</Table.Cell>
-            <Table.Cell>{vigilancia.cant_dias}</Table.Cell>
+            {/* <Table.Cell>{vigilancia.cant_dias}</Table.Cell> */}
             <Table.Cell>{vigilancia.fecha_inicio.slice(0, 10)}</Table.Cell>
             <Table.Cell>{vigilancia.fecha_fin? vigilancia.fecha_fin.slice(0,10):"indefinida"}</Table.Cell>
             <Table.Cell>{vigilancia.latitud}</Table.Cell>
@@ -46,7 +46,7 @@ export function TableVigilancia(props) {
               // user={user}
                addHorarios={addHorarios}
                fecha_inicio={vigilancia.fecha_inicio.slice(0,10)}
-               fecha_fin={vigilancia.fecha_fin.slice(0,10)}
+               fecha_fin={vigilancia.fecha_fin? vigilancia.fecha_fin.slice(0,10):null}
             //   updateUser={updateUser}
               //  onDeleteUser={onDeleteUser}
               
