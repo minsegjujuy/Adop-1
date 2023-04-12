@@ -47,7 +47,10 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
             data['objetivo']= vigilancia['objetivo']
             data['cant_dias']= vigilancia['cant_dias']
             data['fecha_inicio']= vigilancia['fecha_inicio']
-            data['fecha_fin']= vigilancia['fecha_fin']
+            if vigilancia['fecha_fin']:
+                data['fecha_fin'] = vigilancia['fecha_fin']
+            else:
+                data['fecha_fin'] = "Indefinido"
             data['destino']= vigilancia['destino']
             data['longitud']= vigilancia['longitud']
             data['latitud']= vigilancia['latitud']

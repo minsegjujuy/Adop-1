@@ -69,7 +69,9 @@ export function AuthProvider(props) {
         'email': response.usuario.email,
         'nombres': response.usuario.nombres,
         'apellidos': response.usuario.apellidos,
-        'rol':response.usuario.rol
+        'rol':response.usuario.rol,
+        'jurisdiccion': response.usuario.jurisdiccion,
+        'unidad_regional' : response.usuario.unidad_regional
       }
     }
     setToken(JSON.stringify(data));
