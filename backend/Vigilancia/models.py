@@ -2,7 +2,6 @@ from django.db import models
 from Servicio.models import TipoRecurso, TipoServicio
 from Personal.models import Personal
 from Dependencia.models import Dependencia
-from django.db import connections
 
 class Motivo(models.Model):
     motivo = models.CharField(max_length=22)
@@ -32,9 +31,13 @@ class Vigilancia(models.Model):
 
 class DiasVigilancia(models.Model):
     fk_vigilancia = models.ForeignKey('Vigilancia', on_delete=models.CASCADE)
-    fk_personal = models.ForeignKey(Personal, on_delete=models.CASCADE, null=True)
-    dia = models.DateTimeField(null=False)
+    fecha = models.DateTimeField(null=False)
     hora_inicio = models.TimeField(null=True)
     hora_fin = models.TimeField(null=True)
-    turno = models.CharField(max_length=100,null=True)
     dia_completo = models.BooleanField(default=False)
+
+class TurnoVigilancia(models.Model):
+    fk_personal = models.ForeignKey(Personal, null=False, on_delete=models.CASCADE)
+    fk_diaVigilancia = models.ForeignKey('DiasVigilancia', on_delete=models.CASCADE)
+    hora_inicio = models.TimeField(null=False)
+    hora_fin = models.TimeField(null=False)

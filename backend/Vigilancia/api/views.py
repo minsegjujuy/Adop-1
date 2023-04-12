@@ -1,9 +1,9 @@
-from ..models import Motivo,Vigilancia, DiasVigilancia
+from ..models import Motivo,Vigilancia, DiasVigilancia, TurnoVigilancia
 from Dependencia.models import Dependencia, UnidadRegional
 from Servicio.models import Servicio
 
 from Dependencia.api.serializer import UnidadRegionalSerializer
-from .serializer import VigilanciaSerializer, DiasVigilanciaSerializer, MotivoVigilanciaSerializer
+from .serializer import VigilanciaSerializer, DiasVigilanciaSerializer, MotivoVigilanciaSerializer, TurnoVigilanciaSerializer
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -15,7 +15,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 class MotivoViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     authentication_classes = (JWTAuthentication,TokenAuthentication)
-    # queryset = Motivo.objects.all()    
+    queryset = Motivo.objects.all()    
     serializer_class = MotivoVigilanciaSerializer
 
 class VigilanciaViewSet(viewsets.ModelViewSet):
@@ -121,8 +121,20 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
         respuesta = {'msj':'Vigilancia creada exitosamente!'}
         return JsonResponse(respuesta, safe=False,status = status.HTTP_201_CREATED)
     
+    def destroy(self, request, pk=None):
+        try:
+            queryset = Vigilancia.objects.get(pk=pk)
+        except Vigilancia.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
 class DiasVigilanciaViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     authentication_classes = (JWTAuthentication,TokenAuthentication)
     queryset = DiasVigilancia.objects.all()    
     serializer_class = DiasVigilanciaSerializer
+
+class TurnoVigilanciaViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (JWTAuthentication,TokenAuthentication)
+    queryset = TurnoVigilancia.objects.all()    
+    serializer_class = TurnoVigilanciaSerializer
