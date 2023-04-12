@@ -27,7 +27,7 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
     def list(self, request):
         usuario = request.user
         serializer = VigilanciaSerializer(self.queryset, many=True)
-        
+        print(serializer.data)
         if usuario.rol.rol == 'OPERADOR':
             datos = [x for x in serializer.data if x['fk_jurisdiccion']==usuario.jurisdiccion.id]
         else:

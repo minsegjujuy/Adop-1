@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
-import { Table, Form, Button, Select, Checkbox ,TimeInput} from "semantic-ui-react";
+import {
+  Table,
+  Form,
+  Button,
+  Select,
+  Checkbox,
+  TimeInput,
+} from "semantic-ui-react";
 import { map } from "lodash";
 import Swal from "sweetalert2";
 import * as Yup from "yup";
-import "./CargaHorario.scss"
+import "./CargaHorario.scss";
 
 export const CargaHorario = (props) => {
-  const { onClose, fecha_fin } = props;
-  const {dias_dif,setdias_dif} = useState(null)
+  const { onClose, fecha_fin,fecha_inicio } = props;
   //   const { addFranja, obtenerFranjas } = usePacienteDiabetes();
 
   // const arreglo = [
@@ -21,24 +27,22 @@ export const CargaHorario = (props) => {
   //   },
   // ];
   // const arreglo2 = definirVector(arreglo, cantidad_dias);
-  
- 
-  
-  const today = new Date()
-  const dia_semana = today.getDay();
-  let dia = ("0" + today.getDate()).slice(-2);
-  let mes = ("0" + (today.getMonth() + 1)).slice(-2);
-  let anio = today.getFullYear().toString();
-  let fechaformateada = anio + '-' + mes + '-' + dia;
 
-  const fecha1= new Date(fechaformateada)
-  const fecha2= new Date(fecha_fin)
+  // const today = new Date();
+  // const dia_semana = today.getDay();
+  // let dia = ("0" + today.getDate()).slice(-2);
+  // let mes = ("0" + (today.getMonth() + 1)).slice(-2);
+  // let anio = today.getFullYear().toString();
+  // let fechaformateada = anio + "-" + mes + "-" + dia;
+
+  const fecha1 = new Date(fecha_inicio);
+  const fecha2 = new Date(fecha_fin);
   const unDia = 24 * 60 * 60 * 1000; // número de milisegundos en un día
   const diffFechas = Math.abs(fecha2 - fecha1); // diferencia de milisegundos entre las fechas
-  const diferencia=Math.floor(diffFechas / unDia); // redondea hacia abajo al número entero más cercano
+  const diferencia = Math.floor(diffFechas / unDia); // redondea hacia abajo al número entero más cercano
 
-  const cant_semanas=Math.floor(diferencia/7)
-  const dias_ult_semana= diferencia % 7
+  const cant_semanas = Math.floor(diferencia / 7);
+  const dias_ult_semana = diferencia % 7;
 
   const dias = [
     { key: "1", text: "Lunes", value: "Lunes" },
@@ -48,17 +52,10 @@ export const CargaHorario = (props) => {
     { key: "5", text: "Viernes", value: "Viernes" },
   ];
 
-  //  useEffect(() => {
-  //      setdias_dif( Difdias(fecha1,fecha2));
-  //     }, []);
-      
   
-  let turnos=[];
-  // const arreglo2=definirVector(turnos,cant_semanas,dias_ult_semana)
-//     useEffect(() => {
-//   definirVector(turnos,cant_semanas,dias_ult_semana)
-// }, []);
-  
+  let turnos = [];
+  let dias_semana=[]
+ 
 
   const formik = useFormik({
     initialValues: initialValues(),
@@ -71,53 +68,73 @@ export const CargaHorario = (props) => {
         // console.log(formValue);
         // setformHorario(formValue);
         // console.log(dia_semana)
-       
-        for (let i = 0; i < cant_semanas; i++){
-                if(formValue.lunes===true){
-                  turnos.push("lunes")
-                }
-                if(formValue.martes===true){
-                    turnos.push("martes")
-                  }
-                  if(formValue.miercoles===true){
-                      turnos.push("miercoles")
-                    }
-                  if(formValue.jueves===true){
-                        turnos.push("jueves")
-                      }
-                        if(formValue.viernes===true){
-                          turnos.push("viernes")
-                        }
-                          if(formValue.sabado===true){
-                            turnos.push("sabado")
-                          }
-                            if(formValue.domingo===true){
-                              turnos.push("domingo")
-                            }
-                  
-                  
-                
-              //  turnos[i].lunes=formValue.lunes
-              //  turnos[i].martes=formValue.martes
-              //  turnos[i].miercoles=formValue.miercoles
-              //  turnos[i].jueves=formValue.jueves
-              //  turnos[i].viernes=formValue.lunes
-              //  turnos[i].sabado=formValue.sabado
-              //  turnos[i].domingo=formValue.domingo
-       }
 
-       const formValue2={
-        turno:turnos,
-        turno_completo:formValue.turno_completo,
-        hora_inicio:formValue.hora_inicio,
-        hora_fin:formValue.hora_fin
-       }
-        console.log(fechaformateada)
-        console.log(diferencia)
-        console.log(cant_semanas)
-        console.log(dias_ult_semana)
-        console.log(formValue2)
-        onClose();
+          let turnos2 = [];
+          if (formValue.lunes === true) {
+            turnos2.push("lunes")
+          }
+          if (formValue.martes === true) {
+            turnos2.push("martes")
+          }
+          if (formValue.miercoles === true) {
+            turnos2.push("miercoles")
+          }
+          if (formValue.jueves === true) {
+            turnos2.push("jueves")
+          }
+          if (formValue.viernes === true) {
+            turnos2.push("viernes")
+          }
+          if (formValue.sabado === true) {
+            turnos2.push("sabado")
+          }
+          if (formValue.domingo === true) {
+            turnos2.push("domingo")
+          }
+          console.log(...turnos2)
+          turnos.push(turnos2)
+          console.log(turnos)
+          let ultima_semana=[]
+          if(dias_ult_semana!==0){
+            
+            if (formValue.lunes === true && (dias_ult_semana>=1)) {
+              ultima_semana.push("lunes")
+            }
+            if (formValue.martes === true && (dias_ult_semana>=2)) {
+              ultima_semana.push("martes")
+            }
+            if (formValue.miercoles === true && (dias_ult_semana>=3)) {
+              ultima_semana.push("miercoles")
+            }
+            if (formValue.jueves === true && (dias_ult_semana>=4)) {
+              ultima_semana.push("jueves")
+            }
+            if (formValue.viernes === true && (dias_ult_semana>=5)) {
+              ultima_semana.push("viernes")
+            }
+            if (formValue.sabado === true && (dias_ult_semana>=6)) {
+              ultima_semana.push("sabado")
+            }
+            if (formValue.domingo === true && (dias_ult_semana>=7)) {
+              ultima_semana.push("domingo")
+            }
+          }
+        
+
+        const formValue2 = {
+          
+          turno:[{cant_semanas},{turnos},{ultima_semana:ultima_semana}],
+          turno_completo: formValue.turno_completo,
+          hora_inicio: formValue.hora_inicio,
+          hora_fin: formValue.hora_fin,
+        };
+        console.log(fecha_inicio);
+        console.log(fecha_fin)
+        console.log(diferencia);
+        console.log(cant_semanas);
+        console.log(dias_ult_semana);
+        console.log(formValue2);
+        // onClose();
       } catch (error) {}
     },
   });
@@ -126,97 +143,88 @@ export const CargaHorario = (props) => {
     <Form className="add-edit-use-form" onSubmit={formik.handleSubmit}>
       <div>
         <div class="seven fields">
-        {dia_semana <= 1 &&(
-          <div class="field">
-            
-            <label>Lunes </label>
+          
             <div class="field">
+              <label>Lunes </label>
+              <div class="field">
+                <Checkbox
+                  checked={formik.values.lunes}
+                  onChange={(event, data) =>
+                    formik.setFieldValue("lunes", data.checked)
+                  }
+                />
+              </div>
+            </div>
+          
+         
+            <div class="field">
+              <label>Martes</label>
               <Checkbox
-                checked={formik.values.lunes}
+                checked={formik.values.martes}
                 onChange={(event, data) =>
-                  formik.setFieldValue("lunes", data.checked)
+                  formik.setFieldValue("martes", data.checked)
                 }
               />
             </div>
-          </div>
-     )}
-     {dia_semana <= 2 &&(
-          <div class="field">
-            <label>Martes</label>
-            <Checkbox
-            
-              checked={formik.values.martes}
-              onChange={(event, data) =>
-                formik.setFieldValue("martes", data.checked)
-              }
-            />
-          </div>
-     )}
-     {dia_semana <= 3 &&(
-          <div class="field">
-            <label>Miercoles</label>
-            <Checkbox
-              
-              checked={formik.values.miercoles}
-              onChange={(event, data) =>
-                formik.setFieldValue("miercoles", data.checked)
-              }
-            />
-          </div>
-     )}
-       {dia_semana <= 4 &&(
-          <div class="field">
-            <label>Jueves</label>
+          
+          
             <div class="field">
+              <label>Miercoles</label>
               <Checkbox
-               
-                checked={formik.values.jueves}
+                checked={formik.values.miercoles}
                 onChange={(event, data) =>
-                  formik.setFieldValue("jueves", data.checked)
+                  formik.setFieldValue("miercoles", data.checked)
                 }
               />
             </div>
-          </div>
-       )}
-       {dia_semana <= 5 &&(
-          <div class="field">
-            <label>Viernes</label>
-            <Checkbox
-             
-              checked={formik.values.viernes}
-              onChange={(event, data) =>
-                formik.setFieldValue("viernes", data.checked)
-              }
-            />
-          </div>
-       )}
-       {dia_semana <= 6 &&(
-
-          <div class="field">
-            <label>Sabado</label>
-            <Checkbox
-             
-              checked={formik.values.sabado}
-              onChange={(event, data) =>
-                formik.setFieldValue("sabado", data.checked)
-              }
-            />
-          </div>
-       )}
-       {dia_semana <= 6 &&(
-          <div class="field">
-            <label>Domingo</label>
-            <Checkbox
-              
-              checked={formik.values.domingo}
-              onChange={(event, data) =>
-                formik.setFieldValue("domingo", data.checked)
-              }
-            />
-          </div>
-       )}
+          
+         
+            <div class="field">
+              <label>Jueves</label>
+              <div class="field">
+                <Checkbox
+                  checked={formik.values.jueves}
+                  onChange={(event, data) =>
+                    formik.setFieldValue("jueves", data.checked)
+                  }
+                />
+              </div>
+            </div>
+          
+          
+            <div class="field">
+              <label>Viernes</label>
+              <Checkbox
+                checked={formik.values.viernes}
+                onChange={(event, data) =>
+                  formik.setFieldValue("viernes", data.checked)
+                }
+              />
+            </div>
+          
+          
+            <div class="field">
+              <label>Sabado</label>
+              <Checkbox
+                checked={formik.values.sabado}
+                onChange={(event, data) =>
+                  formik.setFieldValue("sabado", data.checked)
+                }
+              />
+            </div>
+          
+         
+            <div class="field">
+              <label>Domingo</label>
+              <Checkbox
+                checked={formik.values.domingo}
+                onChange={(event, data) =>
+                  formik.setFieldValue("domingo", data.checked)
+                }
+              />
+            </div>
+          
         </div>
-       
 
         <div class="three fields">
           <div class="field">
@@ -313,35 +321,34 @@ export const CargaHorario = (props) => {
 
 function initialValues(Turnos) {
   return {
-    lunes:false,
-    martes:false,
-    miercoles:false,
-    jueves:false,
-    viernes:false,
-    sabado:false,
-    domingo:false,
-    turno_completo:false,
-    hora_inicio:"",
-    hora_fin:"",
+    lunes: false,
+    martes: false,
+    miercoles: false,
+    jueves: false,
+    viernes: false,
+    sabado: false,
+    domingo: false,
+    turno_completo: false,
+    hora_inicio: "",
+    hora_fin: "",
   };
 }
-function definirVector(turno,cant_semanas,cant_dias) {
-  if(cant_dias!==0){
-    cant_semanas=cant_semanas+1
+function definirVector(turno, cant_semanas, cant_dias) {
+  if (cant_dias !== 0) {
+    cant_semanas = cant_semanas + 1;
   }
   for (let index = 0; index < cant_semanas; index++) {
-            turno[index]={
-              lunes:false,
-              martes:false,
-              miercoles:false,
-              jueves:false,
-              viernes:false,
-              sabado:false,
-              domingo:false,
-            }
-    
+    turno[index] = {
+      lunes: false,
+      martes: false,
+      miercoles: false,
+      jueves: false,
+      viernes: false,
+      sabado: false,
+      domingo: false,
+    };
   }
-  return turno
+  return turno;
 }
 function newSchema() {
   return {
