@@ -139,11 +139,10 @@ class Login(TokenObtainPairView):
                             datos['email'] = usuario['email']
                             datos['nombres'] = usuario['nombres']
                             datos['apellidos'] = usuario['apellidos']
-                            datos['rol'] = Rol.objects.get(id=usuario['rol']).rol.lower()
+                            datos['rol'] = Rol.objects.get(id=usuario['rol']).id
                             datos['jurisdiccion'] = usuario['jurisdiccion']
                             datos['unidad_regional'] = usuario['unidad_regional']
-                            datos['is_superuser'] = usuario['is_superuser']
-                            print(datos)
+                            # datos['is_superuser'] = usuario['is_superuser']
                             return Response({
                                     'token': token.key,
                                     'usuario': datos,

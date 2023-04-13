@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ..models import Motivo,Vigilancia, DiasVigilancia
+from ..models import Motivo,Vigilancia, DiasVigilancia, TurnoVigilancia
 
 class MotivoVigilanciaSerializer(serializers.ModelSerializer):
     class Meta:
@@ -34,10 +34,19 @@ class DiasVigilanciaSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'fk_vigilancia',
-            'fk_personal',
-            'dia',
+            'fecha',
             'hora_inicio',
             'hora_fin',
-            'turno',
             'dia_completo'
+        )
+
+class TurnoVigilanciaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TurnoVigilancia
+        fields = (
+            'id',
+            'fk_personal',
+            'fk_diaVigilancia',
+            'hora_inicio',
+            'hora_fin'
         )
