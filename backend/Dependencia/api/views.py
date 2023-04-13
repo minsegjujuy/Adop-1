@@ -43,7 +43,8 @@ class DependenciaViewSet(viewsets.ModelViewSet):
         if usuario.rol.rol == 'OPERADOR':
             datos = [x for x in serializer.data if x['fk_unidad_regional'] == usuario.unidad_regional.id]
         else:
-            datos = [x for x in serializer.data if x['fk_unidad_regional'] == ur]
+            # datos = [x for x in serializer.data if x['fk_unidad_regional'] == ur]
+            datos=serializer.data
             
         respuesta = []
         

@@ -3,7 +3,7 @@ import { HeaderPage } from "../../components/Admin/";
 import { TableVigilancia } from "../../components/Vigilancia/TableVigilancia";
 import { CargaVigilancia } from "../Vigilancia";
 import { CargaHorario } from "../../components/Vigilancia/CargaHorarios";
-import { useUser, useVigilancia } from "../../hooks";
+import { useUser, useVigilancia ,useAuth} from "../../hooks";
 import { Button, Form } from "semantic-ui-react";
 import { useFormik } from "formik";
 import { Link, useLocation } from "react-router-dom";
@@ -19,6 +19,7 @@ export function HomeAdmin() {
   const [contentModal, setContentModal] = useState(null);
   const [refetch, setRefetch] = useState(false);
   const { pathname } = useLocation();
+  
 
   useEffect(() => {
     get_vigilancia();

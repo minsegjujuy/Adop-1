@@ -83,7 +83,7 @@ export function CargaVigilancia() {
   return (
     <>
           
-          <HeaderPage title="CARGA DE VIGILANCIA"/>
+          <HeaderPage title ='CARGA DE VIGILANCIA' regional={auth.usuario.unidad_regional? auth.usuario.unidad_regional:null}/>
           <div className='header-page-usuarios'>
           
               {/* <div className='agregar'>

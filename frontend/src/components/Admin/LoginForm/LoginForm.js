@@ -25,9 +25,10 @@ const [mostrarContrasenia, setMostrarContrasenia] = useState(false);
         
         toast.success("Ingreso Exitoso", {
           position: toast.POSITION.BOTTOM_CENTER,
-          autoClose: 2000,
+          autoClose: 3000,
           transition: Flip,
         });
+        window.location.replace("http://localhost:3000/admin/vigilancia");
       } catch (error) {
         toast.error(error.message);
       }

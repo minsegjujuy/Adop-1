@@ -20,10 +20,11 @@ export function useVigilancia() {
           
         }
       };
-      const get_jurisdicciones = async (data) => {
+      const get_jurisdicciones = async (id) => {
         try {
           setLoading(true);
-          const resultado = await getJurisdicciones(auth.token);
+          console.log(id)
+          const resultado = await getJurisdicciones(auth.token,id);
           setLoading(false);
           return resultado;
         } catch (error) {

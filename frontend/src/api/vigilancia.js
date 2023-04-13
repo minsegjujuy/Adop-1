@@ -20,9 +20,9 @@ export async function addVigilanciaApi(data, token) {
       throw error;
     }
   }
-  export async function getJurisdicciones(token) {
+  export async function getJurisdicciones(token,id) {
     try {
-      const url = `${BASE_API}/api/dependencias/`;
+      const url = `${BASE_API}/api/dependencias/?uurr=${id}`;
       const params = {
         method: "GET",
         headers: {

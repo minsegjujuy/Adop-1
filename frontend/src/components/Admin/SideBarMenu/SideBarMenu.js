@@ -57,7 +57,7 @@ function MenuLeft(props) {
         </Menu.Item>
       )} */}
 
-      {((auth?.usuario?.rol === "administrador") || (auth?.usuario?.rol ==="operador")) && (
+      {((auth?.usuario?.rol === 1) || (auth?.usuario?.rol ===3)) && (
         <Menu.Item
           as={Link}
           to={"/admin/vigilancia"}
@@ -117,7 +117,7 @@ function MenuLeft(props) {
       */}
       </Menu.Item>
 
-      {auth?.usuario?.rol === "administrador" && (
+      {auth?.usuario?.rol === 1 && (
         <Menu.Item
           as={Link}
           to={"/admin/users"}

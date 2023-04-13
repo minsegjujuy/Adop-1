@@ -53,11 +53,16 @@ export function AddVigilancia(props) {
 
             const [franja, setFranja] = useState(null);
             useEffect(() => {
-             buscarJurisdicciones()
+              if(auth.usuario.unidad_regional===null){
+                buscarJurisdicciones(0)
+              }else{
+                buscarJurisdicciones(auth.usuario.unidad_regional)
+              }
+            
             }, []);
             
-            const buscarJurisdicciones = async () => {
-              const options = await get_jurisdicciones();
+            const buscarJurisdicciones = async (id) => {
+              const options = await get_jurisdicciones(id);
               
               setFranja(options.map((option) => option));
             };
@@ -109,8 +114,7 @@ export function AddVigilancia(props) {
           icon: "error",
           showConfirmButton: true,
         });
-    // //   }
-    // // }
+    
     }
       } catch (error) {
       
@@ -120,8 +124,8 @@ export function AddVigilancia(props) {
   });
 
   return (
-    <Form class="ui form" onSubmit={formik.handleSubmit}>
-      {auth?.usuario?.rol==="operador" &&
+    <Form class="ui form custom-form" onSubmit={formik.handleSubmit}>
+      {auth?.usuario?.rol===3 &&
       <div class="field">
         <label>Regional</label>
         <div className="disable">
@@ -135,7 +139,7 @@ export function AddVigilancia(props) {
           </div>
       </div>
     }
-     {auth?.usuario?.rol==="administrador" &&
+     {auth?.usuario?.rol===1 &&
        <div class="field">
         <label>Regional</label>
         
@@ -202,33 +206,7 @@ export function AddVigilancia(props) {
             error={formik.errors.objetivo}
           />
         </div>
-        {/* <div class="two fields">
-          <div class="field">
-            <label>Cantidad de dias</label>
-            <Form.Input
-              name="cantidad_dias"
-              type="number"
-              placeholder="Escriba la cantidad"
-              value={formik.values.cantidad_dias}
-              onChange={formik.handleChange}
-              error={formik.errors.cantidad_dias}
-            />
-          </div>
-          <div class="field">
-            <label>Asignar turnos</label>
-            <div class="field">
-              <Button
-                type="button"
-                //  className="pencil alternate" positive onClick={()=>addHorarios(formik.values.cantidad_dias,setformHorario)}>
-                className="pencil alternate"
-                positive
-                onClick={() => addHorarios()}
-              >
-                <Icon className="pencil alternate" />
-              </Button>
-            </div>
-          </div>
-        </div> */}
+       
       </div>
       <h4 class="ui dividing header">Fechas de Vigilancia</h4>
       <div class="two fields">
@@ -272,34 +250,7 @@ export function AddVigilancia(props) {
           </div>
         </div>
       </div>
-      {/* <div class="two fields">
-    <div class="field">
-      <label>Hora de inicio</label>
-      <Form.Input
-        name="hora_inicio"
-        type="time"
-        placeholder="Ingrese hora inicio"
-        value={formik.values.hora_inicio}
-        onChange={formik.handleChange}
-        error={formik.errors.hora_inicio}
-      />
-        
-    </div>
-    <div class="field">
-      <label>Hora final</label>
-      <div class="field">
-      <Form.Input
-        name="hora_fin"
-        type="time"
-        placeholder="Ingrese hora final"
-        value={formik.values.hora_fin}
-        onChange={formik.handleChange}
-        error={formik.errors.hora_fin}
-      />
-        
-       </div>
-    </div>
-  </div> */}
+     
       <h4 class="ui dividing header">Recursos</h4>
       <div class="two fields">
         <div class="field">
@@ -333,30 +284,7 @@ export function AddVigilancia(props) {
          position={position}
          setposition={setposition}
          />
-        {/* <div class="field">
-          <label>Latitud</label>
-          <Form.Input
-            name="latitud"
-            type="double"
-            placeholder="Indique latitud"
-            value={formik.values.latitud}
-            onChange={formik.handleChange}
-            error={formik.errors.latitud}
-          />
-        </div>
-        <div class="field">
-          <label>Longitud</label>
-          <div class="field">
-            <Form.Input
-              name="longitud"
-              type="double"
-              placeholder="Indique longitud"
-              value={formik.values.longitud}
-              onChange={formik.handleChange}
-              error={formik.errors.longitud}
-            />
-          </div>
-        </div> */}
+       
       </div>
       <div className="boton_crear_vigilancia">
         <Button
@@ -371,7 +299,7 @@ export function AddVigilancia(props) {
 
 function initialValues(auth) {
   return {
-    regional:auth?.usuario?.rol==="operador"? "REGIONAL 1":"",
+    regional:auth?.usuario?.rol===3? `UNIDAD REGIONAL ${auth.usuario.unidad_regional}`:"",
     juridiccion: "",
     motivo:"",
     tipo_servicio:"",

@@ -102,7 +102,7 @@ export function AuthProvider(props) {
     // }, 1810*1000);
     // console.log(response.token);
     
-    window.location.replace("http://localhost:3000/admin/users");
+    // 
   };
 
   const valueContext = {

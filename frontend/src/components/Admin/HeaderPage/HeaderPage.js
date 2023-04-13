@@ -1,12 +1,15 @@
 import React from 'react'
+import "./HeaderPage.scss"
 
 export function HeaderPage(props) {
-   const {title} = props;
+   const {title,regional} = props;
   return (
     <>
        <div className="header-page-admin">
-      <h2>{title}</h2>
+      <h1 >{title} {regional? `UNIDAD REGIONAL  ${regional}`:null}</h1>
     </div>
+    <hr/>
+    <br/>
     </>
   )
 }
