@@ -1,15 +1,18 @@
 import React, { useState ,useEffect} from "react";
 import "./AddVigilancia.scss";
 import { Button, Form, Icon,Checkbox } from "semantic-ui-react";
-import {useVigilancia} from "../../../../hooks"
+import {useVigilancia,useAuth} from "../../../../hooks"
+import {MapView} from "../../Mapa/react-leaflet"
 import { useFormik } from "formik";
 import * as Yup from "yup";
 // import { useAuth} from "../../hooks";
 import { toast, Flip } from "react-toastify";
 import Swal from "sweetalert2";
-
+import "./AddVigilancia.scss"
 export function AddVigilancia(props) {
+     const [position,setposition]=useState({ lat:  -24.09804180450979, lng:-65.07202148437501 });
      const {addHorarios}=props;
+     const {auth} = useAuth();
      const [formHorario,setformHorario] = useState(null)
      const {addVigilancia,get_jurisdicciones} = useVigilancia()
     // const {auth}=useAuth();
@@ -64,7 +67,7 @@ export function AddVigilancia(props) {
         text: tipo.jurisdiccion,
       }));
   const formik = useFormik({
-    initialValues: initialValues(),
+    initialValues: initialValues(auth),
     validationSchema: Yup.object(validationSchema()),
     onSubmit: async (formValue) => {
       try {
@@ -79,8 +82,8 @@ export function AddVigilancia(props) {
          fecha_inicio:formValue.fecha_inicio,
          fecha_fin: formValue.fecha_fin,
          destino:formValue.destino,
-         latitud:formValue.latitud,
-         longitud:formValue.longitud,}
+         latitud:position.lat.toFixed(6),
+         longitud:position.lng.toFixed(6),}
         if(formValue.fecha_indefinida===true){
           objeto.fecha_fin=null
          }
@@ -118,8 +121,24 @@ export function AddVigilancia(props) {
 
   return (
     <Form class="ui form" onSubmit={formik.handleSubmit}>
+      {auth?.usuario?.rol==="operador" &&
       <div class="field">
         <label>Regional</label>
+        <div className="disable">
+        <Form.Input
+            disabled
+            name="regional"
+            value={formik.values.regional}
+            onChange={formik.handleChange}
+            error={formik.errors.regional}
+          />
+          </div>
+      </div>
+    }
+     {auth?.usuario?.rol==="administrador" &&
+       <div class="field">
+        <label>Regional</label>
+        
         <Form.Select
           fluid
           name="regional"
@@ -128,7 +147,9 @@ export function AddVigilancia(props) {
           value={formik.values.regional}
           onChange={(_, data) => formik.setFieldValue("regional", data.value)}
         />
+          
       </div>
+}
       <div class="two fields">
         <div class="field">
           <label>Juridiccion</label>
@@ -279,7 +300,7 @@ export function AddVigilancia(props) {
        </div>
     </div>
   </div> */}
-      <h4 class="ui dividing header">Personal</h4>
+      <h4 class="ui dividing header">Recursos</h4>
       <div class="two fields">
         <div class="field">
           <label>Destino</label>
@@ -308,7 +329,11 @@ export function AddVigilancia(props) {
       </div>
       <h4 class="ui dividing header">Ubicacion de la vigilancia</h4>
       <div class="two fields">
-        <div class="field">
+        <MapView 
+         position={position}
+         setposition={setposition}
+         />
+        {/* <div class="field">
           <label>Latitud</label>
           <Form.Input
             name="latitud"
@@ -331,7 +356,7 @@ export function AddVigilancia(props) {
               error={formik.errors.longitud}
             />
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="boton_crear_vigilancia">
         <Button
@@ -344,9 +369,9 @@ export function AddVigilancia(props) {
   );
 }
 
-function initialValues() {
+function initialValues(auth) {
   return {
-    regional:"",
+    regional:auth?.usuario?.rol==="operador"? "REGIONAL 1":"",
     juridiccion: "",
     motivo:"",
     tipo_servicio:"",

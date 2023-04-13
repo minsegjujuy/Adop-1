@@ -13,7 +13,7 @@ import "./HomeAdmin.scss";
 import Swal from "sweetalert2";
 
 export function HomeAdmin() {
-  const { get_vigilancia, vigilancias } = useVigilancia();
+  const { get_vigilancia, vigilancias ,auth} = useVigilancia();
   const [titleModal, setTitleModal] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [contentModal, setContentModal] = useState(null);

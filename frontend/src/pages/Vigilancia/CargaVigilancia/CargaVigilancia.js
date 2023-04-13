@@ -5,7 +5,7 @@ import {AddVigilancia} from "../../../components/Vigilancia/CargaVigilancia"
 import {TableVigilancia} from "../../../components/Vigilancia/TableVigilancia"
 import {CargaHorario} from "../../../components/Vigilancia/CargaHorarios"
 import {ModalBasic} from "../../../components/Common/ModalBasic"
-import {useVigilancia} from "../../../hooks"
+import {useVigilancia,useAuth} from "../../../hooks"
 import { useEffect,useState } from 'react'
 import "./CargaVigilancia.scss"
 import Swal from "sweetalert2";
@@ -14,6 +14,7 @@ export function CargaVigilancia() {
   console.log("hola mundo")
     // const {getUsers,loading,users,setUsers,deleteUser,getempleadoId,auth} = useUser()
     const {get_vigilancia,vigilancias} = useVigilancia()
+    const {auth} = useAuth();
     const [titleModal, setTitleModal] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [contentModal, setContentModal] = useState(null);

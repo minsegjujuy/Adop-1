@@ -60,6 +60,7 @@ export function useVigilancia() {
         loading,
         error,
         vigilancias,
+        auth,
         addVigilancia,
         get_jurisdicciones,
         get_vigilancia,
