@@ -1,10 +1,8 @@
 import React from "react";
 import "./SideBarMenu.scss";
-import { Menu, Icon, Select, Dropdown } from "semantic-ui-react";
+import { Menu, Icon, Dropdown } from "semantic-ui-react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
-import { useUser } from "../../../hooks";
-import { useState, useEffect } from "react";
 
 export function SideBarMenu(props) {
   const { children } = props;
@@ -21,17 +19,12 @@ export function SideBarMenu(props) {
 function MenuLeft(props) {
   const { pathname } = props;
   const { auth } = useAuth();
-  const [mostrar, setMostrar] = useState(null);
   // const {buscarEmpleadoId} = useUser()
   // const [empleados, setEmpleado] = useState(null);
   // console.log(empleados)
-  const options = [
-    { key: "1", text: "Tabla 1", value: "Tabla 1" },
-    { key: "2", text: "Tabla 2", value: "Tabla 2" },
-    { key: "3", text: "Tabla 3", value: "Tabla 3" },
-  ];
+  
   return (
-    <Menu fixed="left" borderless class="side" vertical>
+    <Menu fixed="left" borderless className="side" vertical>
       {/* <Menu.Item as={Link} to={"/admin"} active={pathname === "/admin"}>
         <Icon name="home" className="icono-side-bar" />
         Home
@@ -85,36 +78,36 @@ function MenuLeft(props) {
             <Dropdown.Menu>
               <Dropdown.Item
                 as={Link}
-                to={"/admin/tableros"}
-                active={pathname === "/admin/tableros"}
+                to={"/admin/tableros/escuelas"}
+                active={pathname === "/admin/tableros/escuelas"}
               >
-                Tablero 1
+                Vigilancia y escuelas
               </Dropdown.Item>
               <Dropdown.Item
                 as={Link}
-                to={"/admin/tableros"}
-                active={pathname === "/admin/tableros"}
+                to={"/admin/tableros/propiedad"}
+                active={pathname === "/admin/tableros/propiedad"}
               >
-                Tablero 2
+                Analisis Propiedad 2022
               </Dropdown.Item>
               <Dropdown.Item
                 as={Link}
-                to={"/admin/tableros"}
-                active={pathname === "/admin/tableros"}
+                to={"/admin/tableros/contravencion"}
+                active={pathname === "/admin/tableros/contravencion"}
               >
-                Tablero 3
+                Contravencion General
+              </Dropdown.Item>
+              <Dropdown.Item
+                as={Link}
+                to={"/admin/tableros/violencia"}
+                active={pathname === "/admin/tableros/violencia"}
+              >
+                Violencia
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </div>
-        {/* <div class="ui dropdown item"><i class="dropdown icon"></i> Opciones de visualización 
-       <div class="menu">
-       <div class="header">Tamaño de texto</div>
-       <a class="item">Pequeño</a>
-       <a class="item">Mediano</a>
-       <a class="item">Grande</a>
-     </div>
-      */}
+      
       </Menu.Item>
 
       {auth?.usuario?.rol === 1 && (

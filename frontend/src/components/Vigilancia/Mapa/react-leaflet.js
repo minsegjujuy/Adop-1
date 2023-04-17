@@ -42,9 +42,6 @@ function MyComponent() {
       <MapContainer
         center={position}
         zoom={13}
-        onClick={() => {
-          console.log("Map clicked");
-        }}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
         <Marker position={position} icon={MarkerIcon} draggable   >

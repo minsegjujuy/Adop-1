@@ -1,22 +1,31 @@
 import {AdminLayout} from "../layouts/AdminLayout"
-// import { Home } from "../pages/Client";
-import {Tableros} from "../pages/Tableros"; 
-import {CargaVigilancia} from "../pages/Vigilancia"
-import {LoginAdmin} from "../pages/Admin/LoginAdmin"
+import {Escuelas,Propiedad,Contravencion,Violencia} from "../pages/Tableros"; 
+
 
 
 
 const routerTableros = [
   {
-    path: "/admin/tableros",
+    path: "/admin/tableros/escuelas",
     layout: AdminLayout,
-    component: Tableros,
+    component: Escuelas,
   },
-//   {
-//     path: "/admin/carga/vigilancia",
-//     layout: AdminLayout,
-//     component: CargaVigilancia,
-//   }
+  {
+    path: "/admin/tableros/propiedad",
+    layout: AdminLayout,
+    component: Propiedad,
+  },
+  {
+    path: "/admin/tableros/contravencion",
+    layout: AdminLayout,
+    component: Contravencion,
+  },
+  {
+    path: "/admin/tableros/violencia",
+    layout: AdminLayout,
+    component: Violencia,
+  }
+
 ];
 
 export default routerTableros;

@@ -8,7 +8,7 @@ import "./UserAdmin.scss"
 import Swal from "sweetalert2";
 
 export function UserAdmin() {
-    const {getUsers,loading,users,setUsers,deleteUser,getempleadoId,auth} = useUser()
+    const {getUsers,users,deleteUser} = useUser()
     const [titleModal, setTitleModal] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [contentModal, setContentModal] = useState(null);

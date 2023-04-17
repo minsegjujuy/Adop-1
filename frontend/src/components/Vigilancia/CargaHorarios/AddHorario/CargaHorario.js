@@ -143,11 +143,11 @@ export const CargaHorario = (props) => {
   return (
     <Form className="add-edit-use-form" onSubmit={formik.handleSubmit}>
       <div>
-        <div class="seven fields">
+        <div className="seven fields">
           
-            <div class="field">
+            <div className="field">
               <label>Lunes </label>
-              <div class="field">
+              <div className="field">
                 <Checkbox
                   checked={formik.values.lunes}
                   onChange={(event, data) =>
@@ -158,7 +158,7 @@ export const CargaHorario = (props) => {
             </div>
           
          
-            <div class="field">
+            <div className="field">
               <label>Martes</label>
               <Checkbox
                 checked={formik.values.martes}
@@ -169,7 +169,7 @@ export const CargaHorario = (props) => {
             </div>
           
           
-            <div class="field">
+            <div className="field">
               <label>Miercoles</label>
               <Checkbox
                 checked={formik.values.miercoles}
@@ -180,9 +180,9 @@ export const CargaHorario = (props) => {
             </div>
           
          
-            <div class="field">
+            <div className="field">
               <label>Jueves</label>
-              <div class="field">
+              <div className="field">
                 <Checkbox
                   checked={formik.values.jueves}
                   onChange={(event, data) =>
@@ -193,7 +193,7 @@ export const CargaHorario = (props) => {
             </div>
           
           
-            <div class="field">
+            <div className="field">
               <label>Viernes</label>
               <Checkbox
                 checked={formik.values.viernes}
@@ -204,7 +204,7 @@ export const CargaHorario = (props) => {
             </div>
           
           
-            <div class="field">
+            <div className="field">
               <label>Sabado</label>
               <Checkbox
                 checked={formik.values.sabado}
@@ -215,7 +215,7 @@ export const CargaHorario = (props) => {
             </div>
           
          
-            <div class="field">
+            <div className="field">
               <label>Domingo</label>
               <Checkbox
                 checked={formik.values.domingo}
@@ -227,11 +227,11 @@ export const CargaHorario = (props) => {
           
         </div>
 
-        <div class="three fields">
-          <div class="field">
+        <div className="three fields">
+          <div className="field">
             <label>Dia completo </label>
 
-            <div class="field">
+            <div className="field">
               <Checkbox
                 toggle
                 checked={formik.values.turno_completo}
@@ -242,7 +242,7 @@ export const CargaHorario = (props) => {
             </div>
           </div>
           {formik.values.turno_completo === false && (
-            <div class="field">
+            <div className="field">
               <label>Hora de inicio</label>
               <Form.Input
                 name="hora_inicio"
@@ -255,9 +255,9 @@ export const CargaHorario = (props) => {
             </div>
           )}
           {formik.values.turno_completo === false && (
-            <div class="field">
+            <div className="field">
               <label>Hora final</label>
-              <div class="field">
+              <div className="field">
                 <Form.Input
                   name="hora_fin"
                   type="time"

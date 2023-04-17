@@ -28,7 +28,7 @@ export function AddVigilancia(props) {
         { key: "2", text: "Vigilancia interna", value: 2 },
         { key: "3", text: "Custodia de Bienes", value: 3 },
         { key: "4", text: "Custodia de Detenidos", value: 4 },
-        { key: "4", text: "Vigilancia de Persona", value: 5 }]
+        { key: "5", text: "Vigilancia de Persona", value: 5 }]
 
         const recursos = [
           { key: "1", text: "Auto", value: 1 },
@@ -124,9 +124,9 @@ export function AddVigilancia(props) {
   });
 
   return (
-    <Form class="ui form custom-form" onSubmit={formik.handleSubmit}>
+    <Form className="ui form custom-form" onSubmit={formik.handleSubmit}>
       {auth?.usuario?.rol===3 &&
-      <div class="field">
+      <div className="field">
         <label>Regional</label>
         <div className="disable">
         <Form.Input
@@ -140,7 +140,7 @@ export function AddVigilancia(props) {
       </div>
     }
      {auth?.usuario?.rol===1 &&
-       <div class="field">
+       <div className="field">
         <label>Regional</label>
         
         <Form.Select
@@ -154,8 +154,8 @@ export function AddVigilancia(props) {
           
       </div>
 }
-      <div class="two fields">
-        <div class="field">
+      <div className="two fields">
+        <div className="field">
           <label>Juridiccion</label>
           <Form.Select
             search
@@ -168,9 +168,9 @@ export function AddVigilancia(props) {
             }
           />
         </div>
-        <div class="field">
+        <div className="field">
           <label>Motivo</label>
-          <div class="field">
+          <div className="field">
             <Form.Select
               name="motivo"
               options={motivos}
@@ -181,9 +181,9 @@ export function AddVigilancia(props) {
           </div>
         </div>
       </div>
-      <div class="field">
+      <div className="field">
         <label>Tipo Servicio</label>
-        <div class="fields">
+        <div className="fields">
           <Form.Select
             name="tipo_servicio"
             options={servicios}
@@ -195,8 +195,8 @@ export function AddVigilancia(props) {
           />
         </div>
       </div>
-      <div class="two fields">
-        <div class="field">
+      <div className="two fields">
+        <div className="field">
           <label>Objetivo</label>
           <Form.TextArea
             name="objetivo"
@@ -208,9 +208,9 @@ export function AddVigilancia(props) {
         </div>
        
       </div>
-      <h4 class="ui dividing header">Fechas de Vigilancia</h4>
-      <div class="two fields">
-        <div class="field">
+      <h4 className="ui dividing header">Fechas de Vigilancia</h4>
+      <div className="two fields">
+        <div className="field">
           <label>Fecha de inicio</label>
           <Form.Input
             name="fecha_inicio"
@@ -220,9 +220,9 @@ export function AddVigilancia(props) {
             error={formik.errors.fecha_inicio}
           />
         </div>
-        <div class="two fields">
+        <div className="two fields">
           {formik.values.fecha_indefinida === false && (
-            <div class="field">
+            <div className="field">
               <label>Fecha fin de vigilancia</label>
               <Form.Input
                 name="fecha_fin"
@@ -233,10 +233,10 @@ export function AddVigilancia(props) {
               />
             </div>
           )}
-          <div class="field">
+          <div className="field">
             <label>Fecha de fin de vigilancia indefinida</label>
-            <div class="field">
-              <div className="add-edit-user-form__staff">
+            <div className="field">
+              <div classNameName="add-edit-user-form__staff">
                 <Checkbox
                   toggle
                   checked={formik.values.fecha_indefinida}
@@ -251,9 +251,9 @@ export function AddVigilancia(props) {
         </div>
       </div>
      
-      <h4 class="ui dividing header">Recursos</h4>
-      <div class="two fields">
-        <div class="field">
+      <h4 className="ui dividing header">Recursos</h4>
+      <div className="two fields">
+        <div className="field">
           <label>Destino</label>
           <Form.Input
             name="destino"
@@ -263,9 +263,9 @@ export function AddVigilancia(props) {
             error={formik.errors.destino}
           />
         </div>
-        <div class="field">
+        <div className="field">
           <label>Recursos</label>
-          <div class="field">
+          <div className="field">
             <Form.Select
               name="recursos"
               options={recursos}
@@ -278,8 +278,8 @@ export function AddVigilancia(props) {
           </div>
         </div>
       </div>
-      <h4 class="ui dividing header">Ubicacion de la vigilancia</h4>
-      <div class="two fields">
+      <h4 className="ui dividing header">Ubicacion de la vigilancia</h4>
+      <div className="two fields">
         <MapView 
          position={position}
          setposition={setposition}
