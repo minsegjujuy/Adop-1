@@ -160,7 +160,7 @@ export function AddVigilancia(props) {
           <Form.Select
             search
             name="juridiccion"
-            options={valores}
+            options={valores? valores:0}
             placeholder="Seleccione la juridiccion"
             value={formik.values.juridiccion}
             onChange={(_, data) =>
@@ -236,7 +236,7 @@ export function AddVigilancia(props) {
           <div className="field">
             <label>Fecha de fin de vigilancia indefinida</label>
             <div className="field">
-              <div classNameName="add-edit-user-form__staff">
+              <div className="add-edit-user-form__staff">
                 <Checkbox
                   toggle
                   checked={formik.values.fecha_indefinida}
@@ -305,7 +305,7 @@ function initialValues(auth) {
     tipo_servicio:"",
     objetivo:"",
     cantidad_dias:0,
-    fecha_inicio:"01/01/2010",
+    fecha_inicio:"2010-01-01",
     fecha_fin: null,
     fecha_indefinida:false,
     // hora_inicio:"",

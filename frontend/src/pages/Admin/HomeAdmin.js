@@ -2,6 +2,7 @@ import React from "react";
 import { HeaderPage } from "../../components/Admin/";
 import { TableVigilancia } from "../../components/Vigilancia/TableVigilancia";
 import { CargaVigilancia } from "../Vigilancia";
+import {MapView} from "../../components/Vigilancia/Mapa/react-leaflet"
 import { CargaHorario } from "../../components/Vigilancia/CargaHorarios";
 import { useUser, useVigilancia ,useAuth} from "../../hooks";
 import { Button, Form } from "semantic-ui-react";
@@ -14,6 +15,7 @@ import Swal from "sweetalert2";
 
 export function HomeAdmin() {
   const { get_vigilancia, vigilancias ,auth} = useVigilancia();
+  
   const [titleModal, setTitleModal] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [contentModal, setContentModal] = useState(null);
@@ -43,6 +45,20 @@ export function HomeAdmin() {
         // setformHorario={setformHorario}
         // addUser={addUser}
       />
+    );
+    openCloseModal();
+  };
+  const vermapa = (position,comando) => {
+    // const {position,setposition} = useState({latitud,longitud})
+    console.log(position)
+    setTitleModal("Ubicacion de Vigilancia");
+    setContentModal(
+      <div className="mapa">
+     <MapView
+       position={position}
+       comando={comando}
+     />
+     </div>
     );
     openCloseModal();
   };
@@ -147,7 +163,8 @@ export function HomeAdmin() {
           </Button> */}
         </div>
       </div>
-      <TableVigilancia vigilancias={vigilancias} addHorarios={addHorarios} />
+      <TableVigilancia vigilancias={vigilancias} addHorarios={addHorarios}
+       vermapa={vermapa} />
       <ModalBasic
         show={showModal}
         title={titleModal}

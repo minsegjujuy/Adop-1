@@ -1,11 +1,12 @@
-import React from "react";
-import { Table, Button, Icon } from "semantic-ui-react";
+import React, { useState } from "react";
+import { Table, Button, Icon,Popup } from "semantic-ui-react";
 import { map } from "lodash";
 import "./TableVigilancia.scss";
 
 
 export function TableVigilancia(props) {
-  const {vigilancias,addHorarios } = props;
+  const {vigilancias,addHorarios,vermapa } = props;
+  const {position,setposition}= useState(null)
  
   return (
     <Table className="table-users-admin">
@@ -45,8 +46,13 @@ export function TableVigilancia(props) {
             <Actions
               // user={user}
                addHorarios={addHorarios}
+               vermapa={vermapa}
                fecha_inicio={vigilancia.fecha_inicio.slice(0,10)}
                fecha_fin={vigilancia.fecha_fin? vigilancia.fecha_fin.slice(0,10):null}
+               latitud={vigilancia.latitud}
+               longitud={vigilancia.longitud}
+               position={position}
+               setposition={setposition}
             //   updateUser={updateUser}
               //  onDeleteUser={onDeleteUser}
               
@@ -59,7 +65,19 @@ export function TableVigilancia(props) {
 }
 
 function Actions(props) {
-  const { addHorarios,fecha_fin,fecha_inicio} = props;
+  const { addHorarios,fecha_fin,fecha_inicio,latitud,longitud,vermapa} = props;
+  const position = {
+    lat:latitud,
+    lng:longitud
+  }
+  
+  // const posicion={
+  //   lat:latitud,
+  //   lng:longitud
+  // }
+  // const {position,setposition} = useState({ lat:  -24.09804180450979, lng:-65.07202148437501})
+  // console.log(position)
+  // setposition({latitud,longitud})
   return (
     <Table.Cell textAlign="right">
             
@@ -68,8 +86,12 @@ function Actions(props) {
         Turnos
       </Button>
 
+      <Button icon onClick={()=>vermapa(position,true)}>
+        <Icon name="map marker"/>
+      </Button>
+
       <Button icon negative onClick={()=>console.log("hola mundo")}>
-        <Icon name="close" />
+        <Icon title="ver mapa" name="close" />
       </Button>
     </Table.Cell>
   );

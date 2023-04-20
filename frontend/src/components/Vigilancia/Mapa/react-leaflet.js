@@ -7,7 +7,7 @@ import {MarkerIcon} from './react-leaflet-icon.js';
 
 export const MapView= (props)=> {
 //  const [position,setposition]=useState({ lat:  -24.09804180450979, lng:-65.07202148437501 })
- const {position,setposition} = props;
+ const {position,setposition,comando} = props;
  const [showPosition, setShowPosition] = useState(false);
  const [address, setAddress] = useState(null);
 function MyComponent() {
@@ -44,11 +44,20 @@ function MyComponent() {
         zoom={13}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
+        {!comando &&
         <Marker position={position} icon={MarkerIcon} draggable   >
         <Popup >
            {address} {`Latitud: ${position.lat.toFixed(4)}, Longitud: ${position.lng.toFixed(4)}`}
           </Popup>
         </Marker>
+        }
+        {comando===true &&
+          <Marker position={position} icon={MarkerIcon}  >
+          <Popup >
+             {address} {`Latitud: ${position.lat}, Longitud: ${position.lng}`}
+            </Popup>
+          </Marker>
+        }
         <MyComponent/>
       </MapContainer>
     );
