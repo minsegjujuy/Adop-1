@@ -19,6 +19,7 @@ class UnidadRegionalViewSet(viewsets.ModelViewSet):
     serializer_class = UnidadRegionalSerializer
 
     def list(self,request):
+        self.queryset = self.get_queryset()
         usuario=request.user
         serializer =UnidadRegionalSerializer(self.queryset,many=True)
         
@@ -37,6 +38,7 @@ class DependenciaViewSet(viewsets.ModelViewSet):
     
     def list(self,request):
         ur = int(request.GET.get('uurr'))
+        self.queryset = self.get_queryset()
         usuario =request.user
         serializer = DependenciaSerializer(self.queryset, many=True)
         

@@ -1,4 +1,4 @@
-from ..models import Motivo,Vigilancia, DiasVigilancia, TurnoVigilancia
+from ..models import Motivo, Vigilancia, DiasVigilancia, TurnoVigilancia
 from Dependencia.models import Dependencia, UnidadRegional
 from Servicio.models import Servicio
 
@@ -26,8 +26,9 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
     
     def list(self, request):
         usuario = request.user
+        self.queryset = self.get_queryset()
         serializer = VigilanciaSerializer(self.queryset, many=True)
-        print(serializer.data)
+        # print(serializer.data)
         if usuario.rol.rol == 'OPERADOR':
             datos = [x for x in serializer.data if x['fk_jurisdiccion']==usuario.jurisdiccion.id]
         else:
@@ -60,6 +61,7 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
         return Response(resuesta)
 
     def retrieve(self, request, pk=None):
+        self.queryset = self.get_queryset()
         try:
             queryset = Vigilancia.objects.get(pk=pk)
         except Vigilancia.DoesNotExist:
