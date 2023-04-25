@@ -1,5 +1,4 @@
 import React, { useState ,useEffect} from "react";
-import "./AddVigilancia.scss";
 import { Button, Form, Icon,Checkbox } from "semantic-ui-react";
 import {useVigilancia,useAuth} from "../../../../hooks"
 import {MapView} from "../../Mapa/react-leaflet"
@@ -81,7 +80,7 @@ export function AddVigilancia(props) {
          fk_motivo:formValue.motivo,
          fk_tipo_servicio:formValue.tipo_servicio,
          fk_tipo_recurso:formValue.recursos,
-         regional:formValue.regional,
+         fk_unidad_regional:formValue.regional,
          objetivo:formValue.objetivo,
          cant_dias:0,
          fecha_inicio:formValue.fecha_inicio,
@@ -130,10 +129,10 @@ export function AddVigilancia(props) {
         <label>Regional</label>
         <div className="disable">
         <Form.Input
-            disabled
             name="regional"
             value={formik.values.regional}
-            onChange={formik.handleChange}
+            // placeholder={`UNIDAD REGIONAL ${formik.values.regional}`}
+            // onChange={formik.handleReset}
             error={formik.errors.regional}
           />
           </div>
@@ -299,13 +298,13 @@ export function AddVigilancia(props) {
 
 function initialValues(auth) {
   return {
-    regional:auth?.usuario?.rol===3? `UNIDAD REGIONAL ${auth.usuario.unidad_regional}`:"",
+    regional:auth?.usuario?.rol===3?  auth.usuario.unidad_regional:"",
     juridiccion: "",
     motivo:"",
     tipo_servicio:"",
     objetivo:"",
     cantidad_dias:0,
-    fecha_inicio:"2010-01-01",
+    fecha_inicio:"",
     fecha_fin: null,
     fecha_indefinida:false,
     // hora_inicio:"",

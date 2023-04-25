@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { Table, Button, Icon,Popup } from "semantic-ui-react";
+import { Link,useLocation } from "react-router-dom";
 import { map } from "lodash";
 import "./TableVigilancia.scss";
 
 
 export function TableVigilancia(props) {
-  const {vigilancias,addHorarios,vermapa } = props;
+  const {vigilancias,addHorarios,vermapa,AsignarPersonal } = props;
   const {position,setposition}= useState(null)
+  const { pathname } = useLocation();
+
  
   return (
     <Table className="table-users-admin">
@@ -53,6 +56,8 @@ export function TableVigilancia(props) {
                longitud={vigilancia.longitud}
                position={position}
                setposition={setposition}
+               pathname={pathname}
+               AsignarPersonal={AsignarPersonal}
             //   updateUser={updateUser}
               //  onDeleteUser={onDeleteUser}
               
@@ -65,7 +70,7 @@ export function TableVigilancia(props) {
 }
 
 function Actions(props) {
-  const { addHorarios,fecha_fin,fecha_inicio,latitud,longitud,vermapa} = props;
+  const { addHorarios,fecha_fin,fecha_inicio,latitud,longitud,vermapa,pathname,AsignarPersonal} = props;
   const position = {
     lat:latitud,
     lng:longitud
@@ -85,6 +90,17 @@ function Actions(props) {
         {/* <Icon className="green" name="pencil" /> */}
         Turnos
       </Button>
+
+      <Button class="ui basic button"
+       as={Link}
+       to={"/admin/carga/vigilancia/personal"}
+       active={pathname === "/admin/carga/vigilancia/personal"}
+       positive
+       onClick={() => <AsignarPersonal />}
+      
+      ><i class="icon user">
+        
+        </i> Asignar Personal </Button>
 
       <Button icon onClick={()=>vermapa(position,true)}>
         <Icon name="map marker"/>
