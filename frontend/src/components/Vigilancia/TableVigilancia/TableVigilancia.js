@@ -1,11 +1,15 @@
-import React from "react";
-import { Table, Button, Icon } from "semantic-ui-react";
+import React, { useState } from "react";
+import { Table, Button, Icon,Popup } from "semantic-ui-react";
+import { Link,useLocation } from "react-router-dom";
 import { map } from "lodash";
 import "./TableVigilancia.scss";
 
 
 export function TableVigilancia(props) {
-  const {vigilancias,addHorarios } = props;
+  const {vigilancias,addHorarios,vermapa,AsignarPersonal } = props;
+  const {position,setposition}= useState(null)
+  const { pathname } = useLocation();
+
  
   return (
     <Table className="table-users-admin">
@@ -19,8 +23,8 @@ export function TableVigilancia(props) {
           {/* <Table.HeaderCell>Dias</Table.HeaderCell> */}
           <Table.HeaderCell>Fecha de inicio</Table.HeaderCell>
           <Table.HeaderCell>Fecha de fin</Table.HeaderCell>
-          <Table.HeaderCell>Latitud</Table.HeaderCell>
-          <Table.HeaderCell>Longitud</Table.HeaderCell>
+          {/* <Table.HeaderCell>Latitud</Table.HeaderCell>
+          <Table.HeaderCell>Longitud</Table.HeaderCell> */}
 
           <Table.HeaderCell></Table.HeaderCell>
         </Table.Row>
@@ -39,14 +43,21 @@ export function TableVigilancia(props) {
             {/* <Table.Cell>{vigilancia.cant_dias}</Table.Cell> */}
             <Table.Cell>{vigilancia.fecha_inicio.slice(0, 10)}</Table.Cell>
             <Table.Cell>{vigilancia.fecha_fin? vigilancia.fecha_fin.slice(0,10):"indefinida"}</Table.Cell>
-            <Table.Cell>{vigilancia.latitud}</Table.Cell>
-            <Table.Cell>{vigilancia.longitud}</Table.Cell>
+            {/* <Table.Cell>{vigilancia.latitud}</Table.Cell>
+            <Table.Cell>{vigilancia.longitud}</Table.Cell> */}
             
             <Actions
               // user={user}
                addHorarios={addHorarios}
+               vermapa={vermapa}
                fecha_inicio={vigilancia.fecha_inicio.slice(0,10)}
                fecha_fin={vigilancia.fecha_fin? vigilancia.fecha_fin.slice(0,10):null}
+               latitud={vigilancia.latitud}
+               longitud={vigilancia.longitud}
+               position={position}
+               setposition={setposition}
+               pathname={pathname}
+               AsignarPersonal={AsignarPersonal}
             //   updateUser={updateUser}
               //  onDeleteUser={onDeleteUser}
               
@@ -59,7 +70,19 @@ export function TableVigilancia(props) {
 }
 
 function Actions(props) {
-  const { addHorarios,fecha_fin,fecha_inicio} = props;
+  const { addHorarios,fecha_fin,fecha_inicio,latitud,longitud,vermapa,pathname,AsignarPersonal} = props;
+  const position = {
+    lat:latitud,
+    lng:longitud
+  }
+  
+  // const posicion={
+  //   lat:latitud,
+  //   lng:longitud
+  // }
+  // const {position,setposition} = useState({ lat:  -24.09804180450979, lng:-65.07202148437501})
+  // console.log(position)
+  // setposition({latitud,longitud})
   return (
     <Table.Cell textAlign="right">
             
@@ -68,8 +91,23 @@ function Actions(props) {
         Turnos
       </Button>
 
+      <Button class="ui basic button"
+       as={Link}
+       to={"/admin/carga/vigilancia/personal"}
+       active={pathname === "/admin/carga/vigilancia/personal"}
+       positive
+       onClick={() => <AsignarPersonal />}
+      
+      ><i class="icon user">
+        
+        </i> Asignar Personal </Button>
+
+      <Button icon onClick={()=>vermapa(position,true)}>
+        <Icon name="map marker"/>
+      </Button>
+
       <Button icon negative onClick={()=>console.log("hola mundo")}>
-        <Icon name="close" />
+        <Icon title="ver mapa" name="close" />
       </Button>
     </Table.Cell>
   );

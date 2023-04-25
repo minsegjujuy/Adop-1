@@ -1,9 +1,10 @@
 import React from "react";
 import { HeaderPage } from "../../components/Admin/";
 import { TableVigilancia } from "../../components/Vigilancia/TableVigilancia";
-import { CargaVigilancia } from "../Vigilancia";
+import { CargaVigilancia,AsignarPersonal } from "../Vigilancia";
+import { MapView } from "../../components/Vigilancia/Mapa/react-leaflet";
 import { CargaHorario } from "../../components/Vigilancia/CargaHorarios";
-import { useUser, useVigilancia ,useAuth} from "../../hooks";
+import { useUser, useVigilancia, useAuth } from "../../hooks";
 import { Button, Form } from "semantic-ui-react";
 import { useFormik } from "formik";
 import { Link, useLocation } from "react-router-dom";
@@ -13,13 +14,13 @@ import "./HomeAdmin.scss";
 import Swal from "sweetalert2";
 
 export function HomeAdmin() {
-  const { get_vigilancia, vigilancias ,auth} = useVigilancia();
+  const { get_vigilancia, vigilancias, auth } = useVigilancia();
+
   const [titleModal, setTitleModal] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [contentModal, setContentModal] = useState(null);
   const [refetch, setRefetch] = useState(false);
   const { pathname } = useLocation();
-  
 
   useEffect(() => {
     get_vigilancia();
@@ -30,7 +31,7 @@ export function HomeAdmin() {
   };
   const onRefetch = () => setRefetch((prev) => !prev);
 
-  const addHorarios = (fecha_fin,fecha_inicio) => {
+  const addHorarios = (fecha_fin, fecha_inicio) => {
     setTitleModal("Agregar Horarios");
     // console.log(cantidad_dias)
     setContentModal(
@@ -43,6 +44,17 @@ export function HomeAdmin() {
         // setformHorario={setformHorario}
         // addUser={addUser}
       />
+    );
+    openCloseModal();
+  };
+  const vermapa = (position, comando) => {
+    // const {position,setposition} = useState({latitud,longitud})
+    console.log(position);
+    setTitleModal("Ubicacion de Vigilancia");
+    setContentModal(
+      <div className="mapa">
+        <MapView position={position} comando={comando} />
+      </div>
     );
     openCloseModal();
   };
@@ -123,9 +135,9 @@ export function HomeAdmin() {
                   />
                 </div>
 
-                <div className="boton-buscar">
-                  <Button type="submit" content={"Buscar"} primary fluid />
-                </div>
+                <Button positive type="submit">
+                  {"BUSCAR"}
+                </Button>
               </div>
 
               <div></div>
@@ -147,7 +159,12 @@ export function HomeAdmin() {
           </Button> */}
         </div>
       </div>
-      <TableVigilancia vigilancias={vigilancias} addHorarios={addHorarios} />
+      <TableVigilancia
+        vigilancias={vigilancias}
+        AsignarPersonal={AsignarPersonal}
+        addHorarios={addHorarios}
+        vermapa={vermapa}
+      />
       <ModalBasic
         show={showModal}
         title={titleModal}

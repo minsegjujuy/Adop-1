@@ -10,6 +10,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;    
+    font-size: large !important;
 }
 
 .contenido-buscar-recargar{
@@ -19,3 +20,11 @@
 .boton-recargar{
     margin-left: 10px;
 }
+.mapa{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+// .boton-buscar{
+//     font-size: large !important;
+// }

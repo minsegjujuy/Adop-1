@@ -85,9 +85,9 @@ export function UserAdmin() {
           primary
           fluid
           /> */}
-              <div className='agregar'>
+              <div className='agregar-usuario'>
               <Button positive onClick={()=>addUser()}>
-                {"Agregar Usuario"}
+                {"AGREGAR USUARIO"}
               </Button>
               </div>
               

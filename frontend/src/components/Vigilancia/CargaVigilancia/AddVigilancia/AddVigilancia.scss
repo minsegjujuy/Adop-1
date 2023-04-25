@@ -4,10 +4,13 @@
 // input:disabled {
 //     opacity: 0.9; /* cambia la opacidad a 50% */
 //   }
-.disable{
-    color: black;
-    opacity: 0.9999;
-    border: 10px;
+// .disable{
+//     color: black;
+//     opacity: 0.9999;
+//     border: 10px;
+// }
+:disabled {
+  opacity: 0.99;
 }
 .custom-form {
     /* Cambiar el color del borde y el fondo del formulario */
@@ -50,9 +53,13 @@
     /* Cambiar el color del botón de envío */
     background-color: green;
     color: #fff;
+    font-size: large;
   }
   
   .custom-form .positive.button:hover {
     /* Cambiar el color del botón de envío al pasar el ratón por encima */
     background-color: rgb(0, 102, 128);
+  }
+  .custom-form{
+     font-size: large !important;
   }
