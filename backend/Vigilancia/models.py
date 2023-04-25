@@ -1,17 +1,17 @@
 from django.db import models
 from Servicio.models import TipoRecurso, TipoServicio
 from Personal.models import Personal
-from Dependencia.models import Dependencia
+from Dependencia.models import Dependencia, UnidadRegional
 
 class Motivo(models.Model):
     motivo = models.CharField(max_length=22)
 
 class Vigilancia(models.Model):
-    fk_jurisdiccion = models.ForeignKey(Dependencia, on_delete=models.CASCADE)
-    fk_motivo = models.ForeignKey('Motivo', on_delete=models.CASCADE, null=True)
-    fk_tipo_servicio = models.ForeignKey(TipoServicio, on_delete=models.CASCADE, null=True)
-    fk_tipo_recurso = models.ForeignKey(TipoRecurso, on_delete=models.CASCADE, null=True)
-    regional = models.CharField(max_length=50, default='')
+    fk_jurisdiccion = models.ForeignKey(Dependencia, on_delete=models.CASCADE, null=False)
+    fk_motivo = models.ForeignKey('Motivo', on_delete=models.CASCADE, null=False)
+    fk_tipo_servicio = models.ForeignKey(TipoServicio, on_delete=models.CASCADE, null=False)
+    fk_tipo_recurso = models.ForeignKey(TipoRecurso, on_delete=models.CASCADE, null=False)
+    fk_unidad_regional = models.ForeignKey(UnidadRegional, on_delete=models.CASCADE, null=False)
     objetivo = models.TextField()
     cant_dias = models.IntegerField(default=0)
     fecha_inicio = models.DateTimeField(null=False)

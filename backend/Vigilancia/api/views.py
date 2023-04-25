@@ -28,9 +28,9 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
         usuario = request.user
         self.queryset = self.get_queryset()
         serializer = VigilanciaSerializer(self.queryset, many=True)
-        # print(serializer.data)
+        print(serializer.data)
         if usuario.rol.rol == 'OPERADOR':
-            datos = [x for x in serializer.data if x['fk_jurisdiccion']==usuario.jurisdiccion.id]
+            datos = [x for x in serializer.data if x['fk_unidad_regional']==usuario.unidad_regional.id]
         else:
             datos = serializer.data
 
@@ -41,10 +41,10 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
             data['jurisdiccion']= Dependencia.objects.get(id=vigilancia['fk_jurisdiccion']).jurisdiccion
             data['motivo']= Motivo.objects.get(id=vigilancia['fk_motivo']).motivo
             try:
-                data['servicio']=Servicio.objects.get(id=vigilancia['fk_servicio']).servicio
+                data['servicio']=Servicio.objects.get(id=vigilancia['fk_tipo_servicio']).tipo_servicios
             except:
                 data['servicio']=None
-            data['regional'] = UnidadRegionalSerializer(Dependencia.objects.get(id=vigilancia['fk_jurisdiccion']).fk_unidad_regional).data['unidad_regional']
+            data['fk_unidad_regional'] = UnidadRegionalSerializer(Dependencia.objects.get(id=vigilancia['fk_jurisdiccion']).fk_unidad_regional).data['unidad_regional']
             data['objetivo']= vigilancia['objetivo']
             data['cant_dias']= vigilancia['cant_dias']
             data['fecha_inicio']= vigilancia['fecha_inicio']
@@ -96,7 +96,7 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
         fk_motivo = serializer.validated_data.get('fk_motivo')
         fk_tipo_servicio = serializer.validated_data.get('fk_tipo_servicio')
         fk_tipo_recurso = serializer.validated_data.get('fk_tipo_recurso')
-        regional = serializer.validated_data.get('regional')
+        fk_unidad_regional = serializer.validated_data.get('fk_unidad_regional')
         objetivo = serializer.validated_data.get('objetivo')
         cant_dias = serializer.validated_data.get('cant_dias')
         fecha_inicio = serializer.validated_data.get('fecha_inicio')
@@ -110,7 +110,7 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
             fk_motivo = fk_motivo,
             fk_tipo_servicio = fk_tipo_servicio,
             fk_tipo_recurso = fk_tipo_recurso,
-            regional = regional,
+            fk_unidad_regional = fk_unidad_regional,
             objetivo = objetivo,
             cant_dias = cant_dias,
             fecha_inicio = fecha_inicio,
@@ -132,8 +132,13 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
 class DiasVigilanciaViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     authentication_classes = (JWTAuthentication,TokenAuthentication)
-    queryset = DiasVigilancia.objects.all()    
+    dias_queryset = DiasVigilancia.objects.all()    
+    turnos_queryset = TurnoVigilancia.objects.all()    
     serializer_class = DiasVigilanciaSerializer
+    
+    def create(self,request, *args, **kwargs):
+        dias_serializer = DiasVigilanciaSerializer(data=request.data)
+        tirno_serializer = TurnoVigilanciaSerializer(data=request.data)
 
 class TurnoVigilanciaViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)

@@ -4,6 +4,7 @@ from django.contrib.sessions.models import Session
 from django.http import JsonResponse
 
 from Dependencia.models import Dependencia, UnidadRegional
+from Dependencia.api.serializer import DependenciaSerializer, UnidadRegionalSerializer
 
 from users.models import Usuario, Rol
 from users.api.serializers import UserSerializer, TokenSerializer, RolSerializer
@@ -104,37 +105,29 @@ class UserViewSet(Authentication,viewsets.ModelViewSet):
                 'msj':'No se ingreso el id del usuario a modificar'
             }
             return Response(respuesta,status=status.HTTP_400_BAD_REQUEST)
-    
-    
+       
     def create(self,request):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        
-        username = serializer.validated_data.get('username')
-        email = serializer.validated_data.get('email')
-        password = serializer.validated_data.get('password')
-        is_superuser = serializer.validated_data.get('is_superuser')
-        nombres = None
-        apellidos = None
-        jurisdiccion = None
-        regional = None
-        if not is_superuser:  
-            nombres = serializer.validated_data.get('nombres')
-            apellidos = serializer.validated_data.get('apellidos')
-            jurisdiccion = serializer.validated_data.get('jurisdiccion')
-            regional = serializer.validated_data.get('regional')
+        datos = serializer.validated_data
+        username = datos.get('username')
+        email = datos.get('email')
+        password = datos.get('password')
+        is_superuser = datos.get('is_superuser')
+        if is_superuser:
+            Usuario.objects.create_superuser(username,email,1,password)
+        else:
+            # print(UnidadRegional.objects.get(id=datos.get('unidad_regional')))
             Usuario.objects.create_user(
                 email=email,
                 username=username,
-                nombres=nombres,
-                apellidos=apellidos,
-                rol = serializer.validated_data['rol'],
-                unidad_regional=regional,
-                jurisdiccion=jurisdiccion,
+                nombres=datos['nombres'],
+                apellidos=datos['apellidos'],
+                rol = datos['rol'],
+                unidad_regional=datos['unidad_regional'],
+                jurisdiccion=datos['jurisdiccion'],
                 password=password,
-                is_superuser=is_superuser)
-        else:
-            Usuario.objects.create_superuser(username,email,1,password)
+                is_superuser=False)
         
         respuesta = {
             'msj': 'Usuario creado Correctamente!!'
