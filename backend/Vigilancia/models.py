@@ -1,4 +1,5 @@
-from django.db import models
+from django.contrib.postgres.fields import ArrayField
+from django.db import models, connections
 from Servicio.models import TipoRecurso, TipoServicio
 from Personal.models import Personal
 from Dependencia.models import Dependencia, UnidadRegional
@@ -19,8 +20,9 @@ class Vigilancia(models.Model):
     destino = models.CharField(null=False,max_length=50)
     longitud = models.DecimalField(decimal_places=10,max_digits=13)
     latitud = models.DecimalField(decimal_places=10,max_digits=13)
+    turno_asignado = models.BooleanField(default=False)
     # activar luego de la primera migracion
-    # dias_vigilancias = models.ManyToManyField('DiasVigilancia', db_table='vigilancia_diasvigilancia', related_name='dias_vigilancias') #comentar para la primera migracion
+    # turnos_vigilancias = models.ManyToManyField('TurnosVigilancia', db_table='vigilancia_turnosvigilancia', related_name='turnosvigilancia', default=None) #comentar para la primera migracion
     
     # def save(self, *args, **kwargs):
     #     with open('BaseDeDatos/script_triggers.sql', encoding='utf-8') as sql_script:
@@ -29,15 +31,17 @@ class Vigilancia(models.Model):
     #     with connections['default'].cursor() as cursor:
     #         cursor.execute(sql)
 
-class DiasVigilancia(models.Model):
+class TurnosVigilancia(models.Model):
     fk_vigilancia = models.ForeignKey('Vigilancia', on_delete=models.CASCADE)
-    fecha = models.DateTimeField(null=False)
+    turno = ArrayField(models.TextField())
     hora_inicio = models.TimeField(null=True)
     hora_fin = models.TimeField(null=True)
+    diario = models.BooleanField(default=False)
     dia_completo = models.BooleanField(default=False)
 
-class TurnoVigilancia(models.Model):
+class PersonalVigilancia(models.Model):
     fk_personal = models.ForeignKey(Personal, null=False, on_delete=models.CASCADE)
-    fk_diaVigilancia = models.ForeignKey('DiasVigilancia', on_delete=models.CASCADE)
+    fk_turnoVigilancia = models.ForeignKey('TurnosVigilancia', on_delete=models.CASCADE)
+    fecha = models.DateTimeField(null=False)
     hora_inicio = models.TimeField(null=False)
     hora_fin = models.TimeField(null=False)
