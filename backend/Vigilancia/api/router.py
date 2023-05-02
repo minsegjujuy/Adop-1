@@ -1,5 +1,5 @@
 from rest_framework import routers
-from .views import VigilanciaViewSet, DiasVigilanciaViewSet, MotivoViewSet, TurnoVigilanciaViewSet
+from .views import VigilanciaViewSet, TurnosVigilanciaViewSet, MotivoViewSet, PersonalVigilanciaViewSet
 
 router = routers.DefaultRouter()
 
@@ -13,10 +13,10 @@ router.register('vigilancias', VigilanciaViewSet, 'vigilancias')
 
 # [GET] [POST] api/dias_vigilancias/
 # [UPDATE] [DELETE] api/dias_vigilancias/{id}
-router.register('dias_vigilancias', DiasVigilanciaViewSet, 'dias_vigilancias')
+router.register('vigilancia/turnos', TurnosVigilanciaViewSet, 'turnos_vigilancias')
 
 # [GET] [POST] api/turnos_vigilancia/
 # [UPDATE] [DELETE] api/turnos_vigilancia/{id}
-router.register('turnos_vigilancia', TurnoVigilanciaViewSet, 'turnos_vigilancias')
+router.register('vigilancias/turnos/personal', PersonalVigilanciaViewSet, 'personal_vigilancias')
 
 urlpatterns = router.urls

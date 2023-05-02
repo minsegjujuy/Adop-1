@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ..models import Motivo,Vigilancia, DiasVigilancia, TurnoVigilancia
+from ..models import Motivo,Vigilancia, TurnosVigilancia, PersonalVigilancia
 
 class MotivoVigilanciaSerializer(serializers.ModelSerializer):
     class Meta:
@@ -7,6 +7,26 @@ class MotivoVigilanciaSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'motivo'
+        )
+
+class VigilanciaSerializerView(serializers.ModelSerializer):
+    class Meta:
+        model = Vigilancia
+        fields = (
+            'id',
+            'fk_jurisdiccion',
+            'fk_motivo',
+            'fk_tipo_servicio',
+            'fk_tipo_recurso',
+            'fk_unidad_regional',
+            'objetivo',
+            'cant_dias',
+            'fecha_inicio',
+            'fecha_fin',
+            'turno_asignado',
+            'destino',
+            'longitud',
+            'latitud',
         )
 
 class VigilanciaSerializer(serializers.ModelSerializer):
@@ -28,21 +48,22 @@ class VigilanciaSerializer(serializers.ModelSerializer):
             'latitud',
         )
 
-class DiasVigilanciaSerializer(serializers.ModelSerializer):
+class TurnosVigilanciaSerializer(serializers.ModelSerializer):
     class Meta:
-        model = DiasVigilancia
+        model = TurnosVigilancia
         fields = (
             'id',
             'fk_vigilancia',
-            'fecha',
+            'turno',
             'hora_inicio',
             'hora_fin',
+            'diario',
             'dia_completo'
         )
 
-class TurnoVigilanciaSerializer(serializers.ModelSerializer):
+class PersonalVigilanciaSerializer(serializers.ModelSerializer):
     class Meta:
-        model = TurnoVigilancia
+        model = PersonalVigilancia
         fields = (
             'id',
             'fk_personal',

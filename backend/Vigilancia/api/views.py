@@ -1,16 +1,23 @@
-from ..models import Motivo, Vigilancia, DiasVigilancia, TurnoVigilancia
+from ..models import Motivo, Vigilancia, TurnosVigilancia, PersonalVigilancia
 from Dependencia.models import Dependencia, UnidadRegional
 from Servicio.models import TipoServicio, TipoRecurso
 
 from Dependencia.api.serializer import UnidadRegionalSerializer
-from .serializer import VigilanciaSerializer, DiasVigilanciaSerializer, MotivoVigilanciaSerializer, TurnoVigilanciaSerializer
+from .serializer import VigilanciaSerializer, VigilanciaSerializerView, TurnosVigilanciaSerializer, MotivoVigilanciaSerializer, PersonalVigilanciaSerializer
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from django.http import JsonResponse
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from rest_framework_simplejwt.authentication import JWTAuthentication
+
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+from datetime import datetime, date, timedelta
+import calendar
+import locale
+from django.http import JsonResponse
+locale.setlocale(locale.LC_TIME, "es_ES")
 
 class MotivoViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
@@ -22,15 +29,20 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     authentication_classes = (JWTAuthentication,TokenAuthentication)
     queryset = Vigilancia.objects.all()
-    serializer_class = VigilanciaSerializer
+    serializer_class = VigilanciaSerializerView
     
-    def list(self, request):
+    def list(self, request, *args, **kwargs):
         usuario = request.user
+        inactivo = request.GET.get('inactivo')
+        # print(inactivo)
         self.queryset = self.get_queryset()
-        serializer = VigilanciaSerializer(self.queryset, many=True)
-        print(serializer.data)
+        serializer = VigilanciaSerializerView(self.queryset, many=True)
+        # print(serializer.data)
         if usuario.rol.rol == 'OPERADOR':
-            datos = [x for x in serializer.data if x['fk_unidad_regional']==usuario.unidad_regional.id]
+            if inactivo:
+                datos = [x for x in serializer.data if x['fk_unidad_regional']==usuario.unidad_regional.id]
+            else:
+                datos = [x for x in serializer.data if x['fk_unidad_regional']==usuario.unidad_regional.id and str(datetime.now())<x['fecha_fin']]
         else:
             datos = serializer.data
 
@@ -52,6 +64,7 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
                 data['fecha_fin'] = vigilancia['fecha_fin']
             else:
                 data['fecha_fin'] = "Indefinido"
+            data['turno_asignado'] = vigilancia['turno_asignado']
             data['destino']= vigilancia['destino']
             data['longitud']= vigilancia['longitud']
             data['latitud']= vigilancia['latitud']
@@ -67,7 +80,7 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
         except Vigilancia.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        serializer_data = VigilanciaSerializer(queryset).data
+        serializer_data = VigilanciaSerializerView(queryset).data
         
         data = {}
        
@@ -84,6 +97,7 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
         data['cant_dias']= serializer_data['cant_dias']
         data['fecha_inicio']= serializer_data['fecha_inicio']
         data['fecha_fin']= serializer_data['fecha_fin']
+        data['turno_asignado'] = serializer_data['turno_asignado']
         data['destino']= serializer_data['destino']
         data['longitud']= serializer_data['longitud']
         data['latitud']= serializer_data['latitud']
@@ -106,7 +120,7 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
         longitud = serializer.validated_data.get('longitud')
         latitud = serializer.validated_data.get('latitud')
         
-        Vigilancia.objects.create(
+        Vigilancia.objects.create(  
             fk_jurisdiccion = fk_jurisdiccion,
             fk_motivo = fk_motivo,
             fk_tipo_servicio = fk_tipo_servicio,
@@ -130,19 +144,76 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
         except Vigilancia.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
         
-class DiasVigilanciaViewSet(viewsets.ModelViewSet):
+class TurnosVigilanciaViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     authentication_classes = (JWTAuthentication,TokenAuthentication)
-    dias_queryset = DiasVigilancia.objects.all()    
-    turnos_queryset = TurnoVigilancia.objects.all()    
-    serializer_class = DiasVigilanciaSerializer
-    
-    def create(self,request, *args, **kwargs):
-        dias_serializer = DiasVigilanciaSerializer(data=request.data)
-        tirno_serializer = TurnoVigilanciaSerializer(data=request.data)
+    queryset = TurnosVigilancia.objects.all()
+    serializer_class = TurnosVigilanciaSerializer
 
-class TurnoVigilanciaViewSet(viewsets.ModelViewSet):
+    def seleccionar_fechas(self, fecha_inicio, fecha_fin, diario, dias_semana):
+        fechas = []
+        fechas_seleccionadas = []
+        fecha_actual = fecha_inicio
+        fecha_limite = fecha_fin
+        
+        if fecha_limite is None:
+            fecha_limite = fecha_actual + timedelta(days=7)
+
+        while fecha_actual <= fecha_limite:
+            fechas.append(fecha_actual)
+            if diario == False:
+                fechas = [x for x in fechas if x.strftime('%A') in dias_semana]
+            fecha_actual += timedelta(days=1)
+        
+        for fecha in fechas:
+            fechas_seleccionadas.append(str(fecha))
+
+        return fechas_seleccionadas
+
+    def create(self,request, *args, **kwargs):
+        turnos_serializer = self.get_serializer(data=request.data)
+        turnos_serializer.is_valid(raise_exception=True)
+        
+        vigilancia = turnos_serializer.validated_data['fk_vigilancia'].id
+        
+        fechas = self.seleccionar_fechas(Vigilancia.objects.get(id=vigilancia).fecha_inicio,Vigilancia.objects.get(id=vigilancia).fecha_fin,turnos_serializer.validated_data['diario'],turnos_serializer.validated_data['turno'])
+
+        # print(datetime.now().time().isoformat())
+        # print(datetime.now().time().hour)
+        # print(datetime.now().time().minute)
+
+        # print(hora_inicio.hour)
+        # print(hora_fin.hour)
+
+        if turnos_serializer.validated_data['dia_completo']:
+            turnos_serializer.validated_data['hora_inicio'] = None
+            turnos_serializer.validated_data['hora_fin'] = None
+
+        try:
+            TurnosVigilancia.objects.create(
+                fk_vigilancia = turnos_serializer.validated_data['fk_vigilancia'],
+                turno = fechas,
+                hora_inicio = turnos_serializer.validated_data['hora_inicio'],
+                hora_fin = turnos_serializer.validated_data['hora_fin'],
+                diario = turnos_serializer.validated_data['diario'],
+                dia_completo = turnos_serializer.validated_data['dia_completo']
+            )
+            up_vigilancia = get_object_or_404(Vigilancia, pk=vigilancia)
+            up_vigilancia.turno_asignado = True
+            up_vigilancia.save()
+
+            respuesta = {"msj":"Turnos Asignados Correctamente!!!"}
+            return JsonResponse(respuesta, safe=False,status = status.HTTP_201_CREATED)
+        except ValueError:
+            respuesta = {"error":"Error al crear los Turnos"}
+            return JsonResponse(respuesta, safe=False, status = status.HTTP_500_INTERNAL_SERVER_ERROR)
+            
+
+class PersonalVigilanciaViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     authentication_classes = (JWTAuthentication,TokenAuthentication)
-    queryset = TurnoVigilancia.objects.all()    
-    serializer_class = TurnoVigilanciaSerializer
+    queryset = PersonalVigilancia.objects.all()    
+    serializer_class = PersonalVigilanciaSerializer
+    
+    def create(self, request, *args, **kwargs):
+        personal_serializer = PersonalVigilanciaSerializer(data=request.data)
