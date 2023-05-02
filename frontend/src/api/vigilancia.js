@@ -53,3 +53,19 @@ export async function addVigilanciaApi(data, token) {
       throw error;
     }
   }
+  // export async function getVigilanciasInactivas(token) {
+  //   try {
+  //     const url = `${BASE_API}/api/vigilancias/?inactivo=${true}`;
+  //     const params = {
+  //       method: "GET",
+  //       headers: {
+  //         Authorization: `Token ${token}`,
+  //       },
+  //     };
+  //     const response = await fetch(url, params);
+  //     const result = await response.json();
+  //     return result;
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // }

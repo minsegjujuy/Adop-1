@@ -31,7 +31,7 @@ export function HomeAdmin() {
   };
   const onRefetch = () => setRefetch((prev) => !prev);
 
-  const addHorarios = (fecha_fin, fecha_inicio) => {
+  const addHorarios = (fecha_fin, fecha_inicio,id) => {
     setTitleModal("Agregar Horarios");
     // console.log(cantidad_dias)
     setContentModal(
@@ -40,6 +40,7 @@ export function HomeAdmin() {
         Refetch={onRefetch}
         fecha_fin={fecha_fin}
         fecha_inicio={fecha_inicio}
+        id={id}
         // cantidad_dias={cantidad_dias}
         // setformHorario={setformHorario}
         // addUser={addUser}

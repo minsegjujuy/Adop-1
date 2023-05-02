@@ -18,7 +18,7 @@ class VigilanciaSerializer(serializers.ModelSerializer):
             'fk_motivo',
             'fk_tipo_servicio',
             'fk_tipo_recurso',
-            'regional',
+            'fk_unidad_regional',
             'objetivo',
             'cant_dias',
             'fecha_inicio',

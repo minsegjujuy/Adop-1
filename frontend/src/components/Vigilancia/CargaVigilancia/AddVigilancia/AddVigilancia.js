@@ -318,7 +318,13 @@ function initialValues(auth) {
 
 function validationSchema() {
   return {
-    // password: Yup.string().required(true),
-    // nuevacontraseña: Yup.string().required(true),
+    // juridiccion: Yup.number().required("Seleccione una Juridiccion"),
+    // motivo: Yup.number().required("Seleccione un Motivo"),
+    // tipo_servicio: Yup.number().required("Seleccione un Tipo de Servicio"),
+    // Objetivo:Yup.string().required("Escriba un objetivo para la vigilancia"),
+    // fecha_inicio: Yup.date().required("La fecha de inicio es requerida"),
+    // destino: Yup.string().required("Escriba un destino"),
+    // recursos: Yup.number().required("Seleccione un recurso")
+
   };
 }

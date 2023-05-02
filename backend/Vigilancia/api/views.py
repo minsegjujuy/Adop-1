@@ -1,6 +1,6 @@
 from ..models import Motivo, Vigilancia, DiasVigilancia, TurnoVigilancia
 from Dependencia.models import Dependencia, UnidadRegional
-from Servicio.models import Servicio
+from Servicio.models import TipoServicio, TipoRecurso
 
 from Dependencia.api.serializer import UnidadRegionalSerializer
 from .serializer import VigilanciaSerializer, DiasVigilanciaSerializer, MotivoVigilanciaSerializer, TurnoVigilanciaSerializer
@@ -41,7 +41,7 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
             data['jurisdiccion']= Dependencia.objects.get(id=vigilancia['fk_jurisdiccion']).jurisdiccion
             data['motivo']= Motivo.objects.get(id=vigilancia['fk_motivo']).motivo
             try:
-                data['servicio']=Servicio.objects.get(id=vigilancia['fk_tipo_servicio']).tipo_servicios
+                data['servicio']=TipoServicio.objects.get(id=vigilancia['fk_tipo_servicio']).tipo_servicio
             except:
                 data['servicio']=None
             data['fk_unidad_regional'] = UnidadRegionalSerializer(Dependencia.objects.get(id=vigilancia['fk_jurisdiccion']).fk_unidad_regional).data['unidad_regional']
@@ -75,9 +75,10 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
         data['jurisdiccion']= Dependencia.objects.get(id=serializer_data['fk_jurisdiccion']).jurisdiccion
         data['motivo']= Motivo.objects.get(id=serializer_data['fk_motivo']).motivo
         try:
-            data['servicio']=Servicio.objects.get(id=serializer_data['fk_servicio']).servicio
+            data['servicio']=TipoServicio.objects.get(id=serializer_data['fk_tipo_servicio']).tipo_servicio
         except:
             data['servicio']=None
+        data['recurso'] = TipoRecurso.objects.get(id=serializer_data['fk_tipo_recurso']).tipo_recurso
         data['regional'] = UnidadRegionalSerializer(Dependencia.objects.get(id=serializer_data['fk_jurisdiccion']).fk_unidad_regional).data['unidad_regional']
         data['objetivo']= serializer_data['objetivo']
         data['cant_dias']= serializer_data['cant_dias']

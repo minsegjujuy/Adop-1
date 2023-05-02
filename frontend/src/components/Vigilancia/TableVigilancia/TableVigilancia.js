@@ -1,16 +1,13 @@
 import React, { useState } from "react";
-import { Table, Button, Icon,Popup } from "semantic-ui-react";
-import { Link,useLocation } from "react-router-dom";
+import { Table, Button, Icon} from "semantic-ui-react";
+import { Link } from "react-router-dom";
 import { map } from "lodash";
 import "./TableVigilancia.scss";
 
-
 export function TableVigilancia(props) {
-  const {vigilancias,addHorarios,vermapa,AsignarPersonal } = props;
-  const {position,setposition}= useState(null)
-  const { pathname } = useLocation();
+  const { vigilancias, addHorarios, vermapa} = props;
+  const { position, setposition } = useState(null);
 
- 
   return (
     <Table className="table-users-admin">
       <Table.Header>
@@ -31,36 +28,37 @@ export function TableVigilancia(props) {
       </Table.Header>
       <Table.Body>
         {map(vigilancias, (vigilancia, index) => (
-          <Table.Row
-            key={index}
-
-          > 
-             <Table.Cell>{vigilancia.regional}</Table.Cell>
+          <Table.Row key={index}>
+            <Table.Cell>{vigilancia.fk_unidad_regional}</Table.Cell>
             <Table.Cell>{vigilancia.jurisdiccion}</Table.Cell>
             <Table.Cell>{vigilancia.motivo}</Table.Cell>
             <Table.Cell>{vigilancia.servicio}</Table.Cell>
             <Table.Cell>{vigilancia.objetivo}</Table.Cell>
             {/* <Table.Cell>{vigilancia.cant_dias}</Table.Cell> */}
             <Table.Cell>{vigilancia.fecha_inicio.slice(0, 10)}</Table.Cell>
-            <Table.Cell>{vigilancia.fecha_fin? vigilancia.fecha_fin.slice(0,10):"indefinida"}</Table.Cell>
+            <Table.Cell>
+              {vigilancia.fecha_fin
+                ? vigilancia.fecha_fin.slice(0, 10)
+                : "indefinida"}
+            </Table.Cell>
             {/* <Table.Cell>{vigilancia.latitud}</Table.Cell>
             <Table.Cell>{vigilancia.longitud}</Table.Cell> */}
-            
+
             <Actions
               // user={user}
-               addHorarios={addHorarios}
-               vermapa={vermapa}
-               fecha_inicio={vigilancia.fecha_inicio.slice(0,10)}
-               fecha_fin={vigilancia.fecha_fin? vigilancia.fecha_fin.slice(0,10):null}
-               latitud={vigilancia.latitud}
-               longitud={vigilancia.longitud}
-               position={position}
-               setposition={setposition}
-               pathname={pathname}
-               AsignarPersonal={AsignarPersonal}
-            //   updateUser={updateUser}
+              addHorarios={addHorarios}
+              vermapa={vermapa}
+              fecha_inicio={vigilancia.fecha_inicio.slice(0, 10)}
+              fecha_fin={
+                vigilancia.fecha_fin ? vigilancia.fecha_fin.slice(0, 10) : null
+              }
+              latitud={vigilancia.latitud}
+              longitud={vigilancia.longitud}
+              position={position}
+              setposition={setposition}
+              id={vigilancia.id}
+              //   updateUser={updateUser}
               //  onDeleteUser={onDeleteUser}
-              
             />
           </Table.Row>
         ))}
@@ -70,43 +68,46 @@ export function TableVigilancia(props) {
 }
 
 function Actions(props) {
-  const { addHorarios,fecha_fin,fecha_inicio,latitud,longitud,vermapa,pathname,AsignarPersonal} = props;
+  const {
+    addHorarios,
+    fecha_fin,
+    fecha_inicio,
+    latitud,
+    longitud,
+    vermapa,
+    id,
+  } = props;
   const position = {
-    lat:latitud,
-    lng:longitud
-  }
-  
-  // const posicion={
-  //   lat:latitud,
-  //   lng:longitud
-  // }
-  // const {position,setposition} = useState({ lat:  -24.09804180450979, lng:-65.07202148437501})
-  // console.log(position)
-  // setposition({latitud,longitud})
+    lat: latitud,
+    lng: longitud,
+  };
+
   return (
     <Table.Cell textAlign="right">
-            
-      <Button positive icon onClick={() => addHorarios(fecha_fin,fecha_inicio)}>
+      <Button
+        positive
+        icon
+        onClick={() => addHorarios(fecha_fin, fecha_inicio, id)}
+      >
         {/* <Icon className="green" name="pencil" /> */}
         Turnos
       </Button>
 
-      <Button class="ui basic button"
-       as={Link}
-       to={"/admin/carga/vigilancia/personal"}
-       active={pathname === "/admin/carga/vigilancia/personal"}
-       positive
-       onClick={() => <AsignarPersonal />}
-      
-      ><i class="icon user">
-        
-        </i> Asignar Personal </Button>
+      <Link
+        to="/admin/carga/vigilancia/personal"
+        state={{ fecha_fin,fecha_inicio }}
+      >
+         
+        <Button positive>
+        <Icon className="user icon"/>
+          Asignar Personal</Button>
+      </Link>
 
-      <Button icon onClick={()=>vermapa(position,true)}>
-        <Icon name="map marker"/>
+      <Button icon onClick={() => vermapa(position, true)}>
+        <Icon name="map marker" />
       </Button>
 
-      <Button icon negative onClick={()=>console.log("hola mundo")}>
+      <Button icon negative onClick={() => console.log("hola mundo")}>
         <Icon title="ver mapa" name="close" />
       </Button>
     </Table.Cell>

@@ -1,2 +1,2 @@
-export * from "./Mapa"
+// export * from "./Mapa"
 export * from "./CargaPersonal"
