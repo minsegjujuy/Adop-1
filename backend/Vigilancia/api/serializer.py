@@ -82,6 +82,7 @@ class PersonalVigilanciaSerializer(serializers.ModelSerializer):
             'id',
             'fk_personal',
             'fk_turnoVigilancia',
+            'fecha',
             'hora_inicio',
             'hora_fin',
             'asignado'
