@@ -107,6 +107,7 @@ export function AuthProvider(props) {
 
   const valueContext = {
     auth,
+    setAuth,
     login,
     logout,
   };

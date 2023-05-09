@@ -42,7 +42,7 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
             if inactivo:
                 datos = [x for x in serializer.data if x['fk_unidad_regional']==usuario.unidad_regional.id]
             else:
-                datos = [x for x in serializer.data if x['fk_unidad_regional']==usuario.unidad_regional.id and str(datetime.now())<x['fecha_fin']]
+                datos = [x for x in serializer.data if x['fk_unidad_regional']==usuario.unidad_regional.id and (datetime.now())<x['fecha_fin']]
         else:
             datos = serializer.data
 
@@ -166,7 +166,7 @@ class TurnosVigilanciaViewSet(viewsets.ModelViewSet):
             fecha_actual += timedelta(days=1)
         
         for fecha in fechas:
-            fechas_seleccionadas.append(str(fecha))
+            fechas_seleccionadas.append(str(fecha )[:10])
 
         return fechas_seleccionadas
 

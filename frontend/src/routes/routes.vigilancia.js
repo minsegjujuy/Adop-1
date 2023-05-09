@@ -1,8 +1,6 @@
 import {AdminLayout} from "../layouts/AdminLayout"
-// import { Home } from "../pages/Client";
-import { HomeAdmin,UserAdmin} from "../pages/Admin"; 
+import { HomeAdmin} from "../pages/Admin"; 
 import {CargaVigilancia,AsignarPersonal} from "../pages/Vigilancia"
-import {LoginAdmin} from "../pages/Admin/LoginAdmin"
 
 
 

@@ -67,7 +67,7 @@ class PersonalVigilanciaSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'fk_personal',
-            'fk_diaVigilancia',
+            'fk_turnoVigilancia',
             'hora_inicio',
             'hora_fin'
         )

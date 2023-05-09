@@ -57,6 +57,7 @@ export function TableVigilancia(props) {
               position={position}
               setposition={setposition}
               id={vigilancia.id}
+              turno_asignado={vigilancia.turno_asignado}
               //   updateUser={updateUser}
               //  onDeleteUser={onDeleteUser}
             />
@@ -76,6 +77,7 @@ function Actions(props) {
     longitud,
     vermapa,
     id,
+    turno_asignado
   } = props;
   const position = {
     lat: latitud,
@@ -84,6 +86,7 @@ function Actions(props) {
 
   return (
     <Table.Cell textAlign="right">
+     {turno_asignado===false && (
       <Button
         positive
         icon
@@ -92,6 +95,7 @@ function Actions(props) {
         {/* <Icon className="green" name="pencil" /> */}
         Turnos
       </Button>
+      )}
 
       <Link
         to="/admin/carga/vigilancia/personal"
