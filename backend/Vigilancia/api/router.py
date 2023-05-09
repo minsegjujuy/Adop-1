@@ -17,6 +17,6 @@ router.register('vigilancia/turnos', TurnosVigilanciaViewSet, 'turnos_vigilancia
 
 # [GET] [POST] api/turnos_vigilancia/
 # [UPDATE] [DELETE] api/turnos_vigilancia/{id}
-router.register('vigilancias/turnos/personal', PersonalVigilanciaViewSet, 'personal_vigilancias')
+router.register(r'vigilancia/(?P<vigilancia_id>\d+)/turnos', PersonalVigilanciaViewSet, 'turnos_vigilancia')
 
 urlpatterns = router.urls
