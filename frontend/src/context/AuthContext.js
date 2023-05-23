@@ -8,12 +8,15 @@ import { logoutApi } from "../api/user";
 
 export const AuthContext = createContext({
   auth: null,
+  // first:true,
+  // first:1,
   login: () => null,
   logout: () => null,
 });
 
 export function AuthProvider(props) {
   const { children } = props;
+  const [first,setfirst]=useState(1)
   const [auth, setAuth] = useState(JSON.parse(getToken()));
   const { getMeToken } = useUser();
 
@@ -107,6 +110,8 @@ export function AuthProvider(props) {
 
   const valueContext = {
     auth,
+    first,
+    setfirst,
     setAuth,
     login,
     logout,

@@ -1,35 +1,35 @@
-import React, { Children,useEffect, useState } from "react";
+import React, { Children, useEffect, useState } from "react";
 import "./AdminLayout.scss";
-import {logoutApi} from "../../api/user"
-import {removeToken} from "../../api/token"
+import { logoutApi } from "../../api/user";
+import { removeToken } from "../../api/token";
 import { LoginAdmin } from "../../pages/Admin";
 import { useAuth } from "../../hooks";
 import { TopMenu, SideBarMenu } from "../../components/Admin";
 
 export function AdminLayout(props) {
-   const { children } = props;
-   const {auth,setAuth} = useAuth();
-   const {logueado,setLogueado}=useState(true);
-  console.log(auth)
-  console.log(document.referrer)
-  const [logueo,setLogueo]= useState(document.referrer? true:false)
-  console.log(logueo)
-  // useEffect(() => {
-  //   if(logueo===false){
-  //     removeToken();
-  //     setAuth(null);
-  //     logoutApi(auth.token);
-  //     setLogueo(true)
-  //   }
-  
-  // }, []);
-  if ((!auth || logueo===false)){
-    // removeToken();
-    // setAuth(null);
-    // logoutApi(auth.token);
-  // window.location.replace("http://localhost:3000/login")
-   return <LoginAdmin />;
+  const { children } = props;
+  const { auth, logout } = useAuth();
+  console.log(auth);
+  const [logueo, setLogueo] = useState(document.referrer ? true : false);
+  console.log(logueo);
+  console.log(performance.navigation.type);
+  console.log(localStorage.length);
+  if (!auth) {
+    console.log("hola mundo")
+    return <LoginAdmin />;
   }
+  // } else {
+  //   if (logueo === false && performance.navigation.type === 0) {
+  //     console.log("hola2")
+  //     if (localStorage.length !== 0) {
+  //       console.log("hola3")
+  //       logout();
+  //     } else {
+  //       console.log("hola4")
+  //       return <LoginAdmin />;
+  //     }
+  //   }
+  // }
   return (
     <div className="admin-layout">
       <div className="admin-layout__menu">
@@ -37,10 +37,7 @@ export function AdminLayout(props) {
       </div>
 
       <div className="admin-layout__main-content">
-        <SideBarMenu >
-          {children}
-        </SideBarMenu>
-       
+        <SideBarMenu>{children}</SideBarMenu>
       </div>
     </div>
   );

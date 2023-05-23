@@ -1,27 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LoginForm } from "../../../components/Admin";
 import { Modal, Button, Icon } from "semantic-ui-react";
+import {logoutApi} from "../../../api/user"
+import {useAuth} from "../../../hooks"
+import {removeToken} from "../../../api/token"
 // import { ModalRecuperarContrasenia } from "../../../components/Common";
 // import { RecuperarContrasenia } from "../../../components/Admin";
 import "./LoginAdmin.scss";
 
-export function LoginAdmin() {
-//   const [
-//     contentModalRecuperarContrasenia,
-//     setContentModalRecuperarContrasenia,
-//   ] = useState(false);
-//   const [showModalRecuperarContrasenia, setShowModalRecuperarContrasenia] =
-//     useState(false);
-//   const openCloseModalRecuperarContrasenia = () => {
-//     setShowModalRecuperarContrasenia((prev) => !prev);
-//   };
-
-//   const RecuperarContraseniaFuncion = () => {
-//     setContentModalRecuperarContrasenia(
-//       <RecuperarContrasenia onClose={openCloseModalRecuperarContrasenia} />
-//     );
-//     openCloseModalRecuperarContrasenia();
-//   };
+export function LoginAdmin(props) {
+  const {logueo,setLogueo} = props
+  const {auth,setAuth} = useAuth();
+  useEffect(() => {
+      if(logueo===false){
+            removeToken();
+            setAuth(null);
+            logoutApi(auth.token);
+            setLogueo(true)
+      }
+  }, []);
+    
+  // window.location.replace("http://localhost:3000/login")
 
   return (
     <div className="Area">

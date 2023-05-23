@@ -203,7 +203,7 @@ export const CargaHorario = (props) => {
                   fluid
                   name="duracion"
                   options={horarios}
-                  placeholder="Seleccione la duracion del turno"
+                  placeholder="Seleccione"
                   value={formik.values.duracion}
                   onChange={(_, data) =>
                     formik.setFieldValue("duracion", data.value)

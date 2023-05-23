@@ -52,6 +52,8 @@ export function TableVigilancia(props) {
               fecha_fin={
                 vigilancia.fecha_fin ? vigilancia.fecha_fin.slice(0, 10) : null
               }
+              jurisdiccion={vigilancia.jurisdiccion}
+              servicio={vigilancia.servicio}
               latitud={vigilancia.latitud}
               longitud={vigilancia.longitud}
               position={position}
@@ -77,7 +79,9 @@ function Actions(props) {
     longitud,
     vermapa,
     id,
-    turno_asignado
+    turno_asignado,
+    jurisdiccion,
+   servicio,
   } = props;
   const position = {
     lat: latitud,
@@ -96,17 +100,17 @@ function Actions(props) {
         Turnos
       </Button>
       )}
-
+      {turno_asignado===true && (
       <Link
         to="/admin/carga/vigilancia/personal"
-        state={{ fecha_fin,fecha_inicio }}
+        state={{ fecha_fin,fecha_inicio,jurisdiccion,servicio }}
       >
          
         <Button positive>
         <Icon className="user icon"/>
           Asignar Personal</Button>
       </Link>
-
+)}
       <Button icon onClick={() => vermapa(position, true)}>
         <Icon name="map marker" />
       </Button>

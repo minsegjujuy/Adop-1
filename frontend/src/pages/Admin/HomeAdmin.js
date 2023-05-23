@@ -41,7 +41,6 @@ export function HomeAdmin() {
         fecha_fin={fecha_fin}
         fecha_inicio={fecha_inicio}
         id={id}
-    
       />
     );
     openCloseModal();

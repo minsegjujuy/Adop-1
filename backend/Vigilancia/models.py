@@ -38,7 +38,7 @@ class TurnosVigilancia(models.Model):
     hora_fin = models.TimeField(null=True)
     diario = models.BooleanField(default=False)
     dia_completo = models.BooleanField(default=False)
-    duracion = models.IntegerField(default=0)
+    duracion = models.IntegerField(default=0, null=True)
 
 class PersonalVigilancia(models.Model):
     fk_personal = models.ForeignKey(Personal, null=True, on_delete=models.CASCADE)
