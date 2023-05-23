@@ -1,4 +1,5 @@
 from ..models import Motivo, Vigilancia, TurnosVigilancia, PersonalVigilancia
+from Personal.models import Personal
 from Dependencia.models import Dependencia
 from Servicio.models import TipoServicio, TipoRecurso
 
@@ -80,7 +81,7 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
         try:
             queryset = Vigilancia.objects.get(pk=pk)
         except Vigilancia.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            return JsonResponse({'msj':'No se encontro la Vigilancia'},status=status.HTTP_404_NOT_FOUND)
 
         serializer_data = VigilanciaSerializerView(queryset).data
         
@@ -142,7 +143,9 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
     
     def destroy(self, request, pk=None):
         try:
-            queryset = Vigilancia.objects.get(pk=pk)
+            vigilancia = Vigilancia.objects.get(pk=pk)
+            vigilancia.delete()
+            return JsonResponse({'msj':'Vigilancia Eliminada Correctamente!!!'},status=status.HTTP_200_OK)
         except Vigilancia.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
         
@@ -231,9 +234,12 @@ class PersonalVigilanciaViewSet(viewsets.ModelViewSet):
     
     def list(self, *args,  **kwargs):
         self.queryset = self.get_queryset()
-        turno = TurnosVigilancia.objects.get(fk_vigilancia=kwargs['vigilancia_id'])
-        serializer = TurnosVigilanciaSerializerView(turno)
-        return Response(serializer.data)
+        try:
+            turno = TurnosVigilancia.objects.get(fk_vigilancia=kwargs['vigilancia_id'])
+            serializer = TurnosVigilanciaSerializerView(turno)
+            return JsonResponse(serializer.data,status=status.HTTP_200_OK)
+        except:
+            return JsonResponse({'msj':'La vigilancia no tiene ningun turno asignada'},status=status.HTTP_404_NOT_FOUND)
     
     def create(self, request, *args, **kwargs):
         fk_vigilancia = kwargs['vigilancia_id']
@@ -241,7 +247,7 @@ class PersonalVigilanciaViewSet(viewsets.ModelViewSet):
         turno = TurnosVigilancia.objects.get(fk_vigilancia=fk_vigilancia)
         serializer = TurnosVigilanciaSerializerView(turno)
         
-        fk_turno_vigilancia = serializer.data['id']
+        fk_turnoVigilancia = serializer.data['id']
         
         datos_agregar = []
         for t in request.data['turnos']:
@@ -249,7 +255,7 @@ class PersonalVigilanciaViewSet(viewsets.ModelViewSet):
             for f in t[1]:
                 personal_vigilancia = {
                     "fk_personal":f['fk_personal'],
-                    "fk_turnoVigilancia": fk_turno_vigilancia,
+                    "fk_turnoVigilancia": fk_turnoVigilancia,
                     "fecha":fecha,
                     "hora_inicio":f['hora_inicio'],
                     "hora_fin":f['hora_fin']
@@ -259,8 +265,30 @@ class PersonalVigilanciaViewSet(viewsets.ModelViewSet):
                 else:
                     personal_vigilancia['asignado'] = False
                 datos_agregar.append(personal_vigilancia)
-                
-        # for dato in datos_agregar:
-        #     dato.save()
-        # return JsonResponse({"msj":"Personal Asignado Correctamente"},status=status.HTTP_201_CREATED)
-        return JsonResponse({"cant_datos":len(datos_agregar),"datos":datos_agregar})
+        
+        for dato in datos_agregar:
+            serializer = PersonalVigilanciaSerializer(data = dato)
+            serializer.is_valid(raise_exception=True)
+            PersonalVigilancia.objects.create(
+                fk_personal = serializer.validated_data['fk_personal'],
+                fk_turnoVigilancia = serializer.validated_data['fk_turnoVigilancia'],
+                fecha = serializer.validated_data['fecha'],
+                hora_inicio = serializer.validated_data['hora_inicio'],
+                hora_fin = serializer.validated_data['hora_fin'],
+                asignado = serializer.validated_data['asignado']
+            )
+        return JsonResponse({"msj":"Personal Asignado Correctamente"},status=status.HTTP_201_CREATED)
+        # return JsonResponse({"cant_datos":len(datos_agregar),"datos":datos_agregar})
+        
+    def update(self, request, pk=None):
+        personalVigilancia = self.get_object(pk)
+        serializer = PersonalVigilancia(data = personalVigilancia)
+        if serializer.data['fk_personal']:
+            if request.data['fk_personal']!=serializer.data['fk_personal'].id:
+                if request.data['fk_personal']:
+                    serializer.data['fk_personal']=Personal.objects.get(id=request.data['fk_personal'])
+                else:
+                    serializer.data['fk_personal']=None
+                    serializer.data['asignado']=False
+                serializer.save()
+        return JsonResponse({"msj":'Turno Modificado correctamente!!'},status=status.HTTP_200_OK)
