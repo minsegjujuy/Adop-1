@@ -11,12 +11,12 @@ router.register('motivos', MotivoViewSet, 'motivos')
 # [UPDATE] [DELETE] api/vigilancias/{id}
 router.register('vigilancias', VigilanciaViewSet, 'vigilancias')
 
-# [GET] [POST] api/dias_vigilancias/
-# [UPDATE] [DELETE] api/dias_vigilancias/{id}
+# [GET] [POST] api/vigilancia/turnos/
+# [UPDATE] [DELETE] api/vigilancia/turnos/{id}
 router.register('vigilancia/turnos', TurnosVigilanciaViewSet, 'turnos_vigilancias')
 
-# [GET] [POST] api/turnos_vigilancia/
-# [UPDATE] [DELETE] api/turnos_vigilancia/{id}
+# [GET] [POST] api/vigilancia/turnos/
+# [UPDATE] [DELETE] api/vigilancia/{id}/turnos/
 router.register(r'vigilancia/(?P<vigilancia_id>\d+)/turnos', PersonalVigilanciaViewSet, 'turnos_vigilancia')
 
 urlpatterns = router.urls

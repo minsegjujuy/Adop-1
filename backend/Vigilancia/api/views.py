@@ -184,13 +184,6 @@ class TurnosVigilanciaViewSet(viewsets.ModelViewSet):
         
         fechas = self.seleccionar_fechas(Vigilancia.objects.get(id=vigilancia).fecha_inicio,Vigilancia.objects.get(id=vigilancia).fecha_fin,serializer.validated_data['diario'],serializer.validated_data['turno'])
 
-        # print(datetime.now().time().isoformat())
-        # print(datetime.now().time().hour)
-        # print(datetime.now().time().minute)
-
-        # print(hora_inicio.hour)
-        # print(hora_fin.hour)
-
         if serializer.validated_data['dia_completo']:
             serializer.validated_data['hora_inicio'] = None
             serializer.validated_data['hora_fin'] = None
@@ -235,9 +228,14 @@ class PersonalVigilanciaViewSet(viewsets.ModelViewSet):
     def list(self, *args,  **kwargs):
         self.queryset = self.get_queryset()
         try:
-            turno = TurnosVigilancia.objects.get(fk_vigilancia=kwargs['vigilancia_id'])
-            serializer = TurnosVigilanciaSerializerView(turno)
-            return JsonResponse(serializer.data,status=status.HTTP_200_OK)
+            vigilancia = Vigilancia.objects.get(id=kwargs['vigilancia_id']).id
+            print(vigilancia)
+            try:
+                turno = TurnosVigilancia.objects.get(fk_vigilancia=vigilancia)
+                serializer = TurnosVigilanciaSerializerView(turno)
+                return JsonResponse(serializer.data,status=status.HTTP_200_OK)
+            except:
+                return JsonResponse({'msj':'La vigilancia no tiene ningun turno asignada'},status=status.HTTP_404_NOT_FOUND)
         except:
             return JsonResponse({'msj':'La vigilancia no tiene ningun turno asignada'},status=status.HTTP_404_NOT_FOUND)
     
