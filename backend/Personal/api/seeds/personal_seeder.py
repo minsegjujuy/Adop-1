@@ -18,21 +18,23 @@ def seed_data(file_path='Personal/api/seeds/personal_seeder.json'):
             create_personal(obj)
 
 def create_jerarquia(obj):
-    Jerarquia.objects.create(
-        id = obj['pk'],
-        # fk_tipo_jerarquia = TipoJerarquia.objects.get(id = obj['fields']['fk_tipo_jerarquia']),
-        nombre = obj['fields']['nombre'],
-        nombre_largo = obj['fields']['nombre_largo']
-    )
+    try:
+        Jerarquia.objects.create(
+            id = obj['pk'],
+            nombre = obj['fields']['nombre'],
+            nombre_largo = obj['fields']['nombre_largo']
+        )
+    except KeyError as e:
+        print(f"El campo {e} no existe en el modelo.")
 
 def create_personal(obj):
-    Personal.objects.create(
-        legajo = obj['fields']['legajo'],
-        cuil = Persona.objects.get(cuil=obj['fields']['cuil']).cuil,
-        # fk_tipo_funcion = TipoFuncion.objects.get(id=obj['fields']['fk_tipo_funcion']),
-        fk_jerarquia = Jerarquia.objects.get(id=obj['fields']['fk_jerarquia']),
-        fk_destino = None,
-        fk_jurisdiccion = None,
-        # fk_destino = Dependencia.objects.get(id=obj['fields']['fk_destino']),
-        # fk_jurisdiccion = UnidadRegional.objects.get(id=obj['fields']['fk_jurisdiccion']),
-    )
+    try:
+        Personal.objects.create(
+            legajo = obj['fields']['legajo'],
+            cuil = Persona.objects.get(cuil=obj['fields']['cuil']).cuil,
+            fk_jerarquia = Jerarquia.objects.get(id=obj['fields']['fk_jerarquia']),
+            fk_destino = None,
+            fk_jurisdiccion = None,
+        )
+    except KeyError as e:
+        print(f"El campo {e} no existe en el modelo.")

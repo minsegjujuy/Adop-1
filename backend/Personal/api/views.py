@@ -1,3 +1,4 @@
+import json
 from Dependencia.models import Dependencia, UnidadRegional
 from ..models import Personal, Jerarquia
 from .serializer import PersonalSerializer,JerarquiaSerializer
@@ -23,10 +24,16 @@ class PersonalViewSet(viewsets.ModelViewSet):
             data['legajo']=personal['legajo']
             data['cuil']=personal['cuil']
             data['fk_jerarquia'] = Jerarquia.objects.get(id=personal['fk_jerarquia']).nombre
-            data['fk_destino'] = Dependencia.objects.get(id=personal['fk_destino']).jurisdiccion
-            data['fk_jurisdiccion'] = UnidadRegional.objects.get(id=personal['fk_jurisdiccion']).unidad_regional
+            if personal['fk_destino']:
+                data['fk_destino'] = Dependencia.objects.get(id=personal['fk_destino']).jurisdiccion
+            else:
+                data['fk_destino'] = "Sin definir"
+            if personal['fk_jurisdiccion']:
+                data['fk_jurisdiccion'] = UnidadRegional.objects.get(id=personal['fk_jurisdiccion']).unidad_regional
+            else:
+                data['fk_jurisdiccion'] = "Sin definir"
             respuesta.append(data)
-        return JsonResponse(respuesta,status=status.HTTP_200_OK)
+        return JsonResponse(respuesta,safe=False,status=status.HTTP_200_OK)
     
     def create(self, request, *args, **kwargs):
         serializer = PersonalSerializer(data=request)

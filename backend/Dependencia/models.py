@@ -5,12 +5,8 @@ class Inspectora(models.Model):
 
 class UnidadRegional(models.Model):
     unidad_regional = models.CharField(max_length=23, default='')
-
-# class TipoDependencia(models.Model):
-#     tipo_dependencia = models.CharField(max_length=30)
     
 class Dependencia(models.Model):
-    # fk_tipo_dependencia = models.ForeignKey('TipoDependencia', on_delete=models.CASCADE)
     fk_unidad_regional = models.ForeignKey('UnidadRegional', on_delete=models.CASCADE)
     fk_inspectora = models.ForeignKey('Inspectora', on_delete=models.CASCADE, null=True)
     jurisdiccion = models.CharField(null=False, max_length=100)
