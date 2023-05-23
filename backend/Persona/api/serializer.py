@@ -5,12 +5,9 @@ class PersonaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Persona
         fields = (
+            'cuil',
             'dni',
-            'profesion',
-            'sexo',
-            'nacionalidad',
             'nombre_apellido',
-            'edad',
-            'fecha_nacimiento'
+            'fecha_nacimiento',
         )
         read_only_fields = ('dni',)

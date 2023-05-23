@@ -1,5 +1,6 @@
 from ..models import Dependencia, Inspectora, UnidadRegional, DependenciaOperativos
 from .serializer import InspectoraSerializer, UnidadRegionalSerializer, DependenciaSerializer, DependenciaOperativosSerializer
+from django.http import JsonResponse
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -29,6 +30,30 @@ class UnidadRegionalViewSet(viewsets.ModelViewSet):
             datos = serializer.data
         
         return Response(datos)
+
+    def create(self,request):
+        self.queryset = self.get_queryset()
+        usuario=request.user
+        if usuario.rol.rol == "ADMINISTRADOR":
+            if UnidadRegional.objects.filter(unidad_regional=request.POST.get('unidad_regional')).first() is None:
+                UnidadRegional.objects.create(
+                    id=len(UnidadRegional.objects.all())+1,
+                    unidad_regional=request.POST.get('unidad_regional')
+                )
+                respuesta = {
+                    'msj':'Unidad Regional creada con exito!!!'
+                }
+                return JsonResponse(respuesta,status=status.HTTP_201_CREATED)
+            else:
+                respuesta = {
+                    'msj':'La Unidad Regional ingresada ya existe'
+                }
+                return JsonResponse(respuesta,status=status.HTTP_201_CREATED)
+        else:
+            respuesta = {
+                "msj" : "No tiene los permisosnecesarios para realizar esta accion."
+            }
+            return JsonResponse(respuesta,status=status.HTTP_403_FORBIDDEN)
 
 class DependenciaViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
