@@ -12,12 +12,12 @@ def seed_data():
         fields = obj['fields']
 
         if model == 'app.TipoServicio':
-            TipoServicio.objects.create(
+            TipoServicio.objects.get_or_create(
                 id = obj['pk'],
                 tipo_servicio = fields['tipo_servicio']
             )
         elif model == 'app.TipoRecurso':
-            TipoRecurso.objects.create(
+            TipoRecurso.objects.get_or_create(
                 id = obj['pk'],
                 tipo_recurso = fields['tipo_recurso']
             )

@@ -6,7 +6,7 @@ class PersonalSerializer(serializers.ModelSerializer):
         model = Personal
         fields = (
             'legajo',
-            'cuil',
+            'fk_persona',
             'fk_jerarquia',
             'fk_destino',
             'fk_jurisdiccion'

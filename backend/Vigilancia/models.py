@@ -46,4 +46,5 @@ class PersonalVigilancia(models.Model):
     fecha = models.DateField(null=False)
     hora_inicio = models.TimeField(null=False)
     hora_fin = models.TimeField(null=False)
+    duracion = models.IntegerField(null=False)
     asignado = models.BooleanField(default=False)

@@ -1,14 +1,10 @@
 from django.db import models
 
 class Persona(models.Model):
-    cuil = models.BigIntegerField()
-    dni = models.BigIntegerField(primary_key=True)
-    # profesion = models.CharField(max_length=100)
-    # sexo = models.CharField(max_length=8)
+    cuil = models.BigIntegerField(primary_key=True)
+    dni = models.BigIntegerField()
     nombre_apellido = models.CharField(max_length=100, null=False)
-    # edad = models.IntegerField()
     fecha_nacimiento = models.DateField(null=True)
-    # domicilio = models.CharField(max_length=150)
     
     
     # SELECT pn.cuil, pn.dni, CONCAT(pn.nombre,' ',pn.apellido) as nombre_apellido, pn.fecha_nacimiento FROM central_policia.public.personas pn INNER JOIN central_policia.personal.personal pl on pl.cuil = pn.cuil and pn.fallecido='N';

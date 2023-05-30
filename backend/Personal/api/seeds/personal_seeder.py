@@ -13,13 +13,13 @@ def seed_data(file_path='Personal/api/seeds/personal_seeder.json'):
         model = obj['model']
         if model == 'app.Jerarquia':
             create_jerarquia(obj)
-            
+            # pass
         elif model == 'app.Personal':
             create_personal(obj)
 
 def create_jerarquia(obj):
     try:
-        Jerarquia.objects.create(
+        Jerarquia.objects.get_or_create(
             id = obj['pk'],
             nombre = obj['fields']['nombre'],
             nombre_largo = obj['fields']['nombre_largo']
@@ -29,9 +29,9 @@ def create_jerarquia(obj):
 
 def create_personal(obj):
     try:
-        Personal.objects.create(
+        Personal.objects.get_or_create(
             legajo = obj['fields']['legajo'],
-            cuil = Persona.objects.get(cuil=obj['fields']['cuil']).cuil,
+            fk_persona = Persona.objects.get(cuil=obj['fields']['cuil']),
             fk_jerarquia = Jerarquia.objects.get(id=obj['fields']['fk_jerarquia']),
             fk_destino = None,
             fk_jurisdiccion = None,
