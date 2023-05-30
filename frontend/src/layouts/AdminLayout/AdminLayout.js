@@ -11,9 +11,7 @@ export function AdminLayout(props) {
   const { auth, logout } = useAuth();
   console.log(auth);
   const [logueo, setLogueo] = useState(document.referrer ? true : false);
-  console.log(logueo);
-  console.log(performance.navigation.type);
-  console.log(localStorage.length);
+  
   if (!auth) {
     console.log("hola mundo")
     return <LoginAdmin />;

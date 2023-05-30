@@ -103,7 +103,7 @@ function Actions(props) {
       {turno_asignado===true && (
       <Link
         to="/admin/carga/vigilancia/personal"
-        state={{ fecha_fin,fecha_inicio,jurisdiccion,servicio }}
+        state={{ fecha_fin,fecha_inicio,jurisdiccion,servicio,id }}
       >
          
         <Button positive>

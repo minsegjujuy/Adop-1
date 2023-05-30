@@ -12,8 +12,8 @@ def seed_data(file_path='Personal/api/seeds/personal_seeder.json'):
     for obj in json.loads(data):
         model = obj['model']
         if model == 'app.Jerarquia':
-            # create_jerarquia(obj)
-            pass
+            create_jerarquia(obj)
+            
         elif model == 'app.Personal':
             create_personal(obj)
 

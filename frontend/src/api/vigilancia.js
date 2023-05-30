@@ -89,3 +89,36 @@ export async function addVigilanciaApi(data, token) {
       throw error;
     }
   }
+
+  export async function getTurno(token,id) {
+    try {
+      const url = `${BASE_API}/api/vigilancia/${id}/turnos`;
+      const params = {
+        method: "GET",
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      };
+      const response = await fetch(url, params);
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+  export async function getPersonal(token) {
+    try {
+      const url = `${BASE_API}/api/personal/`;
+      const params = {
+        method: "GET",
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      };
+      const response = await fetch(url, params);
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }

@@ -8,8 +8,8 @@ import { useLocation } from "react-router-dom";
 export function AsignarPersonal(props) {
   const location = useLocation();
   console.log(location);
-  const { fecha_fin, fecha_inicio,jurisdiccion,servicio} = location.state || {};
-  console.log(fecha_fin, fecha_inicio);
+  const { fecha_fin, fecha_inicio,jurisdiccion,servicio,id} = location.state || {};
+ 
   const { auth } = useAuth();
 
   return (
@@ -21,7 +21,7 @@ export function AsignarPersonal(props) {
         }
       />
       <div className="form-vigilancia">
-        <CargaPersonal fecha_fin={fecha_fin} fecha_inicio={fecha_inicio} jurisdiccion={jurisdiccion} servicio={servicio} />
+        <CargaPersonal fecha_fin={fecha_fin} fecha_inicio={fecha_inicio} jurisdiccion={jurisdiccion} servicio={servicio} id={id}/>
       </div>
     </>
   );
