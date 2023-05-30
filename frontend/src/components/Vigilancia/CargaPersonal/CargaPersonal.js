@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 import "./CargaPersonal.scss";
 export function CargaPersonal(props) {
   const { fecha_fin, fecha_inicio, jurisdiccion, servicio, id } = props;
-  const { get_turno, turno,get_personal } = useVigilancia();
+  const { get_turno, turno,get_personal,asignar_personal } = useVigilancia();
   const [personal,setPersonal]= useState(null)
   const {auth} = useAuth();
   const [horas, sethoras] = useState(false);
@@ -27,6 +27,11 @@ export function CargaPersonal(props) {
     value:tipo.legajo,
     key: `${index}`,
     text: tipo.legajo,
+  }));
+  const valores2 = personal?.map((tipo, index) => ({
+    value:tipo.nombre_apellido,
+    key: `${index}`,
+    text: tipo.nombre_apellido,
   }));
   // Obtener la fecha actual
   var fechaActual = new Date();
@@ -129,21 +134,43 @@ export function CargaPersonal(props) {
     validationSchema: Yup.object(validationSchema()),
     onSubmit: async (formValue) => {
       let sum=0
+      let turnos2=[]
       try {
         console.log(formValue);
         for (let index = 0; index < formValue.numCampos; index++) {
-          if(formValue.Turnos[index].turno !== ""){
-            sum=sum+formValue.Turnos[index].turno
+            turnos2={
+              fk_personal:formValue.turnos[index].legajo,
+              
+            }
+          if(formValue.turnos[index].turno !== ""){
+            sum=sum+formValue.turnos[index].turno
           }
         }
         if(sum===turno?.duracion){
-          console.log(formValue)
           const formValue2={
             fecha:formValue.fecha,
             duracion:turno?.duracion,
-            Turnos:formValue.Turnos
+            Turnos:formValue.turnos
           }
           console.log(formValue2)
+          const response = await asignar_personal(formValue2,id)
+          if (response.msj) {
+            Swal.fire({
+              title: "Exito!",
+              text: response.msj,
+              icon: "success",
+              timer: 3000,
+              showConfirmButton: true,
+            });
+            window.location.replace("http://localhost:3000/admin/vigilancia");
+          } else {
+            Swal.fire({
+              title: "Algunos datos ingresados no son validos!",
+              text: response.msj,
+              icon: "error",
+              showConfirmButton: true,
+            });
+          }
         }else{
           Swal.fire({
             title: "Algunos datos ingresados son incorrectos!",
@@ -172,12 +199,12 @@ export function CargaPersonal(props) {
           <div class="field">
             <Form.Select
               search
-              name={`Turnos[${i}].legajo`}
+              name={`turnos[${i}].legajo`}
               options={valores}
               placeholder="Buscar Legajo"
-              value={formik.values.Turnos[i].legajo}
+              value={formik.values.turnos[i].legajo}
               onChange={(_, data) =>
-                formik.setFieldValue(`Turnos[${i}].legajo`, data.value)
+                formik.setFieldValue(`turnos[${i}].legajo`, data.value)
               }
             />
           </div>
@@ -186,12 +213,15 @@ export function CargaPersonal(props) {
         <div class="field">
           <label>Nombre y Apellido</label>
           <div class="field">
-            <Form.Input
-              name={`Turnos[${i}].nombre`}
+            <Form.Select
+              search
+              name={`turnos[${i}].nombre`}
               placeholder="Nombre y Apellido"
-              value={formik.values.Turnos[i].nombre}
-              onChange={formik.handleChange}
-              error={formik.errors.Turnos?.nombre}
+              options={valores2}
+              value={formik.values.turnos[i].nombre}
+              onChange={(_, data) =>
+                formik.setFieldValue(`turnos[${i}].nombre`, data.value)
+              }
             />
           </div>
         </div>
@@ -200,10 +230,10 @@ export function CargaPersonal(props) {
           <div class="field">
             <Form.Input
               type="time"
-              name={`Turnos[${i}].hora_inicio`}
-              value={formik.values.Turnos[i].hora_inicio}
+              name={`turnos[${i}].hora_inicio`}
+              value={formik.values.turnos[i].hora_inicio}
               onChange={formik.handleChange}
-              error={formik.errors.Turnos?.hora_inicio}
+              error={formik.errors.turnos?.hora_inicio}
             />
           </div>
         </div>
@@ -213,12 +243,12 @@ export function CargaPersonal(props) {
           <div class="field">
             <Form.Select
               search
-              name={`Turnos[${i}].turno`}
+              name={`turnos[${i}].turno`}
               options={horariosOptions}
               placeholder="Asignar Turno"
-              value={formik.values.Turnos[i].turno}
+              value={formik.values.turnos[i].turno}
               onChange={(_, data) =>
-                formik.setFieldValue(`Turnos[${i}].turno`, data.value)
+                formik.setFieldValue(`turnos[${i}].turno`, data.value)
               }
             />
           </div>
@@ -367,7 +397,7 @@ function initialValues(
     tipo_servicio: servicio,
     fecha_inicio: fecha_inicio,
     fecha_fin: fecha_fin,
-    Turnos: arreglo3,
+    turnos: arreglo3,
     fecha: fechaFormateada,
     numCampos,
   };
