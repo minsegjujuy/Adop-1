@@ -246,22 +246,23 @@ class PersonalVigilanciaViewSet(viewsets.ModelViewSet):
         serializer = TurnosVigilanciaSerializerView(turno)
         
         fk_turnoVigilancia = serializer.data['id']
+        fecha=datetime.strptime(serializer.data['fecha'][0],"%Y-%m-%d").date()
         
         datos_agregar = []
         for t in request.data['turnos']:
-            fecha=datetime.strptime(t[0],"%Y-%m-%d").date()
             for f in t[1]:
                 personal_vigilancia = {
                     "fk_personal":f['fk_personal'],
                     "fk_turnoVigilancia": fk_turnoVigilancia,
                     "fecha":fecha,
                     "hora_inicio":f['hora_inicio'],
-                    "hora_fin":f['hora_fin']
+                    "duraicon":f['duraicon'],
                 }
                 if personal_vigilancia['fk_personal']:
                     personal_vigilancia['asignado'] = True
                 else:
                     personal_vigilancia['asignado'] = False
+                personal_vigilancia['hora_fin'] = (datetime.combine(date.today(),personal_vigilancia['hora_inicio']) + timedelta(hours=personal_vigilancia['duracion'])).time()
                 datos_agregar.append(personal_vigilancia)
         
         for dato in datos_agregar:

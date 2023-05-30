@@ -18258,7 +18258,7 @@
         "fields": {
             "legajo": "222",
             "cuil": "20116648181",
-            "fk_jerarquia": 20,
+            "fk_jerarquia": 18,
             "fk_destino": null,
             "fk_jurisdiccion": null
         }

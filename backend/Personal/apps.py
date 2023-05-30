@@ -17,4 +17,4 @@ class PersonalConfig(AppConfig):
                     seed_data()
 
             # Registra la señal
-            # pre_migrate.connect(migrate_callback, sender=self)
+            pre_migrate.connect(migrate_callback, sender=self)

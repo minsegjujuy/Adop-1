@@ -85,5 +85,6 @@ class PersonalVigilanciaSerializer(serializers.ModelSerializer):
             'fecha',
             'hora_inicio',
             'hora_fin',
+            'duracion',
             'asignado'
         )

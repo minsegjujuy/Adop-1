@@ -1,5 +1,7 @@
 import json
 from Dependencia.models import Dependencia, UnidadRegional
+from Persona.api.serializer import PersonaSerializer
+from Persona.models import Persona
 from ..models import Personal, Jerarquia
 from .serializer import PersonalSerializer,JerarquiaSerializer
 from django.http import JsonResponse
@@ -22,7 +24,8 @@ class PersonalViewSet(viewsets.ModelViewSet):
         for personal in serializer.data:
             data = {}
             data['legajo']=personal['legajo']
-            data['cuil']=personal['cuil']
+            data['cuil']=personal['fk_persona']
+            data['nombre_apellido'] = PersonaSerializer(Persona.objects.get(cuil=personal['fk_persona'])).data['nombre_apellido']
             data['fk_jerarquia'] = Jerarquia.objects.get(id=personal['fk_jerarquia']).nombre
             if personal['fk_destino']:
                 data['fk_destino'] = Dependencia.objects.get(id=personal['fk_destino']).jurisdiccion
@@ -35,12 +38,28 @@ class PersonalViewSet(viewsets.ModelViewSet):
             respuesta.append(data)
         return JsonResponse(respuesta,safe=False,status=status.HTTP_200_OK)
     
+    def retrieve(self, request, *args, **kwargs):
+        legajo = kwargs['pk']
+        personal = PersonalSerializer(Personal.objects.get(legajo=legajo)).data
+        persona = PersonaSerializer(Persona.objects.get(cuil=personal['fk_persona'])).data
+        
+        data = {}
+        data['legajo'] = personal['legajo']
+        data['cuil'] = persona['cuil']
+        data['dni'] = persona['dni']
+        data['nombre_apellido'] = persona['nombre_apellido']
+        data['fecha_nacimiento'] = persona['fecha_nacimiento']
+        data['jerarquia'] = Jerarquia.objects.get(id=personal['fk_jerarquia']).nombre_largo
+        data['dependencia'] = personal['fk_destino']
+        data['jurisdiccion'] = personal['fk_jurisdiccion']
+        return JsonResponse(data,safe=False,status=status.HTTP_200_OK)
+    
     def create(self, request, *args, **kwargs):
         serializer = PersonalSerializer(data=request)
         serializer.is_valid(raise_exception=True)
         Personal.objects.create(
             legajo=serializer.validated_data['legajo'],
-            cuil=serializer.validated_data['cuil'],
+            cuil=serializer.validated_data['fk_persona'],
             # fk_tipo_funcion=serializer.validated_data['fk_tipo_funcion'],
             fk_jerarquia=serializer.validated_data['fk_jerarquia'],
             fk_destino=serializer.validated_data['fk_destino'],

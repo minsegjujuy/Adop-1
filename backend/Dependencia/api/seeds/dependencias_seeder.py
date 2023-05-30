@@ -17,7 +17,7 @@ def seed_data(file_path='Dependencia/api/seeds/dependencias_seeder.json'):
 
 def create_unidad_regional(obj: Dict) -> None:
     try:
-        UnidadRegional.objects.create(
+        UnidadRegional.objects.get_or_create(
             id=obj.get('pk'),
             unidad_regional=obj.get('fields', {}).get('unidad_regional')
         )
@@ -26,7 +26,7 @@ def create_unidad_regional(obj: Dict) -> None:
     
 def create_dependencia(obj):
     try:
-        Dependencia.objects.create(
+        Dependencia.objects.get_or_create(
             id = obj['pk'],
             fk_inspectora = obj['fields']['fk_inspectora'],
             fk_unidad_regional = UnidadRegional.objects.get(id=obj['fields']['fk_unidad_regional']),
