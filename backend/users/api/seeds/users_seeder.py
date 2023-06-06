@@ -18,38 +18,29 @@ def seed_data(file='users/api/seeds/users_seeder.json'):
                 create_user(obj)
 
 def create_rol(obj):
-    try:
-        Rol.objects.get_or_create(
-            id=obj['pk'],
-            rol=obj['fields']['rol']
-        )
-    except:
-        return
+    Rol.objects.get_or_create(
+        id=obj['pk'],
+        rol=obj['fields']['rol']
+    )
 
 
 def create_super_user(obj):
-    try:
-        Usuario.objects.create_superuser(
-            # id = obj['pk'],
-            username = obj['fields']['username'],
-            email = obj['fields']['email'],
-            rol = Rol.objects.get(id=obj['fields']['rol']),
-            password = obj['fields']['password']
-        )
-    except:
-        return
+    Usuario.objects.create_superuser(
+        # id = obj['pk'],
+        username = obj['fields']['username'],
+        email = obj['fields']['email'],
+        rol = Rol.objects.get(id=obj['fields']['rol']),
+        password = obj['fields']['password']
+    )
 
 def create_user(obj):
-    try:
-        Usuario.objects.create_user(
-            email=obj['fields'].get('email'),
-            username=obj['fields'].get('username'),
-            nombres=obj['fields'].get('nombres'),
-            apellidos=obj['fields'].get('apellidos'),
-            rol=Rol.objects.get(id=obj['fields'].get('rol')),
-            unidad_regional=UnidadRegional.objects.get(id=obj['fields'].get('unidad_regional')),
-            jurisdiccion=Dependencia.objects.get(id=obj['fields'].get('jurisdiccion')),
-            password=obj['fields'].get('password')
-        )
-    except:
-        return
+    Usuario.objects.create_user(
+        email=obj['fields'].get('email'),
+        username=obj['fields'].get('username'),
+        nombres=obj['fields'].get('nombres'),
+        apellidos=obj['fields'].get('apellidos'),
+        rol=Rol.objects.get(id=obj['fields'].get('rol')),
+        unidad_regional=UnidadRegional.objects.get(id=obj['fields'].get('unidad_regional')),
+        jurisdiccion=Dependencia.objects.get(id=obj['fields'].get('jurisdiccion')),
+        password=obj['fields'].get('password')
+    )

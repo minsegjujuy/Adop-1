@@ -16,7 +16,7 @@ class UsuarioManager(BaseUserManager):
     ):
         if not email:
             raise ValueError('El usuario debe tener un correo electronico!')
-        if not self.get(username=username):
+        try:
             usuario = self.model(
                 username = username, 
                 email = self.normalize_email(email),
@@ -30,8 +30,8 @@ class UsuarioManager(BaseUserManager):
             usuario.set_password(password)
             usuario.save()
             return usuario
-        else:
-            raise ValueError('El nombre de usuario ya existe')
+        except:
+            return
     
     def create_superuser(
         self, 
@@ -43,15 +43,18 @@ class UsuarioManager(BaseUserManager):
             user_rol =  users.models.Rol.objects.get(id=rol)
         else:
             user_rol = rol
-        usuario = self.create_user(
-            email = email,
-            username = username,
-            rol = user_rol,
-            password = password,
-        )
-        
-        usuario.is_superuser = True
-        
-        usuario.save()
-        
-        return usuario
+        try:
+            usuario = self.create_user(
+                email = email,
+                username = username,
+                rol = user_rol,
+                password = password,
+            )
+            
+            usuario.is_superuser = True
+            
+            usuario.save()
+            
+            return usuario
+        except:
+            return
