@@ -1,11 +1,12 @@
-import json
 from ..models import Motivo, Vigilancia, TurnosVigilancia, PersonalVigilancia
 from Personal.models import Personal
+from Persona.models import Persona
 from Dependencia.models import Dependencia
 from Servicio.models import TipoServicio, TipoRecurso
 
 from Dependencia.api.serializer import UnidadRegionalSerializer
-from .serializer import VigilanciaSerializer, VigilanciaSerializerView, TurnosVigilanciaSerializerView, TurnosVigilanciaSerializer, MotivoVigilanciaSerializer, PersonalVigilanciaSerializer
+from Personal.api.serializer import PersonalSerializer
+from .serializer import VigilanciaSerializer, VigilanciaSerializerView, TurnosVigilanciaSerializer, MotivoVigilanciaSerializer, PersonalVigilanciaSerializer
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -154,7 +155,7 @@ class TurnosVigilanciaViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     authentication_classes = (JWTAuthentication,TokenAuthentication)
     queryset = TurnosVigilancia.objects.all()
-    serializer_class = TurnosVigilanciaSerializerView
+    serializer_class = TurnosVigilanciaSerializer
 
     def retrieve(self, request, *args, **kwargs):
         turnoVigilancia = TurnosVigilanciaSerializer(TurnosVigilancia.objects.get(id=kwargs['pk'])).data
@@ -259,16 +260,15 @@ class PersonalVigilanciaViewSet(viewsets.ModelViewSet):
                     for fecha in turnos_vigilancia['turno']:
                         horarios = {}
                         horarios[fecha] = []
-                        personal_vigilancia = PersonalVigilancia.objects.filter(fecha=fecha)
-                        for personal in personal_vigilancia:
-                            personal = PersonalVigilanciaSerializer(personal).data
+                        personal_vigilancia = PersonalVigilanciaSerializer(PersonalVigilancia.objects.filter(fecha=fecha), many=True).data
+                        for turno in personal_vigilancia:
+                            personal = PersonalSerializer(Personal.objects.get(legajo=turno['fk_personal'])).data
                             horario = {}
-                            horario['id'] = personal['id']
-                            horario['fk_personal'] = personal['fk_personal']
-                            horario['hora_inicio'] = personal['hora_inicio']
-                            horario['hora_fin'] = personal['hora_fin']
-                            horario['duracion'] = personal['duracion']
-                            horario['asignado'] = personal['asignado']
+                            # horario['id'] = turno['id']
+                            horario['personal'] = str(personal['legajo']) + " - " + Persona.objects.get(cuil=personal['fk_persona']).nombre_apellido
+                            horario['hora_inicio'] = turno['hora_inicio']
+                            horario['hora_fin'] = turno['hora_fin']
+                            horario['duracion'] = turno['duracion']
                             horarios[fecha].append(horario)
                         turnos['turnos'].append(horarios) 
                     return JsonResponse(turnos,status=status.HTTP_200_OK)
@@ -283,20 +283,27 @@ class PersonalVigilanciaViewSet(viewsets.ModelViewSet):
         fk_vigilancia = kwargs['vigilancia_id']
         
         turno = TurnosVigilancia.objects.get(fk_vigilancia=fk_vigilancia)
-        serializer = TurnosVigilanciaSerializerView(turno)
-        # print(serializer.data)
+        serializer = TurnosVigilanciaSerializer(turno)
+
         fk_turnoVigilancia = serializer.data['id']
         
         datos_agregar = []
         
-        for fecha, contenido in dict(request.data['turnos']).items():
-            for objeto in contenido:
-                personal_vigilancia = {}
-                
-                personal_vigilancia['fecha'] = fecha
-                
-                for clave, valor in dict(objeto).items():
-                    personal_vigilancia[clave] = valor
+        fecha = request.data['fecha']
+
+        for contenido in request.data['turnos']:
+            personal_vigilancia = {}
+            
+            personal_vigilancia['fecha'] = fecha
+            
+            for clave, valor in dict(contenido).items():
+                if clave != '':
+                    if clave == "legajo":
+                        personal_vigilancia['fk_personal'] = valor
+                    else:
+                        personal_vigilancia[clave] = valor
+            
+            if personal_vigilancia['hora_inicio']!='':
                 
                 personal_vigilancia['fk_turnoVigilancia'] = fk_turnoVigilancia
                 
@@ -304,10 +311,10 @@ class PersonalVigilanciaViewSet(viewsets.ModelViewSet):
                     personal_vigilancia['asignado'] = True
                 else:
                     personal_vigilancia['asignado'] = False
-                
+            
                 hora_inicio = datetime.strptime(personal_vigilancia['hora_inicio'], "%H:%M").time()
                 hora_fin = (datetime.combine(date.today(),hora_inicio) + timedelta(hours=personal_vigilancia['duracion'])).time()
-                
+            
                 personal_vigilancia['hora_fin'] = hora_fin.strftime("%H:%M")
                 datos_agregar.append(personal_vigilancia)
                 
