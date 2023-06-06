@@ -67,27 +67,6 @@ class PersonalViewSet(viewsets.ModelViewSet):
         )
         return JsonResponse({'msj':'Personal Creado Correctamente!!'},status=status.HTTP_201_CREATED)
 
-# class TipoFuncionViewSet(viewsets.ModelViewSet):
-#     permission_classes = (IsAuthenticated,)
-#     authentication_classes = (JWTAuthentication, TokenAuthentication)
-#     queryset = TipoFuncion.objects.all()
-#     serializer_class = TipoFuncionSerializer
-
-#     @action(detail=True, methods=['get'])
-#     def get(self, request, *args, **kwargs):
-#         self.queryset=self.get_queryset()
-#         serializer = TipoFuncionSerializer(self.queryset, many=True)
-#         return JsonResponse(serializer,status=status.HTTP_200_OK)
-
-#     @action(detail=True, methods=['post'])
-#     def post(self, request, *args, **kwargs):
-#         serializer = TipoFuncionSerializer(request)
-#         serializer.is_valid(raise_exception=True)
-#         TipoFuncion.objects.create(
-#             tipo_funcion=serializer.validated_data['tipo_funcion']
-#         )
-#         return JsonResponse({'msj':'Elemento creado correctamente!!'},status=status.HTTP_201_CREATED)
-
 class JerarquiaViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     authentication_classes = (JWTAuthentication, TokenAuthentication)
