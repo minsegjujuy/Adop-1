@@ -264,7 +264,7 @@ class PersonalVigilanciaViewSet(viewsets.ModelViewSet):
                         for turno in personal_vigilancia:
                             personal = PersonalSerializer(Personal.objects.get(legajo=turno['fk_personal'])).data
                             horario = {}
-                            # horario['id'] = turno['id']
+                            horario['id'] = turno['id']
                             horario['personal'] = str(personal['legajo']) + " - " + Persona.objects.get(cuil=personal['fk_persona']).nombre_apellido
                             horario['hora_inicio'] = turno['hora_inicio']
                             horario['hora_fin'] = turno['hora_fin']
@@ -331,7 +331,6 @@ class PersonalVigilanciaViewSet(viewsets.ModelViewSet):
                 asignado = serializer.validated_data['asignado']
             )
         return JsonResponse({"msj":"Personal Asignado Correctamente"},status=status.HTTP_201_CREATED)
-        # return JsonResponse({"cant_datos":len(datos_agregar),"datos":datos_agregar})
         
     def update(self, request, pk=None):
         personalVigilancia = self.get_object(pk)
