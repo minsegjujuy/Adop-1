@@ -39,7 +39,6 @@ export function useVigilancia() {
         try {
           setLoading(true);
           const resultado = await getVigilancias(auth.token);
-          console.log(resultado)
           setLoading(false);
           setVigilancias(resultado)
         } catch (error) {
@@ -64,9 +63,9 @@ export function useVigilancia() {
         try {
           setLoading(true);
           const resultado = await getTurno(auth.token,id);
-          console.log(resultado)
-          setLoading(false);
           setTurno(resultado)
+          setLoading(false);
+          
         } catch (error) {
           setLoading(false);
           setError(error);
@@ -77,7 +76,6 @@ export function useVigilancia() {
         try {
           setLoading(true);
           const resultado = await getPersonal(auth.token);
-          console.log(resultado)
           setLoading(false);
           return resultado
         } catch (error) {
