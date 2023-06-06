@@ -23,8 +23,8 @@ def create_rol(obj):
             id=obj['pk'],
             rol=obj['fields']['rol']
         )
-    except Exception as e:
-        print(f"Error creando el Rol: {e}")
+    except:
+        return
 
 
 def create_super_user(obj):
@@ -36,8 +36,8 @@ def create_super_user(obj):
             rol = Rol.objects.get(id=obj['fields']['rol']),
             password = obj['fields']['password']
         )
-    except Exception as e:
-        print(f"Error creando el Usuario Administrador: {e}")
+    except:
+        return
 
 def create_user(obj):
     try:
@@ -51,5 +51,5 @@ def create_user(obj):
             jurisdiccion=Dependencia.objects.get(id=obj['fields'].get('jurisdiccion')),
             password=obj['fields'].get('password')
         )
-    except Exception as e:
-        print(f"Error creando el Usuario: {e}")  # or 
+    except:
+        return
