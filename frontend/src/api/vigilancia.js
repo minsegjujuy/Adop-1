@@ -92,7 +92,7 @@ export async function addVigilanciaApi(data, token) {
 
   export async function getTurno(token,id) {
     try {
-      const url = `${BASE_API}/api/vigilancia/${id}/turnos`;
+      const url = `${BASE_API}/api/vigilancia/turnos/${id}/`;
       const params = {
         method: "GET",
         headers: {
@@ -124,7 +124,7 @@ export async function addVigilanciaApi(data, token) {
   }
   export async function asignarPersonal(data, token,id) {
     try {
-      const url = `${BASE_API}/api/vigilancia/${id}/turnos`;
+      const url = `${BASE_API}/api/vigilancia/${id}/turnos/`;
       const params = {
         method: "POST",
         headers: {
@@ -139,6 +139,23 @@ export async function addVigilanciaApi(data, token) {
       return result;
     } catch (error) {
       
+      throw error;
+    }
+  }
+  export async function deleteVigilanciaApi(id, token) {
+    try {
+      const url = `${BASE_API}/api/vigilancias/${id}/`;
+      const params = {
+        method: "DELETE",
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      };
+  
+      const response = await fetch(url, params);
+      const result = await response.json();
+      return result;
+    } catch (error) {
       throw error;
     }
   }

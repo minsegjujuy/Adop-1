@@ -10,11 +10,12 @@ import { useFormik } from "formik";
 import { Link, useLocation } from "react-router-dom";
 import { ModalBasic } from "../../components/Common/ModalBasic";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import "./HomeAdmin.scss";
 // import Swal from "sweetalert2";
 
 export function HomeAdmin() {
-  const { get_vigilancia, vigilancias} = useVigilancia();
+  const { get_vigilancia, vigilancias,deleteVigilancia} = useVigilancia();
 
   const [titleModal, setTitleModal] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -54,6 +55,40 @@ export function HomeAdmin() {
       </div>
     );
     openCloseModal();
+  };
+  const onDeleteVigilancia = async (id) => {
+    try {
+      Swal.fire({
+        icon: "question",
+        iconColor: "lightblue",
+        title: "Eliminar Vigilancia",
+        text: "¿Estas seguro que quieres eliminar esta vigilancia?",
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonText: "confirmar",
+        cancelButtonText: "cancelar",
+        reverseButtons: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          await deleteVigilancia(id);
+          console.log("hola mundo")
+          window.location.reload()
+          // setUsers(null);
+
+          Swal.fire({
+            title: "Vigilancia Eliminada!",
+            text: "El vigilancia fue eliminada",
+            icon: "success",
+            showConfirmButton: true,
+            timer: 3000,
+          });
+        }
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   
@@ -113,6 +148,7 @@ export function HomeAdmin() {
         AsignarPersonal={AsignarPersonal}
         addHorarios={addHorarios}
         vermapa={vermapa}
+        onDeleteVigilancia={onDeleteVigilancia}
       />
       <ModalBasic
         show={showModal}

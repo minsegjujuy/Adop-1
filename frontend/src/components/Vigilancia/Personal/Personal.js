@@ -9,13 +9,14 @@ import { toast, Flip } from "react-toastify";
 import Swal from "sweetalert2";
 import "./Personal.scss";
 export function Personal(props) {
-  const {turnos,duracion} =props;
+  const {turnos,duracion,id} =props;
   const { get_turno, turno, get_personal, asignar_personal } = useVigilancia();
   const [personal, setPersonal] = useState(null);
   const { auth } = useAuth();
   const [horas, sethoras] = useState(false);
   useEffect(() => {
     buscarPersonal();
+    get_turno(id);
   }, []);
   const buscarPersonal = async () => {
     const options = await get_personal();
@@ -26,12 +27,12 @@ export function Personal(props) {
     { key: "1", text: "Cargando....", value: 1 },
   ];
   const valores = personal?.map((tipo, index) => ({
-    value: tipo.legajo,
+    value: `${tipo.legajo}`,
     key: `${index}`,
     text: tipo.legajo,
   }));
   const valores2 = personal?.map((tipo, index) => ({
-    value: tipo.nombre_apellido,
+    value: `${tipo.nombre_apellido}`,
     key: `${index}`,
     text: tipo.nombre_apellido,
   }));
@@ -55,37 +56,37 @@ export function Personal(props) {
       legajo: "",
       nombre: "",
       hora_inicio: "",
-      turno: "",
+     duracion: "",
     },
     {
       legajo: "",
       nombre: "",
       hora_inicio: "",
-      turno: "",
+     duracion: "",
     },
     {
       legajo: "",
       nombre: "",
       hora_inicio: "",
-      turno: "",
+     duracion: "",
     },
     {
       legajo: "",
       nombre: "",
       hora_inicio: "",
-      turno: "",
+     duracion: "",
     },
     {
       legajo: "",
       nombre: "",
       hora_inicio: "",
-      turno: "",
+     duracion: "",
     },
     {
       legajo: "",
       nombre: "",
       hora_inicio: "",
-      turno: "",
+     duracion: "",
     },
   ];
 
@@ -110,20 +111,25 @@ export function Personal(props) {
               // turnos2 = {
               //   fk_personal: formValue.turnos[index].legajo,
               // };
-              if (formValue.turnos[index].turno !== "") {
-                sum = sum + formValue.turnos[index].turno;
+              if (formValue.turnos[index].duracion !== "") {
+                sum = sum + formValue.turnos[index].duracion;
               }
             }
         if (sum === duracion) {
-          // const formValue2 = {
-          //   fecha: formValue.fecha,
-          //   duracion: turno?.duracion,
-          //   Turnos: formValue.turnos,
-          // };
+          const newArray = formValue.turnos.map(objeto => {
+            // Crear un nuevo objeto sin el campo a eliminar
+            const { nombre, ... restoCampos} = objeto;
+            return restoCampos;
+          });
+          const formValue2 = {
+            fecha: formValue.fecha_vigilancia,
+            turnos: newArray,
+          };
           // console.log(formValue2);
-          console.log(formValue)
-          console.log("exito")
-          // if (response.msj) {
+          console.log(formValue2)
+          console.log(id)
+          const response = await asignar_personal(formValue2,id)
+          if (response.msj) {
             Swal.fire({
               title: "Exito!",
               text: "Personal Asignado Correctamente",
@@ -131,15 +137,15 @@ export function Personal(props) {
               timer: 3000,
               showConfirmButton: true,
             });
-            // window.location.replace("http://localhost:3000/admin/carga/vigilancia/personal");
-          // } else {
-          //   Swal.fire({
-          //     title: "Algunos datos ingresados no son validos!",
-          //     text: response.msj,
-          //     icon: "error",
-          //     showConfirmButton: true,
-          //   });
-          // }
+            window.location.reload()
+          } else {
+            Swal.fire({
+              title: "Algunos datos ingresados no son validos!",
+              text: response.msj,
+              icon: "error",
+              showConfirmButton: true,
+            });
+          }
         } else {
           Swal.fire({
             title: "Algunos datos ingresados son incorrectos!",
@@ -220,12 +226,12 @@ export function Personal(props) {
               <Form.Select
                 fluid
                 search
-                name={`turnos[${i}].turno`}
+                name={`turnos[${i}].duracion`}
                 options={horariosOptions}
                 placeholder="Asignar Turno"
-                value={formik.values.turnos[i].turno}
+                value={formik.values.turnos[i].duracion}
                 onChange={(_, data) =>
-                  formik.setFieldValue(`turnos[${i}].turno`, data.value)
+                  formik.setFieldValue(`turnos[${i}].duracion`, data.value)
                 }
               />
             </div>

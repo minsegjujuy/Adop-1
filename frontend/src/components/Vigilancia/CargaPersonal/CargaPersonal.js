@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Form, Icon, Checkbox, Input } from "semantic-ui-react";
 import { useVigilancia, useAuth } from "../../../hooks";
 import { useFormik } from "formik";
+import {TableHistorial} from "../../Vigilancia"
 import { map } from "lodash";
 import * as Yup from "yup";
 // import { useAuth} from "../../hooks";
@@ -9,7 +10,7 @@ import { toast, Flip } from "react-toastify";
 import Swal from "sweetalert2";
 import "./CargaPersonal.scss";
 export function CargaPersonal(props) {
-  const { fecha_fin, fecha_inicio, jurisdiccion, servicio, id, addTurnos } =
+  const { jurisdiccion, servicio, id, addTurnos,onDeleteHistorial } =
     props;
   const { get_turno, turno} = useVigilancia();
   const [personal, setPersonal] = useState(null);
@@ -51,8 +52,8 @@ export function CargaPersonal(props) {
 
   return (
     <Form>
-      <div className="ui form">
-        <div className="field">
+      
+        <>
           <h4 className="ui dividing header">
             Duracion y fecha de la vigilancia
           </h4>
@@ -76,7 +77,7 @@ export function CargaPersonal(props) {
               />
             </div>
           </div>
-        </div>
+        
         <h4 className="ui dividing header">Datos sobre la vigilancia</h4>
         <div className="two fields">
           <div className="field">
@@ -98,7 +99,7 @@ export function CargaPersonal(props) {
             />
           </div>
         </div>
-      </div>
+      
 
       <div className="field">
         <h4 className="ui dividing header">
@@ -108,14 +109,16 @@ export function CargaPersonal(props) {
           <Button
             className="pencil alternate"
             positive
-            onClick={() => addTurnos(turno?.turno,turno?.duracion)}
+            onClick={() => addTurnos(turno?.turno,turno?.duracion,id)}
           >
-            <Icon className="pencil alternate" />
+            <Icon size="small" className="pencil alternate" />
             Presione aqui para empezar asignar los turnos
           </Button>
         
       </div>
-      <h4 className="ui dividing header">Historial </h4>
+      <h3 className="ui dividing header">Historial </h3>
+      <TableHistorial onDeleteHistorial={onDeleteHistorial}/>
+      </>
     </Form>
   );
 }

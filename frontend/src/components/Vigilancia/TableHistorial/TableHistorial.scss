@@ -1,0 +1,53 @@
+.centered-content {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+
+  .icon-container {
+    margin-bottom: 16px !important;
+  }
+
+  .header {
+    font-size: 1.5rem !important;
+    color: #333 !important;
+    margin-bottom: 8px !important;
+  }
+
+  .meta {
+    color: #777 !important;
+    margin-bottom: 8px !important;
+  }
+
+  .description {
+    color: #555 !important;
+    margin-bottom: 16px !important;
+  }
+
+  .extra {
+    color: #888 !important;
+    font-size: 0.9rem !important;
+
+    .icon {
+      margin-right: 4px !important;
+    }
+  }
+}
+.lista-personal{
+  margin: 5%;
+
+}
+.lista-personal-contenido{
+  margin-top: 5%;
+}
+.no-seguimiento{
+  text-align: center;
+  margin: 10%;
+}
+
+.delete-button {
+  position: absolute;
+  top: 0px;
+  right: 0px;}
+

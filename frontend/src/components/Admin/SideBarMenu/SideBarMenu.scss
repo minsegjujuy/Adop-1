@@ -11,6 +11,9 @@
       margin: 0 !important;
       margin-right: 10px !important;
     }
+    // .icono-side-bar:hover{
+    //   background-color: green !important;
+    // }
     
     .contenido {
       position: absolute;
@@ -19,9 +22,15 @@
       width: calc(100% - 250px);
     }
   }
- .header_class{
-  display: flex;
+  .header_class {
+    display: flex !important;
+    margin-right: 10px !important;
+
+    align-items: center !important;
+    
+  }
+  // .dropdown.menu {
+  //   border: none !important;
+  //   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1) !important;
+  // }
   
-  align-items: center;
- }
- 

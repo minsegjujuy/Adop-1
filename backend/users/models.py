@@ -17,7 +17,6 @@ class Usuario(AbstractBaseUser,PermissionsMixin):
     unidad_regional = models.ForeignKey(UnidadRegional,name="unidad_regional", null=True, default=None, on_delete=models.CASCADE)
     usuario_activo = models.BooleanField(default=True)
     
-    
     objects = UsuarioManager()
     
     USERNAME_FIELD = 'email'

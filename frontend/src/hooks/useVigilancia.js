@@ -1,4 +1,4 @@
-import {addVigilanciaApi,getJurisdicciones,getVigilancias,addTurnosApi,getTurno,getPersonal,asignarPersonal} from "../api/vigilancia"
+import {addVigilanciaApi,getJurisdicciones,getVigilancias,addTurnosApi,getTurno,getPersonal,asignarPersonal,deleteVigilanciaApi} from "../api/vigilancia"
 import { useState } from "react";
 import {useAuth} from "../hooks"
 
@@ -64,6 +64,7 @@ export function useVigilancia() {
           setLoading(true);
           const resultado = await getTurno(auth.token,id);
           setTurno(resultado)
+          console.log(resultado)
           setLoading(false);
           
         } catch (error) {
@@ -96,6 +97,16 @@ export function useVigilancia() {
           
         }
       };
+      const deleteVigilancia = async (id) => {
+        try {
+          setLoading(true);
+          await deleteVigilanciaApi(id, auth.token);
+          setLoading(false);
+        } catch (error) {
+          setLoading(false);
+          setError(error);
+        }
+      };
   // const buscarEmpleadoId = async (id) => {
   //   try {
   //     setLoading(true);
@@ -119,7 +130,8 @@ export function useVigilancia() {
         add_turnos,
         get_turno,
         get_personal,
-        asignar_personal
+        asignar_personal,
+        deleteVigilancia
         
         
        

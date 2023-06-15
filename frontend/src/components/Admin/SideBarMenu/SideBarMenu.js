@@ -71,8 +71,8 @@ function MenuLeft(props) {
           Pacientes
         </Menu.Item>
       )} */}
-      <Menu.Item>
-        <div className="header_class">
+      <Menu.Item className="header_class">
+        
           <Icon name="chart bar" className="icono-side-bar" />
           <Dropdown item text="Tableros">
             <Dropdown.Menu>
@@ -106,7 +106,7 @@ function MenuLeft(props) {
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-        </div>
+        
       
       </Menu.Item>
 

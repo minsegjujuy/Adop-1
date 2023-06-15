@@ -48,20 +48,6 @@ class VigilanciaSerializer(serializers.ModelSerializer):
             'latitud',
         )
 
-class TurnosVigilanciaSerializerView(serializers.ModelSerializer):
-    class Meta:
-        model = TurnosVigilancia
-        fields = (
-            'id',
-            'fk_vigilancia',
-            'turno',
-            'hora_inicio',
-            'hora_fin',
-            'duracion',
-            'diario',
-            'dia_completo'
-        )
-
 class TurnosVigilanciaSerializer(serializers.ModelSerializer):
     class Meta:
         model = TurnosVigilancia
@@ -71,6 +57,7 @@ class TurnosVigilanciaSerializer(serializers.ModelSerializer):
             'turno',
             'hora_inicio',
             'hora_fin',
+            'duracion',
             'diario',
             'dia_completo'
         )

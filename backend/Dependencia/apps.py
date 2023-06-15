@@ -16,5 +16,5 @@ class DependenciaConfig(AppConfig):
                 if kwargs["using"] == "default":
                     seed_data()
 
-            # Registra la señal
+            # # Registra la señal
             pre_migrate.connect(migrate_callback, sender=self)

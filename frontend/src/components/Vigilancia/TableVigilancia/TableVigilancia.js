@@ -5,7 +5,7 @@ import { map } from "lodash";
 import "./TableVigilancia.scss";
 
 export function TableVigilancia(props) {
-  const { vigilancias, addHorarios, vermapa} = props;
+  const { vigilancias, addHorarios, vermapa,onDeleteVigilancia} = props;
   const { position, setposition } = useState(null);
 
   return (
@@ -61,7 +61,7 @@ export function TableVigilancia(props) {
               id={vigilancia.id}
               turno_asignado={vigilancia.turno_asignado}
               //   updateUser={updateUser}
-              //  onDeleteUser={onDeleteUser}
+               onDeleteVigilancia={onDeleteVigilancia}
             />
           </Table.Row>
         ))}
@@ -82,7 +82,7 @@ function Actions(props) {
     turno_asignado,
     jurisdiccion,
    servicio,
-  } = props;
+  onDeleteVigilancia} = props;
   const position = {
     lat: latitud,
     lng: longitud,
@@ -115,8 +115,8 @@ function Actions(props) {
         <Icon name="map marker" />
       </Button>
 
-      <Button icon negative onClick={() => console.log("hola mundo")}>
-        <Icon title="ver mapa" name="close" />
+      <Button icon negative onClick={()=>onDeleteVigilancia(id)}>
+        <Icon name="close" />
       </Button>
     </Table.Cell>
   );
