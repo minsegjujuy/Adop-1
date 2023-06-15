@@ -5,6 +5,7 @@ from Dependencia.models import Dependencia
 from Servicio.models import TipoServicio, TipoRecurso
 
 from Dependencia.api.serializer import UnidadRegionalSerializer
+from Personal.api.serializer import PersonalSerializer
 from .serializer import VigilanciaSerializer, VigilanciaSerializerView, TurnosVigilanciaSerializer, MotivoVigilanciaSerializer, PersonalVigilanciaSerializer
 
 from rest_framework import viewsets, status
@@ -259,16 +260,15 @@ class PersonalVigilanciaViewSet(viewsets.ModelViewSet):
                     for fecha in turnos_vigilancia['turno']:
                         horarios = {}
                         horarios[fecha] = []
-                        personal_vigilancia = PersonalVigilancia.objects.filter(fecha=fecha)
-                        for personal in personal_vigilancia:
-                            personal = PersonalVigilanciaSerializer(personal).data
+                        personal_vigilancia = PersonalVigilanciaSerializer(PersonalVigilancia.objects.filter(fecha=fecha), many=True).data
+                        for turno in personal_vigilancia:
+                            personal = PersonalSerializer(Personal.objects.get(legajo=turno['fk_personal'])).data
                             horario = {}
-                            horario['id'] = personal['id']
-                            horario['fk_personal'] = personal['fk_personal']+" - "+Persona.objects.get(id=Personal.objects.get(id=personal['fk_personal']).fk_persona).nombre_apellido
-                            horario['hora_inicio'] = personal['hora_inicio']
-                            horario['hora_fin'] = personal['hora_fin']
-                            horario['duracion'] = personal['duracion']
-                            horario['asignado'] = personal['asignado']
+                            horario['id'] = turno['id']
+                            horario['personal'] = str(personal['legajo']) + " - " + Persona.objects.get(cuil=personal['fk_persona']).nombre_apellido
+                            horario['hora_inicio'] = turno['hora_inicio']
+                            horario['hora_fin'] = turno['hora_fin']
+                            horario['duracion'] = turno['duracion']
                             horarios[fecha].append(horario)
                         turnos['turnos'].append(horarios) 
                     return JsonResponse(turnos,status=status.HTTP_200_OK)
@@ -331,7 +331,6 @@ class PersonalVigilanciaViewSet(viewsets.ModelViewSet):
                 asignado = serializer.validated_data['asignado']
             )
         return JsonResponse({"msj":"Personal Asignado Correctamente"},status=status.HTTP_201_CREATED)
-        # return JsonResponse({"cant_datos":len(datos_agregar),"datos":datos_agregar})
         
     def update(self, request, pk=None):
         personalVigilancia = self.get_object(pk)
