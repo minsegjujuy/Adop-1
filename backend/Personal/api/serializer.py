@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ..models import Jerarquia, Personal
+from ..models import Cargo, Funcionario, Jerarquia, Personal
 
 class PersonalSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,5 +20,26 @@ class JerarquiaSerializer(serializers.Serializer):
             'id',
             'nombre',
             'nombre_largo',
+            'activo',
         )
         read_only_fields = ('id', 'nombre', 'nombre_largo',)
+
+class FuncionarioSerializer(serializers.Serializer):
+    class Meta:
+        model = Funcionario
+        fields = (
+            'fk_persona',
+            'fk_cargo',
+            'fecha_inicio',
+            'fecha_fin'
+        )
+
+class CargoSerializer(serializers.Serializer):
+    class Meta:
+        model = Cargo
+        fields = (
+            'id',
+            'nombre',
+            'activo',
+        )
+        read_only_fields = ('id', 'nombre',)

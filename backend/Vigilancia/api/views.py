@@ -259,18 +259,19 @@ class PersonalVigilanciaViewSet(viewsets.ModelViewSet):
                     turnos['turnos'] = []
                     for fecha in turnos_vigilancia['turno']:
                         horarios = {}
-                        horarios[fecha] = []
                         personal_vigilancia = PersonalVigilanciaSerializer(PersonalVigilancia.objects.filter(fecha=fecha), many=True).data
-                        for turno in personal_vigilancia:
-                            personal = PersonalSerializer(Personal.objects.get(legajo=turno['fk_personal'])).data
-                            horario = {}
-                            horario['id'] = turno['id']
-                            horario['personal'] = str(personal['legajo']) + " - " + Persona.objects.get(cuil=personal['fk_persona']).nombre_apellido
-                            horario['hora_inicio'] = turno['hora_inicio']
-                            horario['hora_fin'] = turno['hora_fin']
-                            horario['duracion'] = turno['duracion']
-                            horarios[fecha].append(horario)
-                        turnos['turnos'].append(horarios) 
+                        if personal_vigilancia:
+                            horarios[fecha] = []
+                            for turno in personal_vigilancia:
+                                personal = PersonalSerializer(Personal.objects.get(legajo=turno['fk_personal'])).data
+                                horario = {}
+                                horario['id'] = turno['id']
+                                horario['personal'] = {'legajo': personal['legajo'], 'nombre':Persona.objects.get(cuil=personal['fk_persona']).nombre_apellido}
+                                # horario['hora_inicio'] = turno['hora_inicio']
+                                # horario['hora_fin'] = turno['hora_fin']
+                                horario['duracion'] = turno['duracion']
+                                horarios[fecha].append(horario)
+                            turnos['turnos'].append(horarios) 
                     return JsonResponse(turnos,status=status.HTTP_200_OK)
                 except:
                     return JsonResponse({'msj':'La vigilancia no tiene ningun personal asignado'},status=status.HTTP_400_BAD_REQUEST)

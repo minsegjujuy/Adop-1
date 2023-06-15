@@ -1,11 +1,19 @@
 from django.contrib.postgres.fields import ArrayField
-from django.db import models, connections
+from django.db import models
 from Servicio.models import TipoRecurso, TipoServicio
-from Personal.models import Personal
+from Personal.models import Categoria, Personal
 from Dependencia.models import Dependencia, UnidadRegional
+from Personal.models import Funcionario
+
+class Ente(Categoria):
+    pass
 
 class Motivo(models.Model):
     motivo = models.CharField(max_length=22)
+
+class Archivo(models.Model):
+    fk_vigilancia = models.ForeignKey('Vigilancia', on_delete=models.CASCADE)
+    path = models.TextField(blank=False)
 
 class Vigilancia(models.Model):
     fk_jurisdiccion = models.ForeignKey(Dependencia, on_delete=models.CASCADE, null=False)
@@ -13,6 +21,10 @@ class Vigilancia(models.Model):
     fk_tipo_servicio = models.ForeignKey(TipoServicio, on_delete=models.CASCADE, null=False)
     fk_tipo_recurso = models.ForeignKey(TipoRecurso, on_delete=models.CASCADE, null=False)
     fk_unidad_regional = models.ForeignKey(UnidadRegional, on_delete=models.CASCADE, null=False)
+    
+    fk_funcionario = models.ForeignKey(Funcionario, on_delete=models.CASCADE, null=True, default=None)
+    fk_ente = models.ForeignKey(Ente, on_delete=models.CASCADE, null=True, default=None)
+    
     objetivo = models.TextField()
     cant_dias = models.IntegerField(default=0)
     fecha_inicio = models.DateTimeField(null=False)
