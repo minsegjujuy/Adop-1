@@ -7,7 +7,7 @@
   background: #1e226e;  
   background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);  
   width: 100%;
-  height:110vh;
+  min-height: 100vh;
 }
 
 .login-admin {
@@ -27,14 +27,22 @@
     width: 500px;
     box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.3);
   }
-
+  
   h1 {
     font-size: 30px;
     text-align: center;
     margin-bottom: 60px;
   }
 }
-
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px;
+  color: white;
+  text-align: center;
+}
 
 .recuperar-contraseña-usuario{
     

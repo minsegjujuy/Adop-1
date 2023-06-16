@@ -22,12 +22,13 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', default='uwpa8%g^(lh=68o$o7*iatvr*mg$yfqcx2&rz!53+@pnjj4ak9')
+SECRET_KEY = os.environ.get(
+    'SECRET_KEY', default='uwpa8%g^(lh=68o$o7*iatvr*mg$yfqcx2&rz!53+@pnjj4ak9')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', "localhost","192.168.80.4"]
+ALLOWED_HOSTS = ['127.0.0.1', "localhost", "192.168.80.4"]
 
 
 # Application definition
@@ -101,8 +102,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'Ministerio',
-        'USER': 'root',
-        'PASSWORD': 'root',
+        'USER': 'postgres',
+        'PASSWORD': 'Mauro123*',
         'HOST': 'localhost',
         'PORT': '5432'
     }
@@ -157,7 +158,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
 # Minutos que el usuario tendra activa su sesion
-TOKEN_EXPIRED_AFTER_MINUTES=30
+TOKEN_EXPIRED_AFTER_MINUTES = 30
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
@@ -165,25 +166,25 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
     'UPDATE_LAST_LOGIN': True,
-    
+
     'ALGORITHM': 'HS256',
     'SIGNING_KEY': SECRET_KEY,
     'VERIFYING_KEY': None,
     "AUDIENCE": None,
     'ISSUER': None,
-    
+
     'AUTH_HEADER': ('Authenticate',),
     'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
-    'USER_ID_FIELD':'id',
+    'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'user_id',
-    
+
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
     'TOKEN_TYPE_CLAIM': 'token_type',
-    
+
     'JTI_CLAIM': 'jti',
-    
+
     'TOKEN_USER_CLASS': 'rest_framework_simplejwt.models.TokenUser',
-    
+
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
     "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1)

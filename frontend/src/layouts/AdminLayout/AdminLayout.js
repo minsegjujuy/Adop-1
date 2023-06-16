@@ -4,7 +4,7 @@ import { logoutApi } from "../../api/user";
 import { removeToken } from "../../api/token";
 import { LoginAdmin } from "../../pages/Admin";
 import { useAuth } from "../../hooks";
-import { TopMenu, SideBarMenu } from "../../components/Admin";
+import { TopMenu, SideBarMenu} from "../../components/Admin";
 
 export function AdminLayout(props) {
   const { children } = props;
@@ -29,6 +29,7 @@ export function AdminLayout(props) {
   //   }
   // }
   return (
+    <div className="trancision">
     <div className="admin-layout">
       <div className="admin-layout__menu">
         <TopMenu />
@@ -37,6 +38,10 @@ export function AdminLayout(props) {
       <div className="admin-layout__main-content">
         <SideBarMenu>{children}</SideBarMenu>
       </div>
+      {/* <div className="admin-layout__footer">
+        <Footer/>
+      </div> */}
+    </div>
     </div>
   );
 }

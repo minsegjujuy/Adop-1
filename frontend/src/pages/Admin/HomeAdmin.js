@@ -105,6 +105,7 @@ export function HomeAdmin() {
   });
   return (
     <>
+    <div className="transicion">
       <HeaderPage title="VIGILANCIAS" />
       <div className="header-page-vigilancia">
         <div className="formulario-buscar">
@@ -157,6 +158,7 @@ export function HomeAdmin() {
         onClose={openCloseModal}
         refetch={refetch}
       />
+      </div>
     </>
   );
 }
