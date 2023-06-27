@@ -261,16 +261,21 @@ class PersonalVigilanciaViewSet(viewsets.ModelViewSet):
                         horarios = {}
                         personal_vigilancia = PersonalVigilanciaSerializer(PersonalVigilancia.objects.filter(fecha=fecha), many=True).data
                         if personal_vigilancia:
-                            horarios[fecha] = []
+                            # horarios[fecha] = []
+                            horarios = []
+                            personal = []
                             for turno in personal_vigilancia:
-                                personal = PersonalSerializer(Personal.objects.get(legajo=turno['fk_personal'])).data
-                                horario = {}
-                                horario['id'] = turno['id']
-                                horario['personal'] = {'legajo': personal['legajo'], 'nombre':Persona.objects.get(cuil=personal['fk_persona']).nombre_apellido}
-                                # horario['hora_inicio'] = turno['hora_inicio']
-                                # horario['hora_fin'] = turno['hora_fin']
-                                horario['duracion'] = turno['duracion']
-                                horarios[fecha].append(horario)
+                                fk_personal = PersonalSerializer(Personal.objects.get(legajo=turno['fk_personal'])).data
+                                personal.append({'legajo': fk_personal['legajo'], 'nombre':Persona.objects.get(cuil=fk_personal['fk_persona']).nombre_apellido})
+                                # persona['hora_inicio'] = turno['hora_inicio']
+                                # persona['hora_fin'] = turno['hora_fin']
+                            persona = {}
+                            persona['id'] = turno['id']
+                            persona['personal'] = personal
+                            persona['duracion'] = turno['duracion']
+                            persona['fecha'] = fecha
+                            horarios.append(persona)
+                                # horarios[fecha].append(persona)
                             turnos['turnos'].append(horarios) 
                     return JsonResponse(turnos,status=status.HTTP_200_OK)
                 except:
