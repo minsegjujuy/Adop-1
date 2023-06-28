@@ -1,4 +1,4 @@
-import {addVigilanciaApi,getJurisdicciones,getVigilancias,addTurnosApi,getTurno,getPersonal,asignarPersonal,deleteVigilanciaApi} from "../api/vigilancia"
+import {addVigilanciaApi,getJurisdicciones,getVigilancias,addTurnosApi,getTurno,getPersonal,asignarPersonal,deleteVigilanciaApi,getTurnosApi,deleteHistorialApi} from "../api/vigilancia"
 import { useState } from "react";
 import {useAuth} from "../hooks"
 
@@ -6,10 +6,25 @@ export function useVigilancia() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [vigilancias, setVigilancias] = useState(null);
+    const [historial,setHistorial]= useState([])
     // const [personal, setPersonal] = useState(null);
     const [turno, setTurno]= useState(null);
     const { auth } = useAuth();
-
+    const get_turnos = async (id) => {
+      try {
+        setLoading(true);
+        const resultado = await getTurnosApi(id,auth.token);
+        console.log(resultado.turnos)
+        setLoading(false)
+        setHistorial(resultado.turnos)
+        console.log(historial)
+        
+      } catch (error) {
+        setLoading(false);
+        setError(error);
+        
+      }
+    };
       const addVigilancia = async (data) => {
         try {
           setLoading(true);
@@ -107,6 +122,18 @@ export function useVigilancia() {
           setError(error);
         }
       };
+      const deleteHistorial = async (id,id_turno) => {
+        try {
+          setLoading(true);
+          await deleteHistorialApi(id,id_turno, auth.token);
+          setLoading(false);
+        } catch (error) {
+          setLoading(false);
+          setError(error);
+        }
+      };
+     
+     
   // const buscarEmpleadoId = async (id) => {
   //   try {
   //     setLoading(true);
@@ -123,6 +150,7 @@ export function useVigilancia() {
         error,
         vigilancias,
         turno,
+        historial,
         auth,
         addVigilancia,
         get_jurisdicciones,
@@ -131,7 +159,9 @@ export function useVigilancia() {
         get_turno,
         get_personal,
         asignar_personal,
-        deleteVigilancia
+        deleteVigilancia,
+        get_turnos,
+        deleteHistorial,
         
         
        

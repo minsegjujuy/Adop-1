@@ -9,114 +9,26 @@ import {
   Icon,
   ListContent,
 } from "semantic-ui-react";
+import {useVigilancia} from "../../../hooks/"
 import { map } from "lodash";
+import {useEffect} from "react"
 import "./TableHistorial.scss";
 
 export function TableHistorial(props) {
-  const {onDeleteHistorial} = props
-  const seguimientos = [
-    {
-      id_turno:1,
-      fecha_turno: "02-02-2023",
-      observaciones: "COVID",
-      legajos: [
-        {
-          empleado:"2020",
-          nombre:"Nicolas Yañez"
-        },
-        {
-          empleado:"3030",
-          nombre: "Jesus Escalante"
-        }
-      ],
-    },
-    {
-      fecha_turno: "03-03-2023",
-      tipo_seguimiento: 1,
-      observaciones: "COVID",
-      legajos: [
-        {
-          empleado:"2020",
-          nombre:"Saul Jimenez"
-        },{
-          empleado:"3030",
-          nombre:"Fabian Lopez"
-        }
-      ],
-    },{
-      fecha_turno: "02-02-2023",
-      tipo_seguimiento: 1,
-      observaciones: "COVID",
-      legajos: [
-        {
-          empleado:"2020",
-          nombre:"Nicolas Yañez"
-        },
-        {
-          empleado:"3030",
-          nombre: "Jesus Escalante"
-        }
-      ],
-    },
-    {
-      fecha_turno: "03-03-2023",
-      tipo_seguimiento: 1,
-      observaciones: "COVID",
-      legajos: [
-        {
-          empleado:"2020",
-          nombre:"Saul Jimenez"
-        },{
-          empleado:"3030",
-          nombre:"Fabian Lopez"
-        },{
-          empleado:"2333",
-          nombre:"SAC Jimenez"
-        },{
-          empleado:"1111",
-          nombre:"SES Lopez"
-        }
-      ],
-    },
-    {
-      fecha_turno: "02-02-2023",
-      tipo_seguimiento: 1,
-      observaciones: "COVID",
-      legajos: [
-        {
-          empleado:"2020",
-          nombre:"Nicolas Yañez"
-        },
-        {
-          empleado:"3030",
-          nombre: "Jesus Escalante"
-        }
-      ],
-    },
-    {
-      fecha_turno: "03-03-2023",
-      tipo_seguimiento: 1,
-      observaciones: "COVID",
-      legajos: [
-        {
-          empleado:"2020",
-          nombre:"Saul Jimenez"
-        },{
-          empleado:"3030",
-          nombre:"Fabian Lopez"
-        }
-      ],
-    },
-  ];
+  const {onDeleteHistorial,id} = props
+  const {get_turnos,historial} = useVigilancia();
+  useEffect(() => {
+    get_turnos(id);
+  }, []);
   return (
     <>
-      {seguimientos.length !== 0 ? ( 
+      {historial.length !== 0 ? ( 
         <Card.Group className="custom-card-group">
-          {map(seguimientos, (seguimiento, index) => {
+          {Array.from(historial).reverse().map((seguimiento, index) => {
             return (
               <Card className="custom-card-group-card" key={index}>
                 <div className="delete-button">
-                <Button icon negative onClick={()=>onDeleteHistorial()} >
+                <Button icon negative onClick={()=>onDeleteHistorial(id,seguimiento[0].id)} >
                     <Icon name="close" />
                   </Button>
                   </div>
@@ -124,16 +36,16 @@ export function TableHistorial(props) {
                   <div className="icon-container">
                     <Icon name="shield" size="huge" color="blue" />
                   </div>
-                  <Card.Header>Fecha : {seguimiento.fecha_turno}</Card.Header>
+                  <Card.Header>Fecha : {seguimiento[0].fecha}</Card.Header>
                   <Card.Meta>Legajos de Personal Afectado</Card.Meta>
                   <Card.Description>
                   <Card.Description className="legajos">
                     <List >
-                      {seguimiento.legajos?.map((legajos, index) => {
+                      {seguimiento[0].personal?.map((legajos, index) => {
                         return (
                           <List.Item key={index} >
                             <List.Icon name="dot circle" color="blue" />
-                            <List.Content className="lista-personal-contenido">Legajo: {legajos.empleado} </List.Content>
+                            <List.Content className="lista-personal-contenido">Legajo: {legajos.legajo} </List.Content>
                             <ListContent className="lista-personal-contenido"> Nombre: {legajos.nombre}</ListContent>
                           </List.Item>
                         );
@@ -144,7 +56,7 @@ export function TableHistorial(props) {
                 </Card.Content>
                 <Card.Content extra>
                   <Icon name="user" /> 
-                  {seguimiento.legajos.length} Personales afectados a este turno
+                  {seguimiento[0].personal.length} Personales afectados a este turno
                 </Card.Content>
               </Card>
             );

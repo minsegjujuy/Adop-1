@@ -159,3 +159,36 @@ export async function addVigilanciaApi(data, token) {
       throw error;
     }
   }
+  export async function getTurnosApi(id,token) {
+    try {
+      const url = `${BASE_API}/api/vigilancia/${id}/turnos/`;
+      const params = {
+        method: "GET",
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      };
+      const response = await fetch(url, params);
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+  export async function deleteHistorialApi(id,id_turno, token) {
+    try {
+      const url = `${BASE_API}/api/vigilancia/${id}/turnos/${id_turno}/`;
+      const params = {
+        method: "DELETE",
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      };
+  
+      const response = await fetch(url, params);
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }

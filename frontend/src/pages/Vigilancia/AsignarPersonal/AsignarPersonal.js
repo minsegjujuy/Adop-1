@@ -2,7 +2,7 @@ import React from "react";
 import { HeaderPage } from "../../../components/Admin";
 import { CargaPersonal,TableHistorial } from "../../../components/Vigilancia/";
 import {Personal} from "../../../components/Vigilancia/Personal"
-import { useAuth } from "../../../hooks"
+import { useAuth,useVigilancia } from "../../../hooks"
 import { useState } from "react";
 import "./AsignarPersonal.scss";
 import {ModalBasic} from "../../../components/Common/ModalBasic"
@@ -17,6 +17,7 @@ export function AsignarPersonal(props) {
   const { fecha_fin, fecha_inicio,jurisdiccion,servicio,id} = location.state || {};
  
   const { auth } = useAuth();
+  const {deleteHistorial} = useVigilancia();
   const openCloseModal = () => {
     setShowModal((prev) => !prev);
   };
@@ -33,7 +34,7 @@ export function AsignarPersonal(props) {
     );
     openCloseModal();
   };
-  const onDeleteHistorial= async (id) => {
+  const onDeleteHistorial= async (id,id_turno) => {
     try {
       Swal.fire({
         icon: "question",
@@ -49,7 +50,7 @@ export function AsignarPersonal(props) {
         cancelButtonColor: "#d33",
       }).then(async (result) => {
         if (result.isConfirmed) {
-          // await deleteUser(data.id);
+          await deleteHistorial(id,id_turno);
           console.log("hola mundo")
           window.location.reload()
           // setUsers(null);

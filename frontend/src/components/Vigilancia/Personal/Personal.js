@@ -4,12 +4,11 @@ import { useVigilancia, useAuth } from "../../../hooks";
 import { useFormik } from "formik";
 import { map } from "lodash";
 import * as Yup from "yup";
-// import { useAuth} from "../../hooks";
 import { toast, Flip } from "react-toastify";
 import Swal from "sweetalert2";
 import "./Personal.scss";
 export function Personal(props) {
-  const {turnos,duracion,id} =props;
+  const { turnos, duracion, id } = props;
   const { get_turno, turno, get_personal, asignar_personal } = useVigilancia();
   const [personal, setPersonal] = useState(null);
   const { auth } = useAuth();
@@ -23,18 +22,11 @@ export function Personal(props) {
 
     setPersonal(options.map((option) => option));
   };
-  const Cargando = [
-    { key: "1", text: "Cargando....", value: 1 },
-  ];
+  const Cargando = [{ key: "1", text: "Cargando....", value: 1 }];
   const valores = personal?.map((tipo, index) => ({
     value: `${tipo.legajo}`,
     key: `${index}`,
-    text: tipo.legajo,
-  }));
-  const valores2 = personal?.map((tipo, index) => ({
-    value: `${tipo.nombre_apellido}`,
-    key: `${index}`,
-    text: tipo.nombre_apellido,
+    text: `${tipo.legajo},  ${tipo.nombre_apellido}`,
   }));
   const Horario = [
     { key: "1", text: "4 hs", value: 4 },
@@ -54,46 +46,35 @@ export function Personal(props) {
   let arreglo3 = [
     {
       legajo: "",
-      nombre: "",
       hora_inicio: "",
-     duracion: "",
+      duracion: "",
     },
     {
       legajo: "",
-      nombre: "",
       hora_inicio: "",
-     duracion: "",
+      duracion: "",
     },
     {
       legajo: "",
-      nombre: "",
       hora_inicio: "",
-     duracion: "",
+      duracion: "",
     },
     {
       legajo: "",
-      nombre: "",
       hora_inicio: "",
-     duracion: "",
+      duracion: "",
     },
     {
       legajo: "",
-      nombre: "",
       hora_inicio: "",
-     duracion: "",
+      duracion: "",
     },
     {
       legajo: "",
-      nombre: "",
       hora_inicio: "",
-     duracion: "",
+      duracion: "",
     },
   ];
-
-  // let arreglo3 = redimension(
-  //   arreglo2,
-  //   turno?.duracion === 8 ? 1 : turno?.duracion < 24 ? 2 : 3
-  // );
   const [numCampos, setNumCampos] = useState(1);
 
   const campos = [];
@@ -102,33 +83,27 @@ export function Personal(props) {
     initialValues: initialValues(arreglo3, numCampos),
     validationSchema: Yup.object(validationSchema()),
     onSubmit: async (formValue) => {
-        let sum = 0;
-        let turnos2 = [];
+      let sum = 0;
+      let turnos2 = [];
       try {
-       
-        //     console.log(formValue);
-            for (let index = 0; index < formValue.numCampos; index++) {
-              // turnos2 = {
-              //   fk_personal: formValue.turnos[index].legajo,
-              // };
-              if (formValue.turnos[index].duracion !== "") {
-                sum = sum + formValue.turnos[index].duracion;
-              }
-            }
+        for (let index = 0; index < formValue.numCampos; index++) {
+          if (formValue.turnos[index].duracion !== "") {
+            sum = sum + formValue.turnos[index].duracion;
+          }
+        }
         if (sum === duracion) {
-          const newArray = formValue.turnos.map(objeto => {
+          const newArray = formValue.turnos.map((objeto) => {
             // Crear un nuevo objeto sin el campo a eliminar
-            const { nombre, ... restoCampos} = objeto;
+            const { nombre, ...restoCampos } = objeto;
             return restoCampos;
           });
           const formValue2 = {
             fecha: formValue.fecha_vigilancia,
             turnos: newArray,
           };
-          // console.log(formValue2);
-          console.log(formValue2)
-          console.log(id)
-          const response = await asignar_personal(formValue2,id)
+          console.log(formValue2);
+          console.log(id);
+          const response = await asignar_personal(formValue2, id);
           if (response.msj) {
             Swal.fire({
               title: "Exito!",
@@ -137,7 +112,7 @@ export function Personal(props) {
               timer: 3000,
               showConfirmButton: true,
             });
-            window.location.reload()
+            window.location.reload();
           } else {
             Swal.fire({
               title: "Algunos datos ingresados no son validos!",
@@ -149,7 +124,7 @@ export function Personal(props) {
         } else {
           Swal.fire({
             title: "Algunos datos ingresados son incorrectos!",
-            text:"La cantidad de horas asignadas no es correcta",
+            text: "La cantidad de horas asignadas no es correcta",
             icon: "error",
             showConfirmButton: true,
           });
@@ -172,15 +147,15 @@ export function Personal(props) {
         <div>
           <h4 className="ui dividing header">Personal {i + 1}</h4>
         </div>
-        <div className="four fields">
+        <div className="two fields">
           <div className="field">
-            <label>Legajo</label>
+            <label>Legajo y nombre</label>
             <div className="field">
               <Form.Select
                 fluid
                 search
                 name={`turnos[${i}].legajo`}
-                options={valores? valores:Cargando}
+                options={valores ? valores : Cargando}
                 placeholder="Buscar Legajo"
                 value={formik.values.turnos[i].legajo}
                 onChange={(_, data) =>
@@ -190,50 +165,36 @@ export function Personal(props) {
             </div>
           </div>
 
-          <div className="field">
-            <label>Nombre y Apellido</label>
+          <div className="two fields">
             <div className="field">
-              <Form.Select
-                fluid
-                search
-                name={`turnos[${i}].nombre`}
-                placeholder="Nombre y Apellido"
-                options={valores2? valores2:Cargando}
-                value={formik.values.turnos[i].nombre}
-                onChange={(_, data) =>
-                  formik.setFieldValue(`turnos[${i}].nombre`, data.value)
-                }
-              />
+              <label>Hora de inicio</label>
+              <div className="field">
+                <Form.Input
+                  fluid
+                  type="time"
+                  name={`turnos[${i}].hora_inicio`}
+                  value={formik.values.turnos[i].hora_inicio}
+                  onChange={formik.handleChange}
+                  error={formik.errors.turnos?.hora_inicio}
+                />
+              </div>
             </div>
-          </div>
-          <div className="field">
-            <label>Horar de inicio</label>
-            <div className="field">
-              <Form.Input
-                fluid
-                type="time"
-                name={`turnos[${i}].hora_inicio`}
-                value={formik.values.turnos[i].hora_inicio}
-                onChange={formik.handleChange}
-                error={formik.errors.turnos?.hora_inicio}
-              />
-            </div>
-          </div>
 
-          <div className="field">
-            <label>Horario del turno</label>
             <div className="field">
-              <Form.Select
-                fluid
-                search
-                name={`turnos[${i}].duracion`}
-                options={horariosOptions}
-                placeholder="Asignar Turno"
-                value={formik.values.turnos[i].duracion}
-                onChange={(_, data) =>
-                  formik.setFieldValue(`turnos[${i}].duracion`, data.value)
-                }
-              />
+              <label>Horario del turno</label>
+              <div className="field">
+                <Form.Select
+                  fluid
+                  search
+                  name={`turnos[${i}].duracion`}
+                  options={horariosOptions}
+                  placeholder="Asignar Turno"
+                  value={formik.values.turnos[i].duracion}
+                  onChange={(_, data) =>
+                    formik.setFieldValue(`turnos[${i}].duracion`, data.value)
+                  }
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -243,11 +204,13 @@ export function Personal(props) {
   return (
     <Form onSubmit={formik.handleSubmit}>
       {/* <h4 className="ui dividing header">Personal Asignado a la vigilancia</h4> */}
-      <h4 className="ui dividing header">Ingrese la fecha para la vigilancia</h4>
+      <h4 className="ui dividing header">
+        Ingrese la fecha para la vigilancia
+      </h4>
       <div className="one field">
         <Form.Select
           name="fecha_vigilancia"
-          options={fechas? fechas:Cargando}
+          options={fechas ? fechas : Cargando}
           placeholder="Seleccione la fecha para la vigilancia "
           value={formik.values.fecha_vigilancia}
           onChange={(_, data) =>
@@ -256,7 +219,9 @@ export function Personal(props) {
         />
       </div>
 
-      <h4 className="ui dividing header">Ingrese la cantidad de Turnos de la vigilancia:</h4>
+      <h4 className="ui dividing header">
+        Ingrese la cantidad de Turnos de la vigilancia:
+      </h4>
       <div className="one field">
         <input
           type="number"
@@ -282,7 +247,7 @@ export function Personal(props) {
 
 function initialValues(arreglo3, numCampos) {
   return {
-    fecha_vigilancia:"",
+    fecha_vigilancia: "",
     turnos: arreglo3,
     numCampos,
   };

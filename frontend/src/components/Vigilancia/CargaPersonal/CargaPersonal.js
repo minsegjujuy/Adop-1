@@ -117,7 +117,7 @@ export function CargaPersonal(props) {
         
       </div>
       <h3 className="ui dividing header">Historial </h3>
-      <TableHistorial onDeleteHistorial={onDeleteHistorial}/>
+      <TableHistorial id={id} onDeleteHistorial={onDeleteHistorial}/>
       </>
     </Form>
   );
