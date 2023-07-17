@@ -7,7 +7,7 @@ class Operativo(models.Model):
     jefe_cargo = models.IntegerField()
     hora_inicio = models.TimeField(null=False)
     hora_final = models.TimeField(null=False)
-    # dependencia = models.ForeignKey(Dependencia, on_delete=models.CASCADE)
+    jurisdiccion = models.ForeignKey(Dependencia, on_delete=models.CASCADE, null=True)
     fecha = models.DateField(null=False)
     latitud = models.DecimalField(null=False,decimal_places=10,max_digits=13)
     longitud = models.DecimalField(null=False,decimal_places=10,max_digits=13)

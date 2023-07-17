@@ -2,39 +2,45 @@ from ...models import Rol, Usuario
 from Dependencia.models import UnidadRegional, Dependencia
 import json
 
-def seed_data():
+def seed_data(file='users/api/seeds/users_seeder.json'):
     
     print("Seeding Users data...")
-    with open('users/api/seeds/users_seeder.json', encoding='utf-8') as json_file:
+    with open(file, encoding='utf-8') as json_file:
         data = json_file.read()
         
     for obj in json.loads(data):
-        model = obj['model']
-        fields = obj['fields']
-
-        if model == 'app.Rol':
-            Rol.objects.create(
-                id = obj['pk'],
-                rol = fields['rol']
-            )
-        elif model == 'app.Usuario':
-            if fields['rol'] == 1:
-                Usuario.objects.create_superuser(
-                    # id = obj['pk'],
-                    username = fields['username'],
-                    email = fields['email'],
-                    rol = Rol.objects.get(id=fields['rol']),
-                    password = fields['password']
-                )
+        if obj['model'] == 'app.Rol':
+            create_rol(obj)
+        elif obj['model'] == 'app.Usuario':
+            if obj['fields']['rol'] == 1:
+                create_super_user(obj)
             else:
-                Usuario.objects.create_user(
-                    # id = obj['pk'],
-                    email = fields['email'],
-                    username = fields['username'],
-                    nombres = fields['nombres'],
-                    apellidos = fields['apellidos'],
-                    rol = Rol.objects.get(id=fields['rol']),
-                    unidad_regional = UnidadRegional.objects.get(id=fields['unidad_regional']),
-                    jurisdiccion = Dependencia.objects.get(id=fields['jurisdiccion']),
-                    password=fields['password']
-                )
+                create_user(obj)
+
+def create_rol(obj):
+    Rol.objects.get_or_create(
+        id=obj['pk'],
+        rol=obj['fields']['rol']
+    )
+
+
+def create_super_user(obj):
+    Usuario.objects.create_superuser(
+        # id = obj['pk'],
+        username = obj['fields']['username'],
+        email = obj['fields']['email'],
+        rol = Rol.objects.get(id=obj['fields']['rol']),
+        password = obj['fields']['password']
+    )
+
+def create_user(obj):
+    Usuario.objects.create_user(
+        email=obj['fields'].get('email'),
+        username=obj['fields'].get('username'),
+        nombres=obj['fields'].get('nombres'),
+        apellidos=obj['fields'].get('apellidos'),
+        rol=Rol.objects.get(id=obj['fields'].get('rol')),
+        unidad_regional=UnidadRegional.objects.get(id=obj['fields'].get('unidad_regional')),
+        jurisdiccion=Dependencia.objects.get(id=obj['fields'].get('jurisdiccion')),
+        password=obj['fields'].get('password')
+    )

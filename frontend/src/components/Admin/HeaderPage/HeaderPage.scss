@@ -2,9 +2,36 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 15px;
+    width: 100%;
+    height: 70px;
+    // background: linear-gradient(to bottom, #021624, #0b2033, #0b2033) !important;
+
   
-    > h2 {
+    > h1 {
       margin: 0;
+         color: #333; /* cambia el color del texto */
+    font-size: 2.2em; /* cambia el tamaño de la fuente */
+    
+    font-weight: bold; /* agrega negrita */
+    text-align: center; /* centra el texto */
+    text-transform: uppercase; /* convierte el texto en mayúsculas */
+    letter-spacing: 0.1em; /* ajusta el espaciado entre letras */
+    margin-top: 20px; /* agrega un margen superior */
+      ;
+      // color: white;
     }
   }
-  
+  // .titulo {
+  //   color: #333; /* cambia el color del texto */
+  //   font-size: 2.5em; /* cambia el tamaño de la fuente */
+  //   font-family: 'Times New Roman', Times, serif;
+  //   font-weight: bold; /* agrega negrita */
+  //   text-align: center; /* centra el texto */
+  //   text-transform: uppercase; /* convierte el texto en mayúsculas */
+  //   letter-spacing: 0.1em; /* ajusta el espaciado entre letras */
+  //   margin-top: 20px; /* agrega un margen superior */
+  // }
+  hr{
+    opacity: 0.5 !important;
+  }

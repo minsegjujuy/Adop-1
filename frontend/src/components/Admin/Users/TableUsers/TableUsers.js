@@ -5,7 +5,7 @@ import "./TableUsers.scss";
 
 
 export function TableUsers(props) {
-  const { users,onDeleteUser} = props;  
+  const {users,onDeleteUser} = props;  
 
   console.log(users)
   return (
@@ -50,7 +50,7 @@ export function TableUsers(props) {
               )}
             </Table.Cell>
             <Table.Cell>{user.rol}</Table.Cell>
-            <Table.Cell>{user.regional}</Table.Cell>
+            <Table.Cell>{user.unidad_regional}</Table.Cell>
             <Table.Cell>{user.jurisdiccion}</Table.Cell>
             <Actions
               user={user}

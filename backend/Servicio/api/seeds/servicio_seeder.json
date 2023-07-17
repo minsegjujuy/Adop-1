@@ -17,21 +17,21 @@
         "model": "app.TipoServicio",
         "pk": 3,
         "fields": {
-            "tipo_servicio": "VIGILANCIA DE BIENES"
+            "tipo_servicio": "CUSTODIA DE BIENES"
         }
     },
     {
         "model": "app.TipoServicio",
         "pk": 4,
         "fields": {
-            "tipo_servicio": "VIGILANCIA DE DETENIDOS"
+            "tipo_servicio": "CUSTODIA DE DETENIDOS"
         }
     },
     {
         "model": "app.TipoServicio",
         "pk": 5,
         "fields": {
-            "tipo_servicio": "VIGILANCIA DE PERSONA"
+            "tipo_servicio": "CUSTODIA DE PERSONA"
         }
     },
     {

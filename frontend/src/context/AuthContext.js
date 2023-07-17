@@ -8,12 +8,15 @@ import { logoutApi } from "../api/user";
 
 export const AuthContext = createContext({
   auth: null,
+  // first:true,
+  // first:1,
   login: () => null,
   logout: () => null,
 });
 
 export function AuthProvider(props) {
   const { children } = props;
+  const [first,setfirst]=useState(1)
   const [auth, setAuth] = useState(JSON.parse(getToken()));
   const { getMeToken } = useUser();
 
@@ -69,7 +72,9 @@ export function AuthProvider(props) {
         'email': response.usuario.email,
         'nombres': response.usuario.nombres,
         'apellidos': response.usuario.apellidos,
-        'rol':response.usuario.rol
+        'rol':response.usuario.rol,
+        'jurisdiccion': response.usuario.jurisdiccion,
+        'unidad_regional' : response.usuario.unidad_regional
       }
     }
     setToken(JSON.stringify(data));
@@ -100,11 +105,14 @@ export function AuthProvider(props) {
     // }, 1810*1000);
     // console.log(response.token);
     
-    window.location.replace("http://localhost:3000/admin/users");
+    // 
   };
 
   const valueContext = {
     auth,
+    first,
+    setfirst,
+    setAuth,
     login,
     logout,
   };

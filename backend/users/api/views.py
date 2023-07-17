@@ -3,6 +3,9 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.sessions.models import Session
 from django.http import JsonResponse
 
+from Dependencia.models import Dependencia, UnidadRegional
+from Dependencia.api.serializer import DependenciaSerializer, UnidadRegionalSerializer
+
 from users.models import Usuario, Rol
 from users.api.serializers import UserSerializer, TokenSerializer, RolSerializer
 
@@ -36,54 +39,101 @@ class UserViewSet(Authentication,viewsets.ModelViewSet):
     queryset = Usuario.objects.all()  
     serializer_class = UserSerializer
     
-    def partial_update(self, request, *args, **kwargs):
-        password = request.data['password']
-
-        if password:
-            request.data['password'] = make_password(password)
-        else:
-            request.data['password'] = request.user.password
-        return super().update(request, *args, **kwargs)
+    def update(self,request,pk=None):
+        usuario = self.get_object(pk)
+        serializer = UserSerializer(usuario, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+    def partial_update(self, request,pk=None):
+        user_id = pk
+        if user_id:
+            usuario = Usuario.objects.get(id=user_id)
+                
+            username = request.data.get('username')
+            if username:
+                usuario.username = username
+                
+            email = request.data.get('email')
+            if email:
+                usuario.email = email
+            
+            nombres = request.data.get('nombres')
+            if nombres:
+                usuario.nombres = nombres
+                
+            apellidos = request.data.get('apellidos')
+            if apellidos:
+                usuario.apellidos = apellidos
+                
+            old_password = request.data.get('old_password')
+            new_password = request.data.get('new_password')
+            if old_password and new_password:
+                if usuario.check_password(old_password):
+                    usuario.set_password(new_password)
+                else:
+                    return Response({"msj":"La contrasenia ingresada es incorrecta"},status=status.HTTP_400_BAD_REQUEST)
+                
+            rol = request.data.get('rol')
+            if rol:
+                usuario.rol = Rol.objects.get(id=rol)
+                
+            jurisdiccion = request.data.get('jurisdiccion')
+            if jurisdiccion:
+                usuario.jurisdiccion = Dependencia.objects.get(id=jurisdiccion)
+            
+            unidad_regional = request.data.get('unidad_regional')
+            if unidad_regional:
+                usuario.unidad_regional = UnidadRegional.objects.get(id=unidad_regional)
+                
+            admin = request.data.get('is_superuser')
+            if admin:
+                usuario.is_superuser = admin
+                usuario.rol = Rol.objects.get(id=1)
+                usuario.jurisdiccion = None
+                usuario.unidad_regional = None
+            
+            usuario.save()
+            respuesta = {
+                'msj':'Usuario Actualizado Correctamente!!'
+            }
+            return Response(respuesta,status=status.HTTP_200_OK)
+        else:
+            respuesta = {
+                'msj':'No se ingreso el id del usuario a modificar'
+            }
+            return Response(respuesta,status=status.HTTP_400_BAD_REQUEST)
+       
     def create(self,request):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        datos = serializer.validated_data
+        username = datos.get('username')
+        email = datos.get('email')
+        password = datos.get('password')
+        is_superuser = datos.get('is_superuser')
+        if is_superuser:
+            Usuario.objects.create_superuser(username,email,1,password)
+        else:
+            # print(UnidadRegional.objects.get(id=datos.get('unidad_regional')))
+            Usuario.objects.create_user(
+                email=email,
+                username=username,
+                nombres=datos['nombres'],
+                apellidos=datos['apellidos'],
+                rol = datos['rol'],
+                unidad_regional=datos['unidad_regional'],
+                jurisdiccion=datos['jurisdiccion'],
+                password=password,
+                is_superuser=False)
         
-        username = serializer.validated_data.get('username')
-        email = serializer.validated_data.get('email')
-        password = serializer.validated_data.get('password')
-        nombres = serializer.validated_data.get('nombres')
-        apellidos = serializer.validated_data.get('apellidos')
-        rol = serializer.validated_data.get('rol')
-        jurisdiccion = serializer.validated_data.get('jurisdiccion')
-        regional = serializer.validated_data.get('regional')
-        is_superuser = serializer.validated_data.get('is_superuser')
-        
-        usuario = Usuario.objects.create_user(
-                        email=email,
-                        username=username,
-                        nombres=nombres,
-                        apellidos=apellidos,
-                        rol=rol,
-                        unidad_regional=regional,
-                        jurisdiccion=jurisdiccion,
-                        password=password,
-                        is_superuser=is_superuser)
-        
-        data = {
-            'id':usuario.id, 
-            'username':usuario.username,
-            'email':usuario.email,
-            'nombres':usuario.nombres, 
-            'apellidos':usuario.apellidos,
-            'rol':usuario.rol,
-            'jurisdiccion':usuario.jurisdiccion,
-            'regional':usuario.regional,
-            'is_superuser':usuario.is_superuser,
-            'usuario_activo':usuario.usuario_activo
+        respuesta = {
+            'msj': 'Usuario creado Correctamente!!'
         }
         
-        response = JsonResponse(data, safe=False)
+        response = JsonResponse(respuesta, safe=False)
         
         return response
     
@@ -133,9 +183,19 @@ class Login(TokenObtainPairView):
                                         session.delete();
                             token.delete();
                             token = Token.objects.create(user=user)
+                            usuario = TokenSerializer(user).data
+                            datos = {}
+                            datos['username'] = usuario['username']
+                            datos['email'] = usuario['email']
+                            datos['nombres'] = usuario['nombres']
+                            datos['apellidos'] = usuario['apellidos']
+                            datos['rol'] = Rol.objects.get(id=usuario['rol']).id
+                            datos['jurisdiccion'] = usuario['jurisdiccion']
+                            datos['unidad_regional'] = usuario['unidad_regional']
+                            # datos['is_superuser'] = usuario['is_superuser']
                             return Response({
                                     'token': token.key,
-                                    'usuario': TokenSerializer(user).data,
+                                    'usuario': datos,
                                     'mensaje':'inicio de Sesion Existoso'
                                 },
                                 status=status.HTTP_200_OK

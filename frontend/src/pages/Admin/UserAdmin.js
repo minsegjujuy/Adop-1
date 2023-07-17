@@ -8,7 +8,7 @@ import "./UserAdmin.scss"
 import Swal from "sweetalert2";
 
 export function UserAdmin() {
-    const {getUsers,loading,users,setUsers,deleteUser,getempleadoId,auth} = useUser()
+    const {getUsers,users,deleteUser} = useUser()
     const [titleModal, setTitleModal] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [contentModal, setContentModal] = useState(null);
@@ -74,7 +74,7 @@ export function UserAdmin() {
   return (
     <>
           
-          <HeaderPage title="USUARIOS"/>
+          <HeaderPage title="GESTION DE USUARIOS"/>
           <div className='header-page-usuarios'>
           {/* <Button 
           type="button"
@@ -85,9 +85,9 @@ export function UserAdmin() {
           primary
           fluid
           /> */}
-              <div className='agregar'>
+              <div className='agregar-usuario'>
               <Button positive onClick={()=>addUser()}>
-                {"Agregar Usuario"}
+                {"AGREGAR USUARIO"}
               </Button>
               </div>
               

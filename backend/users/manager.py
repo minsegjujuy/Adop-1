@@ -1,5 +1,5 @@
 from django.contrib.auth.models import BaseUserManager
-from django.contrib.auth.hashers import make_password
+import users
 
 class UsuarioManager(BaseUserManager):
     def create_user(
@@ -16,46 +16,45 @@ class UsuarioManager(BaseUserManager):
     ):
         if not email:
             raise ValueError('El usuario debe tener un correo electronico!')
-        
-        usuario = self.model(
-            username = username, 
-            email = self.normalize_email(email),
-            nombres = nombres,
-            apellidos = apellidos,
-            rol = rol,
-            unidad_regional=unidad_regional,
-            jurisdiccion=jurisdiccion,
-            is_superuser = is_superuser
-        )
-        
-        # if jurisdiccion is None:
-        #     usuario.jurisdiccion = regional
-        
-        # print(password)
-        password = make_password(password)
-        # print(password)
-        usuario.set_password(password)
-        
-        usuario.save()
-        
-        return usuario
+        try:
+            usuario = self.model(
+                username = username, 
+                email = self.normalize_email(email),
+                nombres = nombres,
+                apellidos = apellidos,
+                rol = rol,
+                unidad_regional=unidad_regional,
+                jurisdiccion=jurisdiccion,
+                is_superuser = is_superuser
+            )
+            usuario.set_password(password)
+            usuario.save()
+            return usuario
+        except:
+            return
     
     def create_superuser(
         self, 
         username, 
         email,
-        rol=0,
+        rol=1,
         password=None):
-        
-        usuario = self.create_user(
-            email = email,
-            username = username,
-            rol = rol,
-            password = password,
-        )
-        
-        usuario.is_superuser = True
-        
-        usuario.save()
-        
-        return usuario
+        if rol == 1:
+            user_rol =  users.models.Rol.objects.get(id=rol)
+        else:
+            user_rol = rol
+        try:
+            usuario = self.create_user(
+                email = email,
+                username = username,
+                rol = user_rol,
+                password = password,
+            )
+            
+            usuario.is_superuser = True
+            
+            usuario.save()
+            
+            return usuario
+        except:
+            return

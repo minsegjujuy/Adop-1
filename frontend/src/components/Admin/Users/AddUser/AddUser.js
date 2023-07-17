@@ -1,6 +1,7 @@
 import { useFormik } from "formik";
 import { Form, Button,Checkbox} from "semantic-ui-react";
-import {useUser} from "../../../../hooks/";
+import {useUser,useVigilancia} from "../../../../hooks/";
+import {useState,useEffect} from "react"
 import Swal from "sweetalert2";
 import "./AddUser.scss"
 import * as Yup from "yup";
@@ -11,33 +12,40 @@ export const AddUser= (props) => {
     Refetch,
   } = props;
 
-   const {addUser} = useUser();
+   const {addUser,auth} = useUser();
+   const {get_jurisdicciones} = useVigilancia();
    const options = [
-    { key: "operador", text: "Operador", value: "operador" },
-    { key: "Administrador", text: "Administrador", value: "administrador" },
-    { key: "General", text: "General", value: "general" },
+    { key: "Administrador", text: "Administrador", value: 1 },
+    { key: "General", text: "General", value: 2 },
+    { key: "operador", text: "Operador", value: 3 },
     
    
   ];
   const options2 = [
-    { key: "Regional 1", text: "Regional 1", value: "1" },
-    { key: "Regional 2", text: "Regional 2", value: "2" },
-    { key: "Regional 3", text: "Regional 3", value: "3" },
-    { key: "Regional 4", text: "Regional 4", value: "4" },
-    { key: "Regional 5", text: "Regional 5", value: "5" },
-    { key: "Regional 6", text: "Regional 6", value: "6" },
-    { key: "Regional 7", text: "Regional 7", value: "7" },
-    { key: "Regional 8", text: "Regional 8", value: "8" },
+    { key: "Regional 1", text: "Regional 1", value: 1 },
+    { key: "Regional 2", text: "Regional 2", value: 2 },
+    { key: "Regional 3", text: "Regional 3", value: 3 },
+    { key: "Regional 4", text: "Regional 4", value: 4 },
+    { key: "Regional 5", text: "Regional 5", value: 5 },
+    { key: "Regional 6", text: "Regional 6", value: 6 },
+    { key: "Regional 7", text: "Regional 7", value: 7 },
+    { key: "Regional 8", text: "Regional 8", value: 8 },
   ];
-  const options3 = [
-    { key: "Juridiccion 1", text: "Juridiccion 1", value: "1" },
-    { key: "Juridiccion 2", text: "Juridiccion 2", value: "2" },
-    { key: "Juridiccion 3", text: "Juridiccion 3", value: "3" },
-    { key: "Juridiccion 4", text: "Juridiccion 4", value: "4" },
-    { key: "Juridiccion 5", text: "Juridiccion 5", value: "5" },
-    { key: "Juridiccion 6", text: "Juridiccion 6", value: "6" },
-    { key: "Juridiccion 7", text: "Juridiccion 7", value: "7" },
-  ];
+  const [franja, setFranja] = useState(null);
+  useEffect(() => {
+      buscarJurisdicciones(0)
+  }, []);
+  
+  const buscarJurisdicciones = async (id) => {
+    const options = await get_jurisdicciones(id);
+    
+    setFranja(options.map((option) => option));
+  };
+const valores = franja?.map((tipo, index) => ({
+value:tipo.id,
+key: `${index}`,
+text: tipo.jurisdiccion,
+}));
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: Yup.object(newSchema()),
@@ -45,7 +53,14 @@ export const AddUser= (props) => {
     onSubmit: async (formValue) => {
     //   formValue.nombres = formValue.nombres.toUpperCase();
     //   formValue.apellidos = formValue.apellidos.toUpperCase();
+    console.log(formValue)
       try {
+        
+        if(formValue.rol===1){
+          formValue.is_superuser = true
+        }else{
+          formValue.is_superuser=false
+        }
         console.log(formValue)
         Swal.fire({
           icon: "info",
@@ -59,7 +74,7 @@ export const AddUser= (props) => {
         });
         const resultado = await addUser(formValue);
         console.log(resultado)
-        if (resultado.id) {
+        if (resultado.msj) {
           Swal.fire({
             title: "Individuo agregado Correctamente!",
             text: resultado.msj,
@@ -86,15 +101,15 @@ export const AddUser= (props) => {
   return (
     <Form className="add-edit-user-form" onSubmit={formik.handleSubmit}>
       <Form.Select
-        name="regional"
+        name="unidad_regional"
         options={options2}
         placeholder="Seleccione la regional "
-        value={formik.values.regional}
-        onChange={(_, data) => formik.setFieldValue("regional", data.value)}
+        value={formik.values.unidad_regional}
+        onChange={(_, data) => formik.setFieldValue("unidad_regional", data.value)}
       />
       <Form.Select
         name="jurisdiccion"
-        options={options3}
+        options={valores}
         placeholder="Seleccione la juridiccion "
         value={formik.values.jurisdiccion}
         onChange={(_, data) => formik.setFieldValue("jurisdiccion", data.value)}
@@ -142,7 +157,7 @@ export const AddUser= (props) => {
         value={formik.values.rol}
         onChange={(_, data) => formik.setFieldValue("rol", data.value)}
       />
-      
+      {/* {formik.values.rol==="administrador" &&
       <div className="add-edit-user-form__staff">
         <Checkbox
           toggle
@@ -151,9 +166,9 @@ export const AddUser= (props) => {
             formik.setFieldValue("is_superuser", data.checked);
           }}
         />{" "}
-        Usuario Staff
+        Usuario Staff (Debe tildar la opcion staff)
         </div>
-
+      } */}
       <Button type="submit" primary fluid content={"Crear Usuario"} />
     </Form>
   );
@@ -161,7 +176,7 @@ export const AddUser= (props) => {
 
  function initialValues() {
   return {
-    regional:"",
+    unidad_regional:"",
     jurisdiccion:"",
     username:"",
     email: "",

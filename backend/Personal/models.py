@@ -1,20 +1,36 @@
 from django.db import models
-from Dependencia.models import Dependencia
+from Dependencia.models import Dependencia, UnidadRegional
+from Persona.models import Persona
 
-# Create your models here.
+class Categoria(models.Model):
+    nombre = models.CharField(max_length=100)
+    activo = models.BooleanField(default=True, null=True)
+    
+    def activar(self):
+        self.activo = True
+        
+    def desactivar(self):
+        self.activo = False
+
+    class Meta:
+        abstract = True
+
+class Jerarquia(Categoria):
+    nombre_largo = models.CharField(max_length=255)
+
 class Personal(models.Model):
     legajo = models.IntegerField(primary_key=True)
-    fk_dependencia = models.ForeignKey(Dependencia,on_delete=models.CASCADE)
-    domicilio = models.CharField(max_length=100)
-    genero = models.CharField(max_length=8, null=True)
-    nombre_apellido = models.CharField(null=False, max_length=80, default='')
-    fecha_nacimiento = models.DateTimeField(null=False,default=models.DateField("01/01/1999"))
-    estudios = models.CharField(max_length=100)
-    oficio = models.CharField(max_length=100)
-    jerarquia = models.CharField(max_length=50)
-    prestacion_servicios = models.IntegerField(null=False)
-    funcion = models.CharField(max_length=100)
-    escalafon = models.CharField(max_length=100)
-    estado_civil = models.CharField(max_length=100)
-    nacionalidad = models.CharField(max_length=100)
-    cuil = models.CharField(null=False,max_length=11)
+    fk_persona = models.ForeignKey(Persona, on_delete=models.CASCADE, default=None)
+    # fk_tipo_funcion = models.ForeignKey('TipoFuncion', on_delete=models.CASCADE)
+    fk_jerarquia = models.ForeignKey('Jerarquia', on_delete=models.CASCADE)
+    fk_destino = models.ForeignKey(Dependencia, on_delete=models.CASCADE, null=True)
+    fk_jurisdiccion = models.ForeignKey(UnidadRegional, on_delete=models.CASCADE, null=True)
+    
+class Cargo(Categoria):
+    pass
+
+class Funcionario(models.Model):
+    fk_persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
+    fk_cargo = models.ForeignKey('Cargo', on_delete=models.CASCADE)
+    fecha_inicio = models.DateField(null=False)
+    fecha_fin = models.DateField(null=True)
