@@ -1,3 +1,4 @@
-/envs
-migrations/0*.py
+*/envs
+*/migrations/0*.py
 *.pyc
+*/__pycache__
