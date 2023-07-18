@@ -2,7 +2,7 @@ from django.db import models
 from Dependencia.models import Dependencia, UnidadRegional
 from Persona.models import Persona
 
-class Categoria(models.Model):
+class Estrato(models.Model):
     nombre = models.CharField(max_length=100)
     activo = models.BooleanField(default=True, null=True)
     
@@ -15,7 +15,7 @@ class Categoria(models.Model):
     class Meta:
         abstract = True
 
-class Jerarquia(Categoria):
+class Jerarquia(Estrato):
     nombre_largo = models.CharField(max_length=255)
 
 class Personal(models.Model):
@@ -26,11 +26,14 @@ class Personal(models.Model):
     fk_destino = models.ForeignKey(Dependencia, on_delete=models.CASCADE, null=True)
     fk_jurisdiccion = models.ForeignKey(UnidadRegional, on_delete=models.CASCADE, null=True)
     
-class Cargo(Categoria):
+class Categoria(Estrato):
     pass
+
+class SubCategoria(Estrato):
+    fk_categoria = models.ForeignKey('Categoria',on_delete=models.CASCADE)
 
 class Funcionario(models.Model):
     fk_persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
-    fk_cargo = models.ForeignKey('Cargo', on_delete=models.CASCADE)
+    fk_categoria = models.ForeignKey('SubCategoria', on_delete=models.CASCADE)
     fecha_inicio = models.DateField(null=False)
     fecha_fin = models.DateField(null=True)

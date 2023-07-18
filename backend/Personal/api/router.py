@@ -1,5 +1,5 @@
 from rest_framework import routers
-from .views import JerarquiaViewSet, PersonalViewSet
+from .views import CategoriaViewSet, FuncionarioViewSet, JerarquiaViewSet, PersonalViewSet
 
 router = routers.DefaultRouter()
 
@@ -12,5 +12,13 @@ router.register('personal', PersonalViewSet, 'personal')
 
 # [GET] [POST] api/jerarquia/
 router.register('jerarquia', JerarquiaViewSet, basename='jerarquia')
+
+# [GET] [POST] api/cargp/
+# [UPDATE] [DELETE] api/cargp/{id}
+router.register('cargo', CategoriaViewSet, 'cargo')
+
+# [GET] [POST] api/funcionario/
+# [UPDATE] [DELETE] api/funcionario/{id}
+router.register('funcionario', FuncionarioViewSet, 'funcionario')
 
 urlpatterns = router.urls

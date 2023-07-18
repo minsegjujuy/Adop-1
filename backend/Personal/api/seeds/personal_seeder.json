@@ -67242,5 +67242,80 @@
             "fk_destino": null,
             "fk_jurisdiccion": null
   		}
+	},
+
+
+
+    {
+        "model": "app.Categoria",
+        "pk": "1",
+        "fields": {
+            "nombre": "Juzgado"
+  		}
+	},
+    {
+        "model": "app.Categoria",
+        "pk": "2",
+        "fields": {
+            "nombre": "Fiscalia"
+  		}
+	},
+    {
+        "model": "app.Categoria",
+        "pk": "3",
+        "fields": {
+            "nombre": "Otro"
+  		}
+	},
+
+
+    {
+        "model": "app.SubCategoria",
+        "pk": "1",
+        "fields": {
+            "fk_categoria": "1",
+            "nombre": "Abogado"
+  		}
+	},
+    {
+        "model": "app.SubCategoria",
+        "pk": "2",
+        "fields": {
+            "fk_categoria": "2",
+            "nombre": "Intendente"
+  		}
+	},
+    {
+        "model": "app.SubCategoria",
+        "pk": "3",
+        "fields": {
+            "fk_categoria": "3",
+            "nombre": "Contador"
+  		}
+	},
+
+
+
+    {
+        "model": "app.Persona",
+        "fields": {
+            "cuil": "20447064007",
+            "dni": "44706400",
+            "nombre_apellido": "SAMUEL PAREDES",
+            "fecha_nacimiento": "1995-02-15"
+        }
+    },
+
+
+    
+    {
+        "model": "app.Funcionario",
+        "pk": "1",
+        "fields": {
+            "fk_persona": "20447064007",
+            "fk_categoria": 1,
+            "fecha_inicio": "2020-08-1",
+            "fecha_fin": null
+  		}
 	}
 ]

@@ -1,10 +1,8 @@
-from rest_framework.response import Response
-import json
 from Dependencia.models import Dependencia, UnidadRegional
 from Persona.api.serializer import PersonaSerializer
 from Persona.models import Persona
-from ..models import Cargo, Funcionario, Personal, Jerarquia
-from .serializer import CargoSerializer, FuncionarioSerializer, PersonalSerializer,JerarquiaSerializer
+from ..models import Categoria, Funcionario, Personal, Jerarquia
+from .serializer import CategoriaSerializer, FuncionarioSerializer, PersonalSerializer,JerarquiaSerializer
 from django.http import JsonResponse
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
@@ -90,11 +88,11 @@ class JerarquiaViewSet(viewsets.ModelViewSet):
         serializer.save()
         return JsonResponse({'msj':'Elemento creado correctamente!!'}, status=status.HTTP_201_CREATED)
 
-class CargoViewSet(viewsets.ModelViewSet):
+class CategoriaViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     authentication_classes = (JWTAuthentication, TokenAuthentication)
-    queryset = Cargo.objects.all()
-    serializer_class = CargoSerializer
+    queryset = Categoria.objects.all()
+    serializer_class = CategoriaSerializer
     
 class FuncionarioViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)

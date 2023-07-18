@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ..models import Cargo, Funcionario, Jerarquia, Personal
+from ..models import Categoria, Funcionario, Jerarquia, Personal
 
 class PersonalSerializer(serializers.ModelSerializer):
     class Meta:
@@ -29,14 +29,14 @@ class FuncionarioSerializer(serializers.Serializer):
         model = Funcionario
         fields = (
             'fk_persona',
-            'fk_cargo',
+            'fk_categoria',
             'fecha_inicio',
             'fecha_fin'
         )
 
-class CargoSerializer(serializers.Serializer):
+class CategoriaSerializer(serializers.Serializer):
     class Meta:
-        model = Cargo
+        model = Categoria
         fields = (
             'id',
             'nombre',

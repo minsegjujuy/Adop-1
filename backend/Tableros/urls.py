@@ -27,18 +27,24 @@ urlpatterns = [
     path('api/',include('users.api.routes-auth')),
     path('api/',include('users.api.router')),
     
-    # Persona and Personal
+    # Persona
     path('api/',include('Persona.api.router')),
+    
+    # Personal
     path('api/',include('Personal.api.router')),
     
     # Dependencia
     path('api/',include('Dependencia.api.router')),
     
-    # Vigilancia and Servicios
+    # Vigilancia
     path('api/',include('Vigilancia.api.router')),
+    
+    # Servicios
     path('api/',include('Servicio.api.router')),
     
-        
+    # Documento
+    path('api/', include('Archivo.api.router')),
+
     # path('api/',include('Procedimiento.api.router')),
     # path('api/',include('Secuestro.api.router')),
     # path('api/',include('Operativos.api.router')),
