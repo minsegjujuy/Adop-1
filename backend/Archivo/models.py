@@ -1,9 +1,11 @@
 from django.db import models
-from Tableros.settings import URL_ARCHIVOS
 from Vigilancia.models import Vigilancia
 
+def directorio_dinamico(instance,filename):
+    # Aquí puedes construir la ruta dinámica basada en la instancia del modelo y el nombre del archivo
+    return f"vigilancias/vigilancia-{instance.fk_vigilancia.id}/{instance.nombre}"
 # Create your models here.
 class Documento(models.Model):
     fk_vigilancia = models.ForeignKey(Vigilancia, on_delete=models.CASCADE, blank=False)
-    file = models.FileField(upload_to=URL_ARCHIVOS)
-    direccion = models.CharField(max_length=255, blank=True, null=True)
+    nombre = models.CharField(max_length=100, default='')
+    file = models.FileField(upload_to=directorio_dinamico)

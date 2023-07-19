@@ -152,7 +152,9 @@ STATIC_URL = 'static/'
 
 LOGIN_URL = '/api/auth/login/'
 
-URL_ARCHIVOS = STATIC_URL+'archivos/vigilancias/'
+# Media Root
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 # USER
 AUTH_USER_MODEL = 'users.Usuario'

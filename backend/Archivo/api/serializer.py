@@ -7,7 +7,7 @@ class DocumentoSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'file',
-            'direccion',
+            'nombre',
             # 'fk_vigilancia'
         )
         read_only_fields = ('id',)
