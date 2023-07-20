@@ -44,7 +44,7 @@ urlpatterns = [
     # Servicios
     path('api/',include('Servicio.api.router')),
     
-    # Documento
+    # Documentos
     path('api/', include('Archivo.api.router')),
 
     # path('api/',include('Procedimiento.api.router')),
