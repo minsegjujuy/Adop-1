@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 import "./Personal.scss";
 export function Personal(props) {
   const { turnos, duracion, id } = props;
-  const { get_turno, turno, get_personal, asignar_personal } = useVigilancia();
+  const { get_turno, get_personal, asignar_personal } = useVigilancia();
   const [personal, setPersonal] = useState(null);
   const { auth } = useAuth();
   const [horas, sethoras] = useState(false);
