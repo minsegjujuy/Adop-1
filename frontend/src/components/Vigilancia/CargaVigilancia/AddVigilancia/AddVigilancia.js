@@ -9,10 +9,7 @@ import { toast, Flip } from "react-toastify";
 import Swal from "sweetalert2";
 import "./AddVigilancia.scss";
 export function AddVigilancia(props) {
-  const [position, setposition] = useState({
-    lat: -24.09804180450979,
-    lng: -65.07202148437501,
-  });
+  const [position, setposition] = useState({lat: -24.715631490415,lng: -65.0051351026728,});
   const { addHorarios } = props;
   const { auth } = useAuth();
   const [formHorario, setformHorario] = useState(null);
@@ -283,7 +280,7 @@ export function AddVigilancia(props) {
       <div className="two fields">
         <MapView position={position} setposition={setposition} />
       </div>
-      {/* <h4 className="ui dividing header">Carga de archivo</h4>
+      <h4 className="ui dividing header">Carga de archivo</h4>
       <div className="three fields">
         <div className="field">
           
@@ -330,7 +327,7 @@ export function AddVigilancia(props) {
             />
           </div>
         </div>
-      </div> */}
+      </div>
 
       <div className="boton_crear_vigilancia">
         <Button
