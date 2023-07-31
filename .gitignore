@@ -1,4 +1,4 @@
 */envs/
-*/migrations/0*.py
+/backend/media/*
+/backend/*/migrations/0*.py
 *.pyc
-*/__pycache__

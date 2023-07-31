@@ -3,9 +3,12 @@ from Personal.models import Personal
 from Persona.models import Persona
 from Dependencia.models import Dependencia
 from Servicio.models import TipoServicio, TipoRecurso
+from Personal.models import Funcionario
+from Ente.models import Ente
 
 from Dependencia.api.serializer import UnidadRegionalSerializer
-from Personal.api.serializer import PersonalSerializer
+from Personal.api.serializer import PersonalSerializer, FuncionarioSerializer
+from Ente.api.serializer import EnteSerializer
 from .serializer import VigilanciaSerializer, VigilanciaSerializerView, TurnosVigilanciaSerializer, MotivoVigilanciaSerializer, PersonalVigilanciaSerializer
 
 from rest_framework import viewsets, status
@@ -19,7 +22,6 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from datetime import datetime, date, timedelta
-import calendar
 import locale
 from django.http import JsonResponse
 locale.setlocale(locale.LC_TIME, "es_ES")
@@ -62,6 +64,8 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
             except:
                 data['servicio']=None
             data['fk_unidad_regional'] = UnidadRegionalSerializer(Dependencia.objects.get(id=vigilancia['fk_jurisdiccion']).fk_unidad_regional).data['unidad_regional']
+            data['fk_ente'] = EnteSerializer(Ente.objects.get(id=vigilancia['fk_ente']))
+            data['fk_funcionario'] = FuncionarioSerializer(Funcionario.objects.get(id=vigilancia['fk_funcionario']))
             data['objetivo']= vigilancia['objetivo']
             data['cant_dias']= vigilancia['cant_dias']
             data['fecha_inicio']= vigilancia['fecha_inicio']
@@ -84,7 +88,7 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
             queryset = Vigilancia.objects.get(pk=pk)
         except Vigilancia.DoesNotExist:
             return JsonResponse({'msj':'No se encontro la Vigilancia'},status=status.HTTP_404_NOT_FOUND)
-
+        
         serializer_data = VigilanciaSerializerView(queryset).data
         
         data = {}
@@ -92,10 +96,23 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
         data['id']=serializer_data['id']
         data['jurisdiccion']= Dependencia.objects.get(id=serializer_data['fk_jurisdiccion']).jurisdiccion
         data['motivo']= Motivo.objects.get(id=serializer_data['fk_motivo']).motivo
+        
         try:
             data['servicio']=TipoServicio.objects.get(id=serializer_data['fk_tipo_servicio']).tipo_servicio
         except:
             data['servicio']=None
+
+        try:
+            data['ente'] = Ente.objects.get(id=serializer_data['fk_ente']).nombre
+        except:
+            data['ente']=None
+
+        try:
+            funcionario = Funcionario.objects.get(id=serializer_data['fk_funcionario'])
+            data['funcionario'] = f'{funcionario.fk_persona.cuil} - {funcionario.fk_persona.nombre_apellido} - {funcionario.fk_categoria.fk_categoria.nombre} {funcionario.fk_categoria.fk_categoria.nombre}'
+        except:
+            data['funcionario']=None
+
         data['recurso'] = TipoRecurso.objects.get(id=serializer_data['fk_tipo_recurso']).tipo_recurso
         data['regional'] = UnidadRegionalSerializer(Dependencia.objects.get(id=serializer_data['fk_jurisdiccion']).fk_unidad_regional).data['unidad_regional']
         data['objetivo']= serializer_data['objetivo']
@@ -117,6 +134,8 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
         fk_tipo_servicio = serializer.validated_data.get('fk_tipo_servicio')
         fk_tipo_recurso = serializer.validated_data.get('fk_tipo_recurso')
         fk_unidad_regional = serializer.validated_data.get('fk_unidad_regional')
+        fk_ente = serializer.validated_data.get('fk_ente')
+        fk_funcionario = serializer.validated_data.get('fk_funcionario')
         objetivo = serializer.validated_data.get('objetivo')
         cant_dias = serializer.validated_data.get('cant_dias')
         fecha_inicio = serializer.validated_data.get('fecha_inicio')
@@ -131,6 +150,8 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
             fk_tipo_servicio = fk_tipo_servicio,
             fk_tipo_recurso = fk_tipo_recurso,
             fk_unidad_regional = fk_unidad_regional,
+            fk_ente = fk_ente,
+            fk_funcionario = fk_funcionario,
             objetivo = objetivo,
             cant_dias = cant_dias,
             fecha_inicio = fecha_inicio,

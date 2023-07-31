@@ -1,10 +1,9 @@
-from rest_framework import routers
+from django.urls import path
 from .views import DocumentoViewSet
 
-router = routers.DefaultRouter()
-
-# [GET] [POST] api/vigilancia/{vigilancia_id}/documento/
-# [UPDATE] [DELETE] api/vigilancia/{vigilancia_id}/documento/{id}
-router.register(r'vigilancias/(?P<vigilancia_id>\d+)/documentos', DocumentoViewSet, 'documentos')
-
-urlpatterns = router.urls
+# Ruta para la vista basada en clase DocumentoCreateAPIView (solo método POST)
+urlpatterns = [
+    path('documentos/', DocumentoViewSet.as_view({'post':'create'}), name='documento-create'),
+    path('vigilancias/<int:vigilancia_id>/documentos/', DocumentoViewSet.as_view({'get': 'list'}), name='documento-list'),
+    path('vigilancias/<int:vigilancia_id>/documentos/<int:pk>/', DocumentoViewSet.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'}), name='documento-detail'),
+]
