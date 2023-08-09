@@ -3,11 +3,10 @@ import { Table, Button, Icon } from "semantic-ui-react";
 import { map } from "lodash";
 import "./TableUsers.scss";
 
-
 export function TableUsers(props) {
-  const {users,onDeleteUser} = props;  
+  const { users, onDeleteUser } = props;
 
-  console.log(users)
+  console.log(users);
   return (
     <Table className="table-users-admin">
       <Table.Header>
@@ -21,16 +20,13 @@ export function TableUsers(props) {
           <Table.HeaderCell>Tipo de Permiso</Table.HeaderCell>
           <Table.HeaderCell>Regional</Table.HeaderCell>
           <Table.HeaderCell>Jurisdiccion</Table.HeaderCell>
-          
+
           <Table.HeaderCell></Table.HeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>
         {map(users, (user, index) => (
-          <Table.Row
-            key={index}
-
-          >
+          <Table.Row key={index}>
             <Table.Cell>{user.username}</Table.Cell>
             <Table.Cell>{user.email}</Table.Cell>
             <Table.Cell>{user.nombres}</Table.Cell>
@@ -54,9 +50,8 @@ export function TableUsers(props) {
             <Table.Cell>{user.jurisdiccion}</Table.Cell>
             <Actions
               user={user}
-            //   updateUser={updateUser}
-               onDeleteUser={onDeleteUser}
-              
+              //   updateUser={updateUser}
+              onDeleteUser={onDeleteUser}
             />
           </Table.Row>
         ))}
@@ -69,8 +64,7 @@ function Actions(props) {
   const { user, updateUser, onDeleteUser } = props;
   return (
     <Table.Cell textAlign="right">
-            
-      <Button icon onClick={() => updateUser(user,"contra")}>
+      <Button icon onClick={() => updateUser(user, "contra")}>
         <Icon name="pencil" />
       </Button>
 

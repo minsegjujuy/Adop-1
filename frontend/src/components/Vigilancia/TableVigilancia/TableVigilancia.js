@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Table, Button, Icon} from "semantic-ui-react";
+import { Table, Button, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { map } from "lodash";
 import "./TableVigilancia.scss";
 
 export function TableVigilancia(props) {
-  const { vigilancias, addHorarios, vermapa,onDeleteVigilancia} = props;
+  const { vigilancias, addHorarios, vermapa, onDeleteVigilancia } = props;
   const { position, setposition } = useState(null);
 
   return (
@@ -61,7 +61,7 @@ export function TableVigilancia(props) {
               id={vigilancia.id}
               turno_asignado={vigilancia.turno_asignado}
               //   updateUser={updateUser}
-               onDeleteVigilancia={onDeleteVigilancia}
+              onDeleteVigilancia={onDeleteVigilancia}
             />
           </Table.Row>
         ))}
@@ -81,8 +81,9 @@ function Actions(props) {
     id,
     turno_asignado,
     jurisdiccion,
-   servicio,
-  onDeleteVigilancia} = props;
+    servicio,
+    onDeleteVigilancia,
+  } = props;
   const position = {
     lat: latitud,
     lng: longitud,
@@ -90,32 +91,32 @@ function Actions(props) {
 
   return (
     <Table.Cell textAlign="right">
-     {turno_asignado===false && (
-      <Button
-        positive
-        icon
-        onClick={() => addHorarios(fecha_fin, fecha_inicio, id)}
-      >
-        {/* <Icon className="green" name="pencil" /> */}
-        Turnos
-      </Button>
+      {turno_asignado === false && (
+        <Button
+          positive
+          icon
+          onClick={() => addHorarios(fecha_fin, fecha_inicio, id)}
+        >
+          {/* <Icon className="green" name="pencil" /> */}
+          Turnos
+        </Button>
       )}
-      {turno_asignado===true && (
-      <Link
-        to="/admin/carga/vigilancia/personal"
-        state={{ fecha_fin,fecha_inicio,jurisdiccion,servicio,id }}
-      >
-         
-        <Button positive>
-        <Icon className="user icon"/>
-          Asignar Personal</Button>
-      </Link>
-)}
+      {turno_asignado === true && (
+        <Link
+          to="/admin/carga/vigilancia/personal"
+          state={{ fecha_fin, fecha_inicio, jurisdiccion, servicio, id }}
+        >
+          <Button positive>
+            <Icon className="user icon" />
+            Asignar Personal
+          </Button>
+        </Link>
+      )}
       <Button icon onClick={() => vermapa(position, true)}>
         <Icon name="map marker" />
       </Button>
 
-      <Button icon negative onClick={()=>onDeleteVigilancia(id)}>
+      <Button icon negative onClick={() => onDeleteVigilancia(id)}>
         <Icon name="close" />
       </Button>
     </Table.Cell>

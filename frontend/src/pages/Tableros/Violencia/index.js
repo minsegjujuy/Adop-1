@@ -1,1 +1,1 @@
-export * from "./Violencia"
+export * from "./Violencia";

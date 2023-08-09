@@ -22,7 +22,7 @@ export function TopMenu() {
 
       <Menu.Menu position="right">
         <Menu.Item>
-          <p style={{color:"black"} }> Bienvenido , {renderName()}</p>
+          <p style={{ color: "black" }}> Bienvenido , {renderName()}</p>
         </Menu.Item>
         <Menu.Item onClick={logout}>
           <Icon name="sign-out"></Icon>

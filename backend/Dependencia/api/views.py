@@ -62,7 +62,6 @@ class DependenciaViewSet(viewsets.ModelViewSet):
     serializer_class = DependenciaSerializer
     
     def list(self,request):
-        ur = int(request.GET.get('uurr'))
         self.queryset = self.get_queryset()
         usuario =request.user
         serializer = DependenciaSerializer(self.queryset, many=True)
@@ -70,8 +69,11 @@ class DependenciaViewSet(viewsets.ModelViewSet):
         if usuario.rol.rol == 'OPERADOR':
             datos = [x for x in serializer.data if x['fk_unidad_regional'] == usuario.unidad_regional.id]
         else:
-            # datos = [x for x in serializer.data if x['fk_unidad_regional'] == ur]
-            datos=serializer.data
+            try:
+                ur = int(request.GET['uurr'])
+                datos = [x for x in serializer.data if x['fk_unidad_regional'] == ur]
+            except:
+                datos=serializer.data
             
         respuesta = []
         

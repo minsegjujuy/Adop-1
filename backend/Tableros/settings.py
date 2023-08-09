@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'Archivo',
     'Dependencia',
+    'Ente',
     'Ley',
     'Operativos',
     'Persona',

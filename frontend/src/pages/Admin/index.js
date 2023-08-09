@@ -1,3 +1,3 @@
 export * from "./HomeAdmin";
-export * from "./LoginAdmin"
-export * from "./UserAdmin"
+export * from "./LoginAdmin";
+export * from "./UserAdmin";

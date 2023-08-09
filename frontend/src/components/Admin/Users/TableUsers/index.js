@@ -1,1 +1,1 @@
-export * from "./TableUsers"
+export * from "./TableUsers";

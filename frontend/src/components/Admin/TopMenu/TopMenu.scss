@@ -1,30 +1,32 @@
 .top-menu-admin {
-    &__logo {
-      width: 250px;
-      font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-      font-size: medium;
-      background-color: rgb(16, 23, 46)  !important;
-      background-image: linear-gradient(315deg, #2a2a82 0%, #007ffd 74%);
-      animation: 2.5s cubic-bezier(.25, 1, .30, 1) circle-in-center both;
-    }
-    p{
-      color: white
-    }
-  
-    &.icon {
-      margin: 0 !important;
-    }
-  }
- 
-  @keyframes circle-in-center {
-    from {
-      clip-path: circle(0%);
-    }
-    to {
-      clip-path: circle(125%);
-    }
-  }
-  
-  [transition-style="in:circle:center"] {
+  &__logo {
+    width: 250px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: medium;
+    background-color: rgb(16, 23, 46) !important;
+    background-image: linear-gradient(315deg, #2a2a82 0%, #007ffd 74%);
     animation: 2.5s cubic-bezier(.25, 1, .30, 1) circle-in-center both;
   }
+
+  p {
+    color: white
+  }
+
+  &.icon {
+    margin: 0 !important;
+  }
+}
+
+@keyframes circle-in-center {
+  from {
+    clip-path: circle(0%);
+  }
+
+  to {
+    clip-path: circle(125%);
+  }
+}
+
+[transition-style="in:circle:center"] {
+  animation: 2.5s cubic-bezier(.25, 1, .30, 1) circle-in-center both;
+}

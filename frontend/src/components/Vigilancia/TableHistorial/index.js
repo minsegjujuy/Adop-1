@@ -1,1 +1,1 @@
-export * from "./TableHistorial"
+export * from "./TableHistorial";

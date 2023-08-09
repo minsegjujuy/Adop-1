@@ -1,2 +1,2 @@
-export * from "./CargaVigilancia"
-export * from "./AsignarPersonal"
+export * from "./CargaVigilancia";
+export * from "./AsignarPersonal";

@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import "./LoginForm.scss";
-import { Button, Form} from "semantic-ui-react";
+import { Button, Form } from "semantic-ui-react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { loginApi } from "../../../api/user";
-import {useAuth} from "../../../hooks";
+import { useAuth } from "../../../hooks";
 import { toast, Flip } from "react-toastify";
 
 export function LoginForm() {
- const { login } = useAuth();
+  const { login } = useAuth();
 
-const [mostrarContrasenia, setMostrarContrasenia] = useState(false);
+  const [mostrarContrasenia, setMostrarContrasenia] = useState(false);
 
   const formik = useFormik({
     initialValues: initialValues(),
@@ -19,10 +19,10 @@ const [mostrarContrasenia, setMostrarContrasenia] = useState(false);
       try {
         // console.log(formValue)
         const response = await loginApi(formValue);
-        console.log(response)
+        console.log(response);
         // const { access } = response;
         login(response);
-        
+
         toast.success("Ingreso Exitoso", {
           position: toast.POSITION.BOTTOM_CENTER,
           autoClose: 3000,
@@ -61,7 +61,13 @@ const [mostrarContrasenia, setMostrarContrasenia] = useState(false);
         }}
       />
 
-      <Button type="submit" icon content="INICIAR SESION" primary fluid></Button>
+      <Button
+        type="submit"
+        icon
+        content="INICIAR SESION"
+        primary
+        fluid
+      ></Button>
     </Form>
   );
 }

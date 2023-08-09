@@ -5,6 +5,6 @@ router = routers.DefaultRouter()
 
 # [GET] [POST] api/ente/
 # [UPDATE] [DELETE] api/ente/{id}
-router.register('ente', EnteViewSet, 'ente')
+router.register("ente", EnteViewSet, "ente")
 
 urlpatterns = router.urls

@@ -2,7 +2,6 @@ import React from "react";
 import { HeaderPage } from "../../../components/Admin";
 import "./Escuelas.scss";
 
-
 export function Escuelas() {
   return (
     <>

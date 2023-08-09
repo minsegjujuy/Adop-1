@@ -6,7 +6,7 @@ import "./CargaVigilancia.scss";
 
 export function CargaVigilancia() {
   const { auth } = useAuth();
-  console.log(document.referrer)
+  console.log(document.referrer);
   return (
     <>
       <HeaderPage

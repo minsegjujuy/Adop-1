@@ -10,12 +10,13 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
+
 class PersonaViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
-    authentication_classes = (JWTAuthentication,TokenAuthentication)
-    queryset = Persona.objects.all()    
+    authentication_classes = (JWTAuthentication, TokenAuthentication)
+    queryset = Persona.objects.all()
     serializer_class = PersonaSerializer
-    
+
     # def retrieve(self, request, *args, **kwargs):
     #     legajo = kwargs['pk']
     #     personal = get_object_or_404(Personal, legajo=legajo)

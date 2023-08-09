@@ -1,12 +1,13 @@
 from rest_framework import serializers
-from ..models import Documento
+from ..models import Ente
+
 
 class EnteSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Documento
+        model = Ente
         fields = (
-            'id',
-            'nombre',
+            "id",
+            "nombre",
             # 'direccion',
         )
-        read_only_fields = ('id',)
+        read_only_fields = ("id",)

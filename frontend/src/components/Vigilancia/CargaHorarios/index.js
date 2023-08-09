@@ -1,1 +1,1 @@
-export * from "./AddHorario"
+export * from "./AddHorario";

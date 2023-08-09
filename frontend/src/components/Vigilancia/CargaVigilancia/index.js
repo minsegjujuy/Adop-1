@@ -1,1 +1,1 @@
-export * from "./AddVigilancia"
+export * from "./AddVigilancia";

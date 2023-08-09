@@ -22,7 +22,7 @@ function MenuLeft(props) {
   // const {buscarEmpleadoId} = useUser()
   // const [empleados, setEmpleado] = useState(null);
   // console.log(empleados)
-  
+
   return (
     <Menu fixed="left" borderless className="side" vertical>
       {/* <Menu.Item as={Link} to={"/admin"} active={pathname === "/admin"}>
@@ -50,7 +50,7 @@ function MenuLeft(props) {
         </Menu.Item>
       )} */}
 
-      {((auth?.usuario?.rol === 1) || (auth?.usuario?.rol ===3)) && (
+      {(auth?.usuario?.rol === 1 || auth?.usuario?.rol === 3) && (
         <Menu.Item
           as={Link}
           to={"/admin/vigilancia"}
@@ -72,42 +72,39 @@ function MenuLeft(props) {
         </Menu.Item>
       )} */}
       <Menu.Item className="header_class">
-        
-          <Icon name="chart bar" className="icono-side-bar" />
-          <Dropdown item text="Tableros">
-            <Dropdown.Menu>
-              <Dropdown.Item
-                as={Link}
-                to={"/admin/tableros/escuelas"}
-                active={pathname === "/admin/tableros/escuelas"}
-              >
-                Vigilancia y escuelas
-              </Dropdown.Item>
-              <Dropdown.Item
-                as={Link}
-                to={"/admin/tableros/propiedad"}
-                active={pathname === "/admin/tableros/propiedad"}
-              >
-                Analisis Propiedad 2022
-              </Dropdown.Item>
-              <Dropdown.Item
-                as={Link}
-                to={"/admin/tableros/contravencion"}
-                active={pathname === "/admin/tableros/contravencion"}
-              >
-                Contravencion General
-              </Dropdown.Item>
-              <Dropdown.Item
-                as={Link}
-                to={"/admin/tableros/violencia"}
-                active={pathname === "/admin/tableros/violencia"}
-              >
-                Violencia
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        
-      
+        <Icon name="chart bar" className="icono-side-bar" />
+        <Dropdown item text="Tableros">
+          <Dropdown.Menu>
+            <Dropdown.Item
+              as={Link}
+              to={"/admin/tableros/escuelas"}
+              active={pathname === "/admin/tableros/escuelas"}
+            >
+              Vigilancia y escuelas
+            </Dropdown.Item>
+            <Dropdown.Item
+              as={Link}
+              to={"/admin/tableros/propiedad"}
+              active={pathname === "/admin/tableros/propiedad"}
+            >
+              Analisis Propiedad 2022
+            </Dropdown.Item>
+            <Dropdown.Item
+              as={Link}
+              to={"/admin/tableros/contravencion"}
+              active={pathname === "/admin/tableros/contravencion"}
+            >
+              Contravencion General
+            </Dropdown.Item>
+            <Dropdown.Item
+              as={Link}
+              to={"/admin/tableros/violencia"}
+              active={pathname === "/admin/tableros/violencia"}
+            >
+              Violencia
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       </Menu.Item>
 
       {auth?.usuario?.rol === 1 && (

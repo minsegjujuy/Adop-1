@@ -1,3 +1,3 @@
 // export * from "./Mapa"
-export * from "./CargaPersonal"
-export * from "./TableHistorial"
+export * from "./CargaPersonal";
+export * from "./TableHistorial";

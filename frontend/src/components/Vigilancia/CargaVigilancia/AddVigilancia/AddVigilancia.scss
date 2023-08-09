@@ -18,19 +18,19 @@
 //     background-color: white;
 //     padding: 10px;
 //   }
-  
+
 //   .custom-form .field {
 //     /* Añadir espacio entre los campos */
 //     margin-bottom: 1em;
 //   }
-  
+
 //   .custom-form label {
 //     /* Cambiar el color y la fuente de las etiquetas de los campos */
 //     font-weight: bold;
 //     font-size: 1.2em;
 //     color: #444;
 //   }
-  
+
 //   .custom-form input[type="text"],
 //   .custom-form input[type="date"],
 //   .custom-form textarea {
@@ -41,21 +41,21 @@
 //     padding: 0.5em;
 //     font-size: 1.1em;
 //   }
-  
+
 //   .custom-form input[type="text"]:focus,
 //   .custom-form input[type="date"]:focus,
 //   .custom-form textarea:focus {
 //     /* Cambiar el color del borde cuando el campo está enfocado */
 //     border-color: green;
 //   }
-  
+
 //   .custom-form .positive.button {
 //     /* Cambiar el color del botón de envío */
 //     background-color: green;
 //     color: #fff;
 //     font-size: large;
 //   }
-  
+
 //   .custom-form .positive.button:hover {
 //     /* Cambiar el color del botón de envío al pasar el ratón por encima */
 //     background-color: rgb(0, 102, 128);
@@ -63,45 +63,48 @@
 //   .custom-form{
 //      font-size: large !important;
 //   }
-  // .file-input-container {
-  //   position: relative;
-  // }
-  
-  // .label {
-  //   display: inline-block;
-  //   // background-color: #f39c12;
-  //   color: white;
-  //   padding: 8px 16px;
-  //   border-radius: 4px;
-  //   cursor: pointer;
-  // }
-  
-  // .file-input {
-  //   // opacity: 0;
-  //   position: relative;
-  //   // top: 0;
-  //   // left: 0;
-  //   // width: 100%;
-  //   // height: 100%;
-  // }
-  
-  // .file-input-error {
-  //   color: red;
-  //   margin-top: 4px;
-  // }
-  // .select{
-  //   float: initial;
-  // }
-  .select-container {
-    position: relative;
-    transform: translateZ(0); /* Crea un nuevo contexto de apilamiento */
-  }
-  
-  .select-dropdown {
-    position: absolute;
-    transform: translateZ(1); /* Sobreponer el select al mapa */
-  }
-  // .two.fields{
-  //   position: relative;
-  //   z-index: 9999;
-  // }
+// .file-input-container {
+//   position: relative;
+// }
+
+// .label {
+//   display: inline-block;
+//   // background-color: #f39c12;
+//   color: white;
+//   padding: 8px 16px;
+//   border-radius: 4px;
+//   cursor: pointer;
+// }
+
+// .file-input {
+//   // opacity: 0;
+//   position: relative;
+//   // top: 0;
+//   // left: 0;
+//   // width: 100%;
+//   // height: 100%;
+// }
+
+// .file-input-error {
+//   color: red;
+//   margin-top: 4px;
+// }
+// .select{
+//   float: initial;
+// }
+.select-container {
+  position: relative;
+  transform: translateZ(0);
+  /* Crea un nuevo contexto de apilamiento */
+}
+
+.select-dropdown {
+  position: absolute;
+  transform: translateZ(1);
+  /* Sobreponer el select al mapa */
+}
+
+// .two.fields{
+//   position: relative;
+//   z-index: 9999;
+// }

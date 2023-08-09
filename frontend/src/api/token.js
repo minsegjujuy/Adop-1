@@ -1,4 +1,4 @@
-import {TOKEN} from "../utils/contants";
+import { TOKEN } from "../utils/contants";
 
 export function setToken(token) {
   localStorage.setItem(TOKEN, token);

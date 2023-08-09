@@ -1,4 +1,4 @@
-.header-page-vigilancia{
+.header-page-vigilancia {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -6,25 +6,27 @@
 }
 
 
-.contenido-formulario-buscar{
+.contenido-formulario-buscar {
     display: flex;
     justify-content: space-between;
-    align-items: center;    
+    align-items: center;
     font-size: large !important;
 }
 
-.contenido-buscar-recargar{
+.contenido-buscar-recargar {
     display: flex;
 }
 
-.boton-recargar{
+.boton-recargar {
     margin-left: 10px;
 }
-.mapa{
+
+.mapa {
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 // .boton-buscar{
 //     font-size: large !important;
 // }

@@ -1,1 +1,1 @@
-export * from "./AsignarPersonal"
+export * from "./AsignarPersonal";

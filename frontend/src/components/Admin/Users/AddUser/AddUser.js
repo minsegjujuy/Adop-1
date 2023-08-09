@@ -1,25 +1,20 @@
 import { useFormik } from "formik";
-import { Form, Button,Checkbox} from "semantic-ui-react";
-import {useUser,useVigilancia} from "../../../../hooks/";
-import {useState,useEffect} from "react"
+import { Form, Button, Checkbox } from "semantic-ui-react";
+import { useUser, useVigilancia } from "../../../../hooks/";
+import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-import "./AddUser.scss"
+import "./AddUser.scss";
 import * as Yup from "yup";
 
-export const AddUser= (props) => {
-  const {
-    onClose,
-    Refetch,
-  } = props;
+export const AddUser = (props) => {
+  const { onClose, Refetch } = props;
 
-   const {addUser,auth} = useUser();
-   const {get_jurisdicciones} = useVigilancia();
-   const options = [
+  const { addUser, auth } = useUser();
+  const { get_jurisdicciones } = useVigilancia();
+  const options = [
     { key: "Administrador", text: "Administrador", value: 1 },
     { key: "General", text: "General", value: 2 },
     { key: "operador", text: "Operador", value: 3 },
-    
-   
   ];
   const options2 = [
     { key: "Regional 1", text: "Regional 1", value: 1 },
@@ -33,35 +28,34 @@ export const AddUser= (props) => {
   ];
   const [franja, setFranja] = useState(null);
   useEffect(() => {
-      buscarJurisdicciones(0)
+    buscarJurisdicciones(0);
   }, []);
-  
+
   const buscarJurisdicciones = async (id) => {
     const options = await get_jurisdicciones(id);
-    
+
     setFranja(options.map((option) => option));
   };
-const valores = franja?.map((tipo, index) => ({
-value:tipo.id,
-key: `${index}`,
-text: tipo.jurisdiccion,
-}));
+  const valores = franja?.map((tipo, index) => ({
+    value: tipo.id,
+    key: `${index}`,
+    text: tipo.jurisdiccion,
+  }));
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: Yup.object(newSchema()),
     validateOnChange: false,
     onSubmit: async (formValue) => {
-    //   formValue.nombres = formValue.nombres.toUpperCase();
-    //   formValue.apellidos = formValue.apellidos.toUpperCase();
-    console.log(formValue)
+      //   formValue.nombres = formValue.nombres.toUpperCase();
+      //   formValue.apellidos = formValue.apellidos.toUpperCase();
+      console.log(formValue);
       try {
-        
-        if(formValue.rol===1){
-          formValue.is_superuser = true
-        }else{
-          formValue.is_superuser=false
+        if (formValue.rol === 1) {
+          formValue.is_superuser = true;
+        } else {
+          formValue.is_superuser = false;
         }
-        console.log(formValue)
+        console.log(formValue);
         Swal.fire({
           icon: "info",
           title: "Creando Empleado",
@@ -73,7 +67,7 @@ text: tipo.jurisdiccion,
           },
         });
         const resultado = await addUser(formValue);
-        console.log(resultado)
+        console.log(resultado);
         if (resultado.msj) {
           Swal.fire({
             title: "Individuo agregado Correctamente!",
@@ -92,9 +86,7 @@ text: tipo.jurisdiccion,
             showConfirmButton: true,
           });
         }
-      } catch (error) {
-        
-      }
+      } catch (error) {}
     },
   });
 
@@ -105,7 +97,9 @@ text: tipo.jurisdiccion,
         options={options2}
         placeholder="Seleccione la regional "
         value={formik.values.unidad_regional}
-        onChange={(_, data) => formik.setFieldValue("unidad_regional", data.value)}
+        onChange={(_, data) =>
+          formik.setFieldValue("unidad_regional", data.value)
+        }
       />
       <Form.Select
         name="jurisdiccion"
@@ -174,25 +168,23 @@ text: tipo.jurisdiccion,
   );
 };
 
- function initialValues() {
+function initialValues() {
   return {
-    unidad_regional:"",
-    jurisdiccion:"",
-    username:"",
+    unidad_regional: "",
+    jurisdiccion: "",
+    username: "",
     email: "",
     nombres: "",
     apellidos: "",
-    password:"",
+    password: "",
     rol: "",
-    is_superuser:false,
-          // usuario_activo: true,
-          // is_superuser: false,
-        }
-          
+    is_superuser: false,
+    // usuario_activo: true,
+    // is_superuser: false,
+  };
+}
 
-      }
-
- function newSchema() {
+function newSchema() {
   return {
     // user:{username:Yup.string(),
     // email: Yup.string().email(true).required(true),
@@ -203,4 +195,4 @@ text: tipo.jurisdiccion,
     // is_active: Yup.bool().required(true),},
     // nivel_permiso : Yup.string().required
   };
- }
+}

@@ -1,1 +1,1 @@
-export * from "./LoginAdmin"
+export * from "./LoginAdmin";

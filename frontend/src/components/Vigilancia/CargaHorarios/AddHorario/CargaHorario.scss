@@ -1,37 +1,39 @@
 input[type="checkbox"] {
-    position: absolute;
-    opacity: 0;
-  }
-   .dias_completo{
-    display: flex;
-    margin-top: 30px;
-   }
-  /* Estilo del checkbox personalizado */
-  .checkbox {
-    display: flex;
-    background-color: #fff;
-    border-radius: 4px;
-    position: relative;
-    margin-right: 10px;
-    margin-bottom: 20px;
-  }
-  
-  /* Estilo del tick del checkbox personalizado */
-  .checkbox::before {
-    content: '';
-    display: flex;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    // width: 10px;
-    // height: 10px;
-    border-radius: 2px;
-    background-color: #4285f4;
-    transition: transform 0.2s ease-out;
-  }
-  
-  /* Cambia el estilo del tick al marcar el checkbox */
-  input[type="checkbox"]:checked + .checkbox::before {
-    transform: translate(-50%, -50%) scale(1);
-  }
+  position: absolute;
+  opacity: 0;
+}
+
+.dias_completo {
+  display: flex;
+  margin-top: 30px;
+}
+
+/* Estilo del checkbox personalizado */
+.checkbox {
+  display: flex;
+  background-color: #fff;
+  border-radius: 4px;
+  position: relative;
+  margin-right: 10px;
+  margin-bottom: 20px;
+}
+
+/* Estilo del tick del checkbox personalizado */
+.checkbox::before {
+  content: '';
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  // width: 10px;
+  // height: 10px;
+  border-radius: 2px;
+  background-color: #4285f4;
+  transition: transform 0.2s ease-out;
+}
+
+/* Cambia el estilo del tick al marcar el checkbox */
+input[type="checkbox"]:checked+.checkbox::before {
+  transform: translate(-50%, -50%) scale(1);
+}

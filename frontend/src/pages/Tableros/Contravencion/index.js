@@ -1,1 +1,1 @@
-export * from "./Contravencion"
+export * from "./Contravencion";

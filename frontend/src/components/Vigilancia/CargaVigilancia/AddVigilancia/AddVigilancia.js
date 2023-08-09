@@ -9,7 +9,10 @@ import { toast, Flip } from "react-toastify";
 import Swal from "sweetalert2";
 import "./AddVigilancia.scss";
 export function AddVigilancia(props) {
-  const [position, setposition] = useState({lat: -24.715631490415,lng: -65.0051351026728,});
+  const [position, setposition] = useState({
+    lat: -24.715631490415,
+    lng: -65.0051351026728,
+  });
   const { addHorarios } = props;
   const { auth } = useAuth();
   const [formHorario, setformHorario] = useState(null);
@@ -283,7 +286,6 @@ export function AddVigilancia(props) {
       <h4 className="ui dividing header">Carga de archivo</h4>
       <div className="three fields">
         <div className="field">
-          
           <label htmlFor="file-input" className="file-input-label">
             Archivo
           </label>
@@ -302,10 +304,10 @@ export function AddVigilancia(props) {
           <div className="field">
             <Form.Select
               // name="recursos"
-              
+
               options={recursos}
               placeholder="Seleccione los recursos "
-              
+
               // value={formik.values.recursos}
               // onChange={(_, data) =>
               //   formik.setFieldValue("recursos", data.value)

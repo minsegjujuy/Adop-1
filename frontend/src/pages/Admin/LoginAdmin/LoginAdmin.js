@@ -58,10 +58,9 @@ export function LoginAdmin(props) {
         </div>
       </div>
       <div className="footer">
-      <Footer/>
-      </div> 
-        
-      
+        <Footer />
+      </div>
+
       <div>
         <ul className="circles">
           <li></li>
@@ -76,7 +75,6 @@ export function LoginAdmin(props) {
           <li></li>
         </ul>
       </div>
-     
     </div>
   );
 }

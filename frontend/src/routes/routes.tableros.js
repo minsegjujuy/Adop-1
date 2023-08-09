@@ -1,8 +1,10 @@
-import {AdminLayout} from "../layouts/AdminLayout"
-import {Escuelas,Propiedad,Contravencion,Violencia} from "../pages/Tableros"; 
-
-
-
+import { AdminLayout } from "../layouts/AdminLayout";
+import {
+  Escuelas,
+  Propiedad,
+  Contravencion,
+  Violencia,
+} from "../pages/Tableros";
 
 const routerTableros = [
   {
@@ -24,8 +26,7 @@ const routerTableros = [
     path: "/admin/tableros/violencia",
     layout: AdminLayout,
     component: Violencia,
-  }
-
+  },
 ];
 
 export default routerTableros;

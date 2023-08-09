@@ -1,11 +1,11 @@
 import React from "react";
 import { HeaderPage } from "../../../components/Admin";
-import { CargaPersonal,TableHistorial } from "../../../components/Vigilancia/";
-import {Personal} from "../../../components/Vigilancia/Personal"
-import { useAuth,useVigilancia } from "../../../hooks"
+import { CargaPersonal, TableHistorial } from "../../../components/Vigilancia/";
+import { Personal } from "../../../components/Vigilancia/Personal";
+import { useAuth, useVigilancia } from "../../../hooks";
 import { useState } from "react";
 import "./AsignarPersonal.scss";
-import {ModalBasic} from "../../../components/Common/ModalBasic"
+import { ModalBasic } from "../../../components/Common/ModalBasic";
 import Swal from "sweetalert2";
 import { useLocation } from "react-router-dom";
 export function AsignarPersonal(props) {
@@ -14,27 +14,22 @@ export function AsignarPersonal(props) {
   const [showModal, setShowModal] = useState(false);
   const [contentModal, setContentModal] = useState(null);
   const [refetch, setRefetch] = useState(false);
-  const { fecha_fin, fecha_inicio,jurisdiccion,servicio,id} = location.state || {};
- 
+  const { fecha_fin, fecha_inicio, jurisdiccion, servicio, id } =
+    location.state || {};
+
   const { auth } = useAuth();
-  const {deleteHistorial} = useVigilancia();
+  const { deleteHistorial } = useVigilancia();
   const openCloseModal = () => {
     setShowModal((prev) => !prev);
   };
   const onRefetch = () => setRefetch((prev) => !prev);
-  const addTurnos = (turno,duracion,id) => {
+  const addTurnos = (turno, duracion, id) => {
     setTitleModal("Asignar Personal");
-   
-    setContentModal(
-      <Personal
-      turnos={turno}
-      duracion={duracion}
-      id={id}
-      />
-    );
+
+    setContentModal(<Personal turnos={turno} duracion={duracion} id={id} />);
     openCloseModal();
   };
-  const onDeleteHistorial= async (id,id_turno) => {
+  const onDeleteHistorial = async (id, id_turno) => {
     try {
       Swal.fire({
         icon: "question",
@@ -50,9 +45,9 @@ export function AsignarPersonal(props) {
         cancelButtonColor: "#d33",
       }).then(async (result) => {
         if (result.isConfirmed) {
-          await deleteHistorial(id,id_turno);
-          console.log("hola mundo")
-          window.location.reload()
+          await deleteHistorial(id, id_turno);
+          console.log("hola mundo");
+          window.location.reload();
           // setUsers(null);
 
           Swal.fire({
@@ -76,10 +71,13 @@ export function AsignarPersonal(props) {
           auth.usuario.unidad_regional ? auth.usuario.unidad_regional : null
         }
       />
-        <div className="form-vigilancia">
-        <CargaPersonal jurisdiccion={jurisdiccion} servicio={servicio} id={id}
-        addTurnos={addTurnos}
-        onDeleteHistorial={onDeleteHistorial}
+      <div className="form-vigilancia">
+        <CargaPersonal
+          jurisdiccion={jurisdiccion}
+          servicio={servicio}
+          id={id}
+          addTurnos={addTurnos}
+          onDeleteHistorial={onDeleteHistorial}
         />
       </div>
       <ModalBasic

@@ -1,1 +1,1 @@
-export * from "./CargaVigilancia"
+export * from "./CargaVigilancia";

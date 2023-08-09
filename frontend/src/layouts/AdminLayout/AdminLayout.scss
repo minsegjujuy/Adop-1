@@ -1,33 +1,35 @@
 .admin-layout {
-    width: 100%;
-    display: grid;
-    grid: 55px / 1fr;
-    grid-template-areas:
-      "menu"
-      "content";
-    min-height: 100vh;
-    
-  
-    &__menu {
-      grid-area: menu;
-    }
-  
-    &__main-content {
-      grid-area: content;
-    }
+  width: 100%;
+  display: grid;
+  grid: 55px / 1fr;
+  grid-template-areas:
+    "menu"
+    "content";
+  min-height: 100vh;
+
+
+  &__menu {
+    grid-area: menu;
   }
-  .trancision {
-    animation: mostrar-pantalla 2.5s cubic-bezier(.25, 1, .30, 1) forwards;
+
+  &__main-content {
+    grid-area: content;
+  }
+}
+
+.trancision {
+  animation: mostrar-pantalla 2.5s cubic-bezier(.25, 1, .30, 1) forwards;
+  opacity: 0;
+}
+
+@keyframes mostrar-pantalla {
+  0% {
     opacity: 0;
+    transform: translateY(20px);
   }
-  
-  @keyframes mostrar-pantalla {
-    0% {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
+}
