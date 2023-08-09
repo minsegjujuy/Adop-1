@@ -93,7 +93,7 @@ export async function deleteVigilanciaApi(id, token) {
 //* Documentos
 export async function addDocumentoVigilancia(data, token, id) {
   try {
-    const url = `${BASE_API}/api/documentos/`;
+    const url = `${BASE_API}/api/vigilancias/documentos/`;
     const params = {
       method: "POST",
       headers: {
@@ -146,7 +146,7 @@ export async function deleteDocumentoVigilancia(id_vigilancia, id_documento, tok
 //* Turnos
 export async function getTurnosApi(id,token) {
   try {
-    const url = `${BASE_API}/api/vigilancia/${id}/turnos/`;
+    const url = `${BASE_API}/api/vigilancias/${id}/turnos/`;
     const params = {
       method: "GET",
       headers: {
@@ -162,7 +162,7 @@ export async function getTurnosApi(id,token) {
 }
 export async function getTurno(token,id) {
   try {
-    const url = `${BASE_API}/api/vigilancia/turnos/${id}/`;
+    const url = `${BASE_API}/api/vigilancias/turnos/${id}/`;
     const params = {
       method: "GET",
       headers: {
@@ -178,7 +178,7 @@ export async function getTurno(token,id) {
 }
 export async function addTurnosApi(data, token) {
   try {
-    const url = `${BASE_API}/api/vigilancia/turnos/`;
+    const url = `${BASE_API}/api/vigilancias/turnos/`;
     const params = {
       method: "POST",
       headers: {
@@ -198,7 +198,7 @@ export async function addTurnosApi(data, token) {
 }
 export async function deleteHistorialApi(id, id_turno, token) {
   try {
-    const url = `${BASE_API}/api/vigilancia/${id}/turnos/${id_turno}/`;
+    const url = `${BASE_API}/api/vigilancias/${id}/turnos/${id_turno}/`;
     const params = {
       method: "DELETE",
       headers: {
@@ -233,7 +233,7 @@ export async function getPersonal(token) {
 }
 export async function asignarPersonal(data, token,id) {
   try {
-    const url = `${BASE_API}/api/vigilancia/${id}/turnos/`;
+    const url = `${BASE_API}/api/vigilancias/${id}/turnos/`;
     const params = {
       method: "POST",
       headers: {

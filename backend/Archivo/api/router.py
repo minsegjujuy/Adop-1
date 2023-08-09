@@ -4,7 +4,7 @@ from .views import DocumentoViewSet
 # Ruta para la vista basada en clase DocumentoCreateAPIView (solo método POST)
 urlpatterns = [
     path(
-        "documentos/",
+        "vigilancias/documentos/",
         DocumentoViewSet.as_view({"post": "create"}),
         name="documento-create",
     ),

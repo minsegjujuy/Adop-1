@@ -20,27 +20,19 @@ router.register("vigilancias", VigilanciaViewSet, "vigilancias")
 
 # [GET] [POST] api/vigilancia/turnos/
 # [UPDATE] [DELETE] api/vigilancia/turnos/{id}
-router.register("vigilancia/turnos", TurnosVigilanciaViewSet, "turnos_vigilancias")
+router.register("vigilancias/turnos", TurnosVigilanciaViewSet, "turnos_vigilancias")
 
 # [GET] [POST] api/vigilancia/turnos/
 # [UPDATE] [DELETE] api/vigilancia/{id}/turnos/
 router.register(
-    r"vigilancia/(?P<vigilancia_id>\d+)/turnos",
+    r"vigilancias/(?P<vigilancia_id>\d+)/turnos",
     PersonalVigilanciaViewSet,
     "personal_turnos_vigilancia",
 )
 
-# [GET] [POST] api/vigilancia/turnos/
-# [UPDATE] [DELETE] api/vigilancia/{id}/turnos/
-router.register(
-    r"vigilancia/(?P<vigilancia_id>\d+)/recursos",
-    RecursosVigilanciaViewSet,
-    "recursos_vigilancia",
-)
-
 urlpatterns = [
     path(
-        "recursos/",
+        "vigilancias/recursos/",
         RecursosVigilanciaViewSet.as_view({"post": "create"}),
         name="recurso-create",
     ),

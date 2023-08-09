@@ -25,7 +25,9 @@ class VigilanciaSerializerView(serializers.ModelSerializer):
             # 'fk_tipo_recurso',
             # 'fk_recursos',
             "fk_unidad_regional",
-            "fk_ente" "fk_funcionario" "objetivo",
+            "fk_ente",
+            "fk_funcionario",
+            "objetivo",
             "cant_dias",
             "fecha_inicio",
             "fecha_fin",
@@ -58,7 +60,7 @@ class VigilanciaSerializer(serializers.ModelSerializer):
 
 class RecursosVigilanciaSerializer(serializers.ModelSerializer):
     class Meta:
-        model: RecursosVigilancia
+        model = RecursosVigilancia
         fields = (
             "fk_tipo_recurso",
             "fk_vigilancia",
