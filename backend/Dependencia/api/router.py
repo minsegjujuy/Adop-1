@@ -1,3 +1,4 @@
+from django.urls import path
 from rest_framework import routers
 from .views import (
     InspectoraViewSet,
@@ -8,22 +9,69 @@ from .views import (
 
 router = routers.DefaultRouter()
 
-# [GET] [POST] api/inspectoras/
-# [UPDATE] [DELETE] api/inspectoras/{id}
-router.register("inspectoras", InspectoraViewSet, "inspectoras")
-
-# [GET] [POST] api/unidades_regionales/
-# [UPDATE] [DELETE] api/unidades_regionales/{id}
-router.register("unidades_regionales", UnidadRegionalViewSet, "unidades_regionales")
-
-# [GET] [POST] api/dependencias/
-# [UPDATE] [DELETE] api/dependencias/{id}
-router.register("dependencias", DependenciaViewSet, "dependencias")
-
 # [GET] [POST] api/dependencias_operativos/
 # [UPDATE] [DELETE] api/dependencias_operativos/{id}
-router.register(
-    "dependencias_operativos", DependenciasOperativosiewSet, "dependencias_operativos"
-)
+# router.register(
+#     "dependencias_operativos", DependenciasOperativosiewSet, "dependencias_operativos"
+# )
 
-urlpatterns = router.urls
+urlpatterns = [
+    # Inspectoras
+    path(
+        "inspectoras/",
+        InspectoraViewSet.as_view({"get": "list", "post": "create"}),
+        name="inspectora",
+    ),
+    path(
+        "inspectoras/<int:pk>/",
+        InspectoraViewSet.as_view(
+            {
+                "get": "retrieve",
+                "patch": "update",
+                "put": "update",
+                "delete": "destroy",
+                "post": "softRestore",
+            }
+        ),
+        name="detail_inspectora",
+    ),
+    # Unidades Regionales
+    path(
+        "unidades_regionales/",
+        UnidadRegionalViewSet.as_view({"get": "list", "post": "create"}),
+        name="unidad_regional",
+    ),
+    path(
+        "unidades_regionales/<int:pk>/",
+        UnidadRegionalViewSet.as_view(
+            {
+                "get": "retrieve",
+                "patch": "update",
+                "put": "update",
+                "delete": "destroy",
+                "post": "softRestore",
+            }
+        ),
+        name="detail_unidad_regional",
+    ),
+    # Dependencias
+    path(
+        "dependencias/",
+        DependenciaViewSet.as_view({"get": "list", "post": "create"}),
+        name="dependencia",
+    ),
+    path(
+        "dependencias/<int:pk>/",
+        DependenciaViewSet.as_view(
+            {
+                "get": "retrieve",
+                "patch": "update",
+                "put": "update",
+                "delete": "destroy",
+                "post": "softRestore",
+            }
+        ),
+        name="detail_dependencia",
+    ),
+]
+

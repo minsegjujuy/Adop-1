@@ -1,27 +1,18 @@
 from ..models import Ley, Articulo, Inciso
 from .serializer import LeySerializer, ArticuloSerializer, IncisoSerializer
-from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import TokenAuthentication
-from rest_framework_simplejwt.authentication import JWTAuthentication
+from BaseModel.api.views import DynamicModelViewSet
 
 
-class LeyViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (JWTAuthentication, TokenAuthentication)
+class LeyViewSet(DynamicModelViewSet):
     queryset = Ley.objects.all()
     serializer_class = LeySerializer
 
 
-class ArticuloViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (JWTAuthentication, TokenAuthentication)
+class ArticuloViewSet(DynamicModelViewSet):
     queryset = Articulo.objects.all()
     serializer_class = ArticuloSerializer
 
 
-class IncisoViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (JWTAuthentication, TokenAuthentication)
+class IncisoViewSet(DynamicModelViewSet):
     queryset = Inciso.objects.all()
     serializer_class = IncisoSerializer

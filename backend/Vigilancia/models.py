@@ -5,13 +5,14 @@ from Personal.models import Personal
 from Dependencia.models import Dependencia, UnidadRegional
 from Personal.models import Funcionario
 from Ente.models import Ente
+from BaseModel.models import BaseModel
 
 
-class Motivo(models.Model):
+class Motivo(BaseModel):
     motivo = models.CharField(max_length=22)
 
 
-class Vigilancia(models.Model):
+class Vigilancia(BaseModel):
     fk_jurisdiccion = models.ForeignKey(Dependencia, on_delete=models.CASCADE, null=False)
     fk_motivo = models.ForeignKey("Motivo", on_delete=models.CASCADE, null=False)
     fk_tipo_servicio = models.ForeignKey(TipoServicio, on_delete=models.CASCADE, null=False)
@@ -34,14 +35,14 @@ class Vigilancia(models.Model):
     # turnos_vigilancias = models.ManyToManyField('TurnosVigilancia', db_table='vigilancia_turnosvigilancia', related_name='turnosvigilancia', default=None) #comentar para la primera migracion
 
 
-class RecursosVigilancia(models.Model):
+class RecursosVigilancia(BaseModel):
     fk_tipo_recurso = models.ForeignKey(TipoRecurso, on_delete=models.CASCADE, null=False)
     fk_vigilancia = models.ForeignKey("Vigilancia", on_delete=models.CASCADE, null=False)
     cantidad = models.IntegerField(null=False, default=0)
     fecha = models.DateField(null=False)
 
 
-class TurnosVigilancia(models.Model):
+class TurnosVigilancia(BaseModel):
     fk_vigilancia = models.ForeignKey("Vigilancia", on_delete=models.CASCADE)
     turno = ArrayField(models.TextField())
     hora_inicio = models.TimeField(null=True)
@@ -51,7 +52,7 @@ class TurnosVigilancia(models.Model):
     duracion = models.IntegerField(default=0, null=True)
 
 
-class PersonalVigilancia(models.Model):
+class PersonalVigilancia(BaseModel):
     fk_personal = models.ForeignKey(Personal, null=True, on_delete=models.CASCADE)
     fk_turnoVigilancia = models.ForeignKey("TurnosVigilancia", on_delete=models.CASCADE)
     fecha = models.DateField(null=False)

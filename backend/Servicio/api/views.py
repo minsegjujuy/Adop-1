@@ -1,27 +1,18 @@
 from ..models import Servicio, TipoRecurso, TipoServicio
 from .serializer import TipoServicioSerializer, ServicioSerializer, TipoRecursoSerializer
-from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import TokenAuthentication
-from rest_framework_simplejwt.authentication import JWTAuthentication
+from BaseModel.api.views import DynamicModelViewSet
 
 
-class TipoServicioViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (JWTAuthentication, TokenAuthentication)
+class TipoServicioViewSet(DynamicModelViewSet):
     queryset = TipoServicio.objects.all()
     serializer_class = TipoServicioSerializer
 
 
-class ServicioViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (JWTAuthentication, TokenAuthentication)
+class ServicioViewSet(DynamicModelViewSet):
     queryset = Servicio.objects.all()
     serializer_class = ServicioSerializer
 
 
-class RecursoViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (JWTAuthentication, TokenAuthentication)
+class RecursoViewSet(DynamicModelViewSet):
     queryset = TipoRecurso.objects.all()
     serializer_class = TipoRecursoSerializer

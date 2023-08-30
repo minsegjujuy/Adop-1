@@ -1,20 +1,13 @@
 from ..models import Procedimiento, ProcedimientoPersona
 from .serializer import ProcedimientoSerializer, ProcedimientoPersonaSerializer
-from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import TokenAuthentication
-from rest_framework_simplejwt.authentication import JWTAuthentication
+from BaseModel.api.views import DynamicModelViewSet
 
 
-class ProcedimientoViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (JWTAuthentication, TokenAuthentication)
+class ProcedimientoViewSet(DynamicModelViewSet):
     queryset = Procedimiento.objects.all()
     serializer_class = ProcedimientoSerializer
 
 
-class ProcedimientoPersonaViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (JWTAuthentication, TokenAuthentication)
+class ProcedimientoPersonaViewSet(DynamicModelViewSet):
     queryset = ProcedimientoPersona.objects.all()
     serializer_class = ProcedimientoPersonaSerializer

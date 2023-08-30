@@ -21,12 +21,17 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
+    # Admin
     path('admin/', admin.site.urls),
+    
+    # Swagger
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     
-    # User and Auth
+    # Auth
     path('api/',include('users.api.routes-auth')),
+    
+    # User
     path('api/',include('users.api.router')),
     
     # Persona
@@ -38,6 +43,9 @@ urlpatterns = [
     # Dependencia
     path('api/',include('Dependencia.api.router')),
     
+    # Ente
+    path('api/',include('Ente.api.router')),
+    
     # Vigilancia
     path('api/',include('Vigilancia.api.router')),
     
@@ -47,9 +55,16 @@ urlpatterns = [
     # Documentos
     path('api/', include('Archivo.api.router')),
 
+    # Procedimiento
     # path('api/',include('Procedimiento.api.router')),
+    
+    # Secuestros
     # path('api/',include('Secuestro.api.router')),
+    
+    # Operativos
     # path('api/',include('Operativos.api.router')),
+    
+    # Ley
     # path('api/',include('Ley.api.router')),
 ]
 

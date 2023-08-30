@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { BASE_APP } from "../../../utils/contants";
 import { LoginForm, Footer } from "../../../components/Admin";
 import { Modal, Button, Icon } from "semantic-ui-react";
 import { logoutApi } from "../../../api/user";
@@ -20,7 +21,7 @@ export function LoginAdmin(props) {
     }
   }, []);
 
-  // window.location.replace("http://localhost:3000/login")
+  // window.location.replace(`${BASE_APP}login`)
 
   return (
     <div className="Area">

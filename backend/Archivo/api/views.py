@@ -77,7 +77,7 @@ class DocumentoViewSet(viewsets.ModelViewSet):
                 archivo = Documento(
                     nombre=nombre, file=file, fk_vigilancia_id=fk_vigilancia
                 )
-                archivo.save()
+                archivo.new_save(usuario=request.user)
             else:
                 errors = errors + nombre + ", "
 
@@ -112,7 +112,7 @@ class DocumentoViewSet(viewsets.ModelViewSet):
                 archivo = request.FILES["file"]
                 documento.file = archivo
                 documento.nombre = archivo.name
-                documento.save()
+                documento.save(usuario=request.user)
                 return JsonResponse(
                     {"msj": "Archivo Modificado correctamente"},
                     status=status.HTTP_200_OK,
@@ -131,10 +131,25 @@ class DocumentoViewSet(viewsets.ModelViewSet):
         try:
             documento = Documento.objects.get(id=kwargs["pk"])
             if path.exists(str(documento.file.path)):
-                remove_file(str(documento.file.path))
-                documento.delete()
+                # remove_file(str(documento.file.path))
+                documento.softDelete()
                 return JsonResponse(
                     {"mensaje": "Archivo eliminado correctamente"}, status=200
+                )
+            else:
+                return JsonResponse(
+                    {"mensaje": "No se encontro el Archivo"}, status=404
+                )
+        except:
+            return JsonResponse({"mensaje": "El archivo no existe"}, status=404)
+
+    def softRestore(self, request, *args, **kwargs):
+        try:
+            documento = Documento.objects.get(id=kwargs["pk"])
+            if path.exists(str(documento.file.path)):
+                documento.softRestore()
+                return JsonResponse(
+                    {"mensaje": "Archivo restaurado correctamente"}, status=200
                 )
             else:
                 return JsonResponse(

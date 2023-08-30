@@ -17,7 +17,7 @@ export function useUser() {
 
   const getMeToken = async (usuario) => {
     try {
-      let uresponse;
+      let response;
       await getTokenApi(usuario).then((token) => (response = token));
       return response;
     } catch (error) {

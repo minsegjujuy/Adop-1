@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { BASE_APP } from "../../../utils/contants";
 import "./LoginForm.scss";
 import { Button, Form } from "semantic-ui-react";
 import { useFormik } from "formik";
@@ -28,7 +29,7 @@ export function LoginForm() {
           autoClose: 3000,
           transition: Flip,
         });
-        window.location.replace("http://localhost:3000/admin/vigilancia");
+        window.location.replace(`${BASE_APP}/admin/vigilancia`);
       } catch (error) {
         toast.error(error.message);
       }

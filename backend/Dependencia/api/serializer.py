@@ -5,7 +5,10 @@ from ..models import Dependencia, Inspectora, UnidadRegional, DependenciaOperati
 class InspectoraSerializer(serializers.ModelSerializer):
     class Meta:
         model = Inspectora
-        fields = ("id",)
+        fields = (
+            "id",
+            "nombre_inspectora",
+        )
         read_only_fields = ("id",)
 
 

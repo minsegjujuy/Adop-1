@@ -1,10 +1,23 @@
-from rest_framework import routers
+from django.urls import path
 from .views import EnteViewSet
-
-router = routers.DefaultRouter()
-
-# [GET] [POST] api/ente/
-# [UPDATE] [DELETE] api/ente/{id}
-router.register("ente", EnteViewSet, "ente")
-
-urlpatterns = router.urls
+urlpatterns = [
+    # Ente
+    path(
+        "ente/",
+        EnteViewSet.as_view({"get": "list", "post": "create"}),
+        name="ente",
+    ),
+    path(
+        "ente/<int:pk>/",
+        EnteViewSet.as_view(
+            {
+                "get": "retrieve",
+                "patch": "update",
+                "put": "update",
+                "delete": "destroy",
+                "post": "softRestore",
+            }
+        ),
+        name="detail_ente",
+    ),
+]

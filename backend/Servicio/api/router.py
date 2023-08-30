@@ -1,16 +1,62 @@
-from rest_framework import routers
+from django.urls import path
 from .views import TipoServicioViewSet, ServicioViewSet, RecursoViewSet
 
-router = routers.DefaultRouter()
-
-# [GET] [POST] api/tipos_servicios/
-# [UPDATE] [DELETE] api/tipos_servicios/{id}
-router.register("tipo_servicios", TipoServicioViewSet, "tipos_servicios")
-# [GET] [POST] api/servicios/
-# [UPDATE] [DELETE] api/servicios/{id}
-router.register("servicios", ServicioViewSet, "servicios")
-# [GET] [POST] api/recursos/
-# [UPDATE] [DELETE] api/recursos/{id}
-router.register("recursos", RecursoViewSet, "recursos")
-
-urlpatterns = router.urls
+urlpatterns = [
+    # Tipos de Servicio
+    path(
+        "tipo_servicio/",
+        TipoServicioViewSet.as_view({"get": "list", "post": "create"}),
+        name="tipo_servicios_list",
+    ),
+    path(
+        "tipo_servicio/<int:pk>/",
+        TipoServicioViewSet.as_view(
+            {
+                "get": "retrieve",
+                "patch": "update",
+                "put": "update",
+                "delete": "destroy",
+                "post": "softRestore",
+            }
+        ),
+        name="detail_tipo_servicio",
+    ),
+    # Servicios
+    path(
+        "servicios/",
+        ServicioViewSet.as_view({"get": "list", "post": "create"}),
+        name="servicios_list",
+    ),
+    path(
+        "servicios/<int:pk>/",
+        ServicioViewSet.as_view(
+            {
+                "get": "retrieve",
+                "patch": "update",
+                "put": "update",
+                "delete": "destroy",
+                "post": "softRestore",
+            }
+        ),
+        name="detail_servicios",
+    ),
+    # Recursos
+    path(
+        "recursos/",
+        RecursoViewSet.as_view({"get": "list", "post": "create"}),
+        name="recursos_list",
+    ),
+    path(
+        "recursos/<int:pk>/",
+        RecursoViewSet.as_view(
+            {
+                "get": "retrieve",
+                "patch": "update",
+                "put": "update",
+                "delete": "destroy",
+                "post": "softRestore",
+            }
+        ),
+        name="detail_recursos",
+    ),
+]

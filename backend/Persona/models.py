@@ -1,7 +1,8 @@
 from django.db import models
+from BaseModel.models import BaseModel
 
 
-class Persona(models.Model):
+class Persona(BaseModel):
     cuil = models.BigIntegerField(primary_key=True)
     dni = models.BigIntegerField()
     nombre_apellido = models.CharField(max_length=100, null=False)

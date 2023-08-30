@@ -1,20 +1,13 @@
 from ..models import TipoSecuestro, Secuestro
 from .serializer import SecuestroSerializer, TipoSecuestroSerializer
-from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import TokenAuthentication
-from rest_framework_simplejwt.authentication import JWTAuthentication
+from BaseModel.api.views import DynamicModelViewSet
 
 
-class TipoSecuestroViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (JWTAuthentication, TokenAuthentication)
+class TipoSecuestroViewSet(DynamicModelViewSet):
     queryset = TipoSecuestro.objects.all()
     serializer_class = TipoSecuestroSerializer
 
 
-class SecuestroViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (JWTAuthentication, TokenAuthentication)
+class SecuestroViewSet(DynamicModelViewSet):
     queryset = Secuestro.objects.all()
     serializer_class = SecuestroSerializer

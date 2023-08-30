@@ -1,8 +1,9 @@
 import React, { useState, useEffect, createContext } from "react";
+import { BASE_APP } from "../utils/contants";
 import { setToken } from "../api/token";
 import { useUser } from "../hooks/useUser";
 import { getToken, removeToken } from "../api/token";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 import { logoutApi } from "../api/user";
 // import { TOKEN, BASE_API } from "../utils/constants";
 
@@ -57,7 +58,7 @@ export function AuthProvider(props) {
       removeToken();
       setAuth(null);
       logoutApi(auth.token);
-      window.location.replace("http://localhost:3000/login");
+      window.location.replace(`${BASE_APP}/login`);
     }
   };
 

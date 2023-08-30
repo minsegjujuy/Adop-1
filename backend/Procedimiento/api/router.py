@@ -1,14 +1,43 @@
-from rest_framework import routers
+from django.urls import path
 from .views import ProcedimientoViewSet, ProcedimientoPersonaViewSet
 
-router = routers.DefaultRouter()
-
-# [GET] [POST] api/procedimientos/
-# [UPDATE] [DELETE] api/procedimientos/{id}
-router.register('procedimientos', ProcedimientoViewSet, 'Procedimiento')
-
-# [GET] [POST] api/procedimientosPersonas/
-# [UPDATE] [DELETE] api/procedimientosPersonas/{id}
-router.register('procedimientosPersonas', ProcedimientoPersonaViewSet, 'ProcedimientoPersonas')
-
-urlpatterns = router.urls
+urlpatterns = [
+    # Procedimientos
+    path(
+        "procedimiento/",
+        ProcedimientoViewSet.as_view({"get": "list", "post": "create"}),
+        name="procedimientos_list",
+    ),
+    path(
+        "procedimiento/<int:pk>/",
+        ProcedimientoViewSet.as_view(
+            {
+                "get": "retrieve",
+                "patch": "update",
+                "put": "update",
+                "delete": "destroy",
+                "post": "softRestore",
+            }
+        ),
+        name="detail_procedimiento",
+    ),
+    # Procedimiento Personas
+    path(
+        "procedimiento_personas/",
+        ProcedimientoPersonaViewSet.as_view({"get": "list", "post": "create"}),
+        name="procedimiento_personas",
+    ),
+    path(
+        "procedimiento_personas/<int:pk>/",
+        ProcedimientoPersonaViewSet.as_view(
+            {
+                "get": "retrieve",
+                "patch": "update",
+                "put": "update",
+                "delete": "destroy",
+                "post": "softRestore",
+            }
+        ),
+        name="detail_procedimiento_personas",
+    ),
+]

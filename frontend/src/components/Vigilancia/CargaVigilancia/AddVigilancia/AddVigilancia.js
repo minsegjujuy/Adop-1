@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form, Icon, Checkbox } from "semantic-ui-react";
+import { BASE_APP } from "../../../../utils/contants";
+import { Button, Form, Checkbox, CustomSelect } from "semantic-ui-react";
 import { useVigilancia, useAuth } from "../../../../hooks";
 import { MapView } from "../../Mapa/react-leaflet";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 // import { useAuth} from "../../hooks";
-import { toast, Flip } from "react-toastify";
+import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import "./AddVigilancia.scss";
 export function AddVigilancia(props) {
@@ -16,48 +17,29 @@ export function AddVigilancia(props) {
   const { addHorarios } = props;
   const { auth } = useAuth();
   const [formHorario, setformHorario] = useState(null);
-  const { addVigilancia, get_jurisdicciones } = useVigilancia();
+
+  const {
+    addVigilancia,
+    get_regionales,
+    get_jurisdicciones,
+    get_motivos,
+    get_tipo_servicios,
+    get_recursos,
+  } = useVigilancia();
   // const {auth}=useAuth();
   // const {actualizar_contra,actualizar_contra_admin} =useContrasena();
-  const motivos = [
-    { key: "1", text: "Violencia de genero", value: 1 },
-    { key: "2", text: "Edificio Publico", value: 2 },
-    { key: "3", text: "Funcionarios Publicos", value: 3 },
-    { key: "4", text: "Proteccion de Personas", value: 4 },
-  ];
 
-  const servicios = [
-    { key: "1", text: "Vigilancia de externa", value: 1 },
-    { key: "2", text: "Vigilancia interna", value: 2 },
-    { key: "3", text: "Custodia de Bienes", value: 3 },
-    { key: "4", text: "Custodia de Detenidos", value: 4 },
-    { key: "5", text: "Vigilancia de Persona", value: 5 },
-  ];
+  const [regional, setRegional] = useState(null);
+  const [jurisdiccion, setJurisdiccion] = useState(null);
+  const [motivo, setMotivo] = useState(null);
+  const [tipo_servicio, setTipoServocio] = useState(null);
+  const [recurso, setRecurso] = useState(null);
 
-  const recursos = [
-    { key: "1", text: "Auto", value: 1 },
-    { key: "2", text: "Camioneta", value: 2 },
-    { key: "3", text: "Moto", value: 3 },
-    { key: "4", text: "Bicicleta", value: 4 },
-    { key: "5", text: "Equino", value: 5 },
-    { key: "6", text: "Carpa Azul", value: 6 },
-    { key: "7", text: "Canes", value: 7 },
-    { key: "8", text: "Otro", value: 8 },
-  ];
-
-  const regionales = [
-    { key: "1", text: "URR 1", value: "1" },
-    { key: "2", text: "URR 2", value: "2" },
-    { key: "3", text: "URR 3", value: "3" },
-    { key: "4", text: "URR 4", value: "4" },
-    { key: "5", text: "URR 5", value: "5" },
-    { key: "6", text: "URR 6", value: "6" },
-    { key: "7", text: "URR 7", value: "7" },
-    { key: "8", text: "URR 8", value: "8" },
-  ];
-
-  const [franja, setFranja] = useState(null);
   useEffect(() => {
+    buscarRegionales();
+    buscarMotivos();
+    buscarTipoServocios();
+    buscarRecursos();
     if (auth.usuario.unidad_regional === null) {
       buscarJurisdicciones(0);
     } else {
@@ -65,16 +47,54 @@ export function AddVigilancia(props) {
     }
   }, []);
 
+  const buscarRegionales = async () => {
+    const options = await get_regionales();
+    setRegional(options.map((option) => option));
+  };
   const buscarJurisdicciones = async (id) => {
     const options = await get_jurisdicciones(id);
 
-    setFranja(options.map((option) => option));
+    setJurisdiccion(options.map((option) => option));
   };
-  const valores = franja?.map((tipo, index) => ({
-    value: tipo.id,
+  const buscarMotivos = async () => {
+    const options = await get_motivos();
+    setMotivo(options.map((option) => option));
+  };
+  const buscarTipoServocios = async () => {
+    const options = await get_tipo_servicios();
+    setTipoServocio(options.map((option) => option));
+  };
+  const buscarRecursos = async () => {
+    const options = await get_recursos();
+    setRecurso(options.map((option) => option));
+  };
+
+  const regionales = regional?.map((res, index) => ({
+    value: res.id,
     key: `${index}`,
-    text: tipo.jurisdiccion,
+    text: res.unidad_regional,
   }));
+  const jurisdicciones = jurisdiccion?.map((res, index) => ({
+    value: res.id,
+    key: `${index}`,
+    text: res.jurisdiccion,
+  }));
+  const motivos = motivo?.map((res, index) => ({
+    value: res.id,
+    key: `${index}`,
+    text: res.motivo,
+  }));
+  const tipos_servicios = tipo_servicio?.map((res, index) => ({
+    value: res.id,
+    key: `${index}`,
+    text: res.tipo_servicio,
+  }));
+  const recursos = recurso?.map((res, index) => ({
+    value: res.id,
+    key: `${index}`,
+    text: res.tipo_recurso,
+  }));
+
   const formik = useFormik({
     initialValues: initialValues(auth),
     validationSchema: Yup.object(validationSchema()),
@@ -84,7 +104,7 @@ export function AddVigilancia(props) {
           fk_jurisdiccion: formValue.juridiccion,
           fk_motivo: formValue.motivo,
           fk_tipo_servicio: formValue.tipo_servicio,
-          fk_tipo_recurso: formValue.recursos,
+          // fk_tipo_recurso: formValue.recursos,
           fk_unidad_regional: formValue.regional,
           objetivo: formValue.objetivo,
           cant_dias: 0,
@@ -100,7 +120,7 @@ export function AddVigilancia(props) {
 
         console.log(formHorario);
         console.log(objeto);
-        console.log(valores);
+        console.log(jurisdicciones);
         const response = await addVigilancia(objeto);
 
         if (response.msj) {
@@ -111,7 +131,7 @@ export function AddVigilancia(props) {
             timer: 3000,
             showConfirmButton: true,
           });
-          window.location.replace("http://localhost:3000/admin/vigilancia");
+          window.location.replace(`${BASE_APP}/admin/vigilancia`);
         } else {
           Swal.fire({
             title: "Algunos datos ingresados no son validos!",
@@ -136,7 +156,7 @@ export function AddVigilancia(props) {
               name="regional"
               value={formik.values.regional}
               // placeholder={`UNIDAD REGIONAL ${formik.values.regional}`}
-              // onChange={formik.handleReset}
+              // onChange={buscarJurisdicciones(formik.values.regional)}
               error={formik.errors.regional}
             />
           </div>
@@ -149,10 +169,14 @@ export function AddVigilancia(props) {
           <Form.Select
             fluid
             name="regional"
-            options={regionales}
+            options={regionales ? regionales : 0}
             placeholder="Seleccione la regional"
             value={formik.values.regional}
-            onChange={(_, data) => formik.setFieldValue("regional", data.value)}
+            onChange={(_, data) => {
+              formik.setFieldValue("regional", data.value);
+              buscarJurisdicciones(data.value);
+            }}
+            // onChange = {(event) => console.log(event)}
           />
         </div>
       )}
@@ -162,7 +186,7 @@ export function AddVigilancia(props) {
           <Form.Select
             search
             name="juridiccion"
-            options={valores ? valores : 0}
+            options={jurisdicciones ? jurisdicciones : 0}
             placeholder="Seleccione la juridiccion"
             value={formik.values.juridiccion}
             onChange={(_, data) =>
@@ -175,7 +199,7 @@ export function AddVigilancia(props) {
           <div className="field">
             <Form.Select
               name="motivo"
-              options={motivos}
+              options={motivos ? motivos : 0}
               placeholder="Seleccione el motivo"
               value={formik.values.motivo}
               onChange={(_, data) => formik.setFieldValue("motivo", data.value)}
@@ -188,7 +212,7 @@ export function AddVigilancia(props) {
         <div className="fields">
           <Form.Select
             name="tipo_servicio"
-            options={servicios}
+            options={tipos_servicios ? tipos_servicios : 0}
             placeholder="Seleccione el tipo de servicio "
             value={formik.values.tipo_servicio}
             onChange={(_, data) =>
@@ -267,14 +291,21 @@ export function AddVigilancia(props) {
         <div className="field">
           <label>Recursos</label>
           <div className="field">
-            <Form.Select
+            {/* <Form.Select
               name="recursos"
               options={recursos}
               placeholder="Seleccione los recursos "
               value={formik.values.recursos}
-              onChange={(_, data) =>
-                formik.setFieldValue("recursos", data.value)
-              }
+              onChange={(_, data) => formik.setFieldValue("recursos", data.value)}
+              isMulti={true}
+            /> */}
+            <Form.Field
+              className="custom-select"
+              name="multiLanguages"
+              options={recursos}
+              component={CustomSelect}
+              placeholder="Select multi languages..."
+              isMulti={true}
             />
           </div>
         </div>
@@ -282,53 +313,6 @@ export function AddVigilancia(props) {
       <h4 className="ui dividing header">Ubicacion de la vigilancia</h4>
       <div className="two fields">
         <MapView position={position} setposition={setposition} />
-      </div>
-      <h4 className="ui dividing header">Carga de archivo</h4>
-      <div className="three fields">
-        <div className="field">
-          <label htmlFor="file-input" className="file-input-label">
-            Archivo
-          </label>
-          <Form.Input
-            multiple="true"
-            type="file"
-            name="file"
-            // placeholder="Seleccione un archivo"
-            value={formik.values.file}
-            onChange={formik.handleChange}
-            error={formik.errors.file}
-          />
-        </div>
-        <div className="field">
-          <label>Ente</label>
-          <div className="field">
-            <Form.Select
-              // name="recursos"
-
-              options={recursos}
-              placeholder="Seleccione los recursos "
-
-              // value={formik.values.recursos}
-              // onChange={(_, data) =>
-              //   formik.setFieldValue("recursos", data.value)
-              // }
-            />
-          </div>
-        </div>
-        <div className="field">
-          <label>Funcionario</label>
-          <div className="field">
-            <Form.Select
-              // name="recursos"
-              options={recursos}
-              placeholder="Seleccione los recursos "
-              // value={formik.values.recursos}
-              // onChange={(_, data) =>
-              //   formik.setFieldValue("recursos", data.value)
-              // }
-            />
-          </div>
-        </div>
       </div>
 
       <div className="boton_crear_vigilancia">
@@ -365,7 +349,7 @@ function initialValues(auth) {
 
 function validationSchema() {
   return {
-    // juridiccion: Yup.number().required("Seleccione una Juridiccion"),
+    juridiccion: Yup.number().required("Seleccione una Juridiccion"),
     // motivo: Yup.number().required("Seleccione un Motivo"),
     // tipo_servicio: Yup.number().required("Seleccione un Tipo de Servicio"),
     // Objetivo:Yup.string().required("Escriba un objetivo para la vigilancia"),

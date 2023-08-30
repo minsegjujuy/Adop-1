@@ -1,6 +1,3 @@
-from Dependencia.models import Dependencia, UnidadRegional
-from Persona.api.serializer import PersonaSerializer
-from Persona.models import Persona
 from ..models import Categoria, Funcionario, Personal, Jerarquia
 from .serializer import (
     CategoriaSerializer,
@@ -8,20 +5,20 @@ from .serializer import (
     PersonalSerializer,
     JerarquiaSerializer,
 )
+from BaseModel.api.views import DynamicModelViewSet
+from Dependencia.models import Dependencia, UnidadRegional
+from Persona.api.serializer import PersonaSerializer
+from Persona.models import Persona
 from django.http import JsonResponse
-from rest_framework import viewsets, status
+from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import TokenAuthentication
-from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
-class PersonalViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (JWTAuthentication, TokenAuthentication)
+class PersonalViewSet(DynamicModelViewSet):
     queryset = Personal.objects.all()
     serializer_class = PersonalSerializer
 
+    @action(detail=True, methods=["get"])
     def list(self, request, *args, **kwargs):
         self.queryset = self.get_queryset()
         serializer = PersonalSerializer(self.queryset, many=True)
@@ -51,6 +48,7 @@ class PersonalViewSet(viewsets.ModelViewSet):
             respuesta.append(data)
         return JsonResponse(respuesta, safe=False, status=status.HTTP_200_OK)
 
+    @action(detail=True, methods=["get"])
     def retrieve(self, request, *args, **kwargs):
         legajo = kwargs["pk"]
         personal = PersonalSerializer(Personal.objects.get(legajo=legajo)).data
@@ -71,6 +69,7 @@ class PersonalViewSet(viewsets.ModelViewSet):
         data["jurisdiccion"] = personal["fk_jurisdiccion"]
         return JsonResponse(data, safe=False, status=status.HTTP_200_OK)
 
+    @action(detail=True, methods=["post"])
     def create(self, request, *args, **kwargs):
         serializer = PersonalSerializer(data=request)
         serializer.is_valid(raise_exception=True)
@@ -87,40 +86,16 @@ class PersonalViewSet(viewsets.ModelViewSet):
         )
 
 
-class JerarquiaViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (JWTAuthentication, TokenAuthentication)
+class JerarquiaViewSet(DynamicModelViewSet):
+    queryset = Jerarquia.objects.all()
     serializer_class = JerarquiaSerializer
 
-    def get_queryset(self):
-        queryset = Jerarquia.objects.filter(...)
-        return queryset
 
-    @action(detail=True, methods=["get"])
-    def get(self, *args, **kwargs):
-        queryset = self.get_queryset()
-        serializer = JerarquiaSerializer(queryset, many=True)
-        return JsonResponse(serializer.data, status=status.HTTP_200_OK)
-
-    @action(detail=True, methods=["post"])
-    def post(self, request, *args, **kwargs):
-        serializer = JerarquiaSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return JsonResponse(
-            {"msj": "Elemento creado correctamente!!"}, status=status.HTTP_201_CREATED
-        )
-
-
-class CategoriaViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (JWTAuthentication, TokenAuthentication)
+class CategoriaViewSet(DynamicModelViewSet):
     queryset = Categoria.objects.all()
     serializer_class = CategoriaSerializer
 
 
-class FuncionarioViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (JWTAuthentication, TokenAuthentication)
+class FuncionarioViewSet(DynamicModelViewSet):
     queryset = Funcionario.objects.all()
     serializer_class = FuncionarioSerializer

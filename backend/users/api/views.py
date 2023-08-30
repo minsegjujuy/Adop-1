@@ -1,20 +1,16 @@
 from django.contrib.auth import authenticate
-from django.contrib.auth.hashers import make_password
 from django.contrib.sessions.models import Session
 from django.http import JsonResponse
 
 from Dependencia.models import Dependencia, UnidadRegional
-from Dependencia.api.serializer import DependenciaSerializer, UnidadRegionalSerializer
+from BaseModel.api.views import DynamicModelViewSet
 
 from users.models import Usuario, Rol
 from users.api.serializers import UserSerializer, TokenSerializer, RolSerializer
 
-from rest_framework import status, viewsets
+from rest_framework import status
 from rest_framework.views import APIView
-
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
-from rest_framework.authentication import TokenAuthentication
-from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.decorators import action
 
 from rest_framework.response import Response
 
@@ -28,19 +24,16 @@ import datetime
 from ..authentication_mixins import Authentication
 
 
-class RolViewSet(Authentication, viewsets.ModelViewSet):
-    permission_classes = (IsAdminUser, IsAuthenticated)
-    authentication_classes = (JWTAuthentication, TokenAuthentication)
+class RolViewSet(Authentication, DynamicModelViewSet):
     queryset = Rol.objects.all()
     serializer_class = RolSerializer
 
 
-class UserViewSet(Authentication, viewsets.ModelViewSet):
-    permission_classes = (IsAdminUser, IsAuthenticated)
-    authentication_classes = (JWTAuthentication, TokenAuthentication)
+class UserViewSet(Authentication, DynamicModelViewSet):
     queryset = Usuario.objects.all()
     serializer_class = UserSerializer
 
+    @action(detail=True, methods=["put"])
     def update(self, request, pk=None):
         usuario = self.get_object(pk)
         serializer = UserSerializer(usuario, data=request.data, partial=True)
@@ -49,6 +42,7 @@ class UserViewSet(Authentication, viewsets.ModelViewSet):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    @action(detail=True, methods=["patch"])
     def partial_update(self, request, pk=None):
         user_id = pk
         if user_id:
@@ -107,6 +101,7 @@ class UserViewSet(Authentication, viewsets.ModelViewSet):
             respuesta = {"msj": "No se ingreso el id del usuario a modificar"}
             return Response(respuesta, status=status.HTTP_400_BAD_REQUEST)
 
+    @action(detail=True, methods=["post"])
     def create(self, request):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)

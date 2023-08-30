@@ -1,4 +1,3 @@
-from Servicio.api.serializer import TipoRecursoSerializer
 from ..models import (
     Motivo,
     Vigilancia,
@@ -6,16 +5,6 @@ from ..models import (
     PersonalVigilancia,
     RecursosVigilancia,
 )
-from Personal.models import Personal
-from Persona.models import Persona
-from Dependencia.models import Dependencia
-from Servicio.models import TipoServicio, TipoRecurso
-from Personal.models import Funcionario
-from Ente.models import Ente
-
-from Dependencia.api.serializer import UnidadRegionalSerializer
-from Personal.api.serializer import PersonalSerializer, FuncionarioSerializer
-from Ente.api.serializer import EnteSerializer
 from .serializer import (
     VigilanciaSerializer,
     VigilanciaSerializerView,
@@ -25,36 +14,41 @@ from .serializer import (
     PersonalVigilanciaSerializer,
 )
 
-from rest_framework import viewsets, status
+from Personal.models import Personal
+from Persona.models import Persona
+from Dependencia.models import Dependencia
+from Servicio.models import TipoServicio, TipoRecurso
+from Personal.models import Funcionario
+from Ente.models import Ente
+
+from Servicio.api.serializer import TipoRecursoSerializer
+from Dependencia.api.serializer import UnidadRegionalSerializer
+from Personal.api.serializer import PersonalSerializer, FuncionarioSerializer
+from Ente.api.serializer import EnteSerializer
+from BaseModel.api.views import DynamicModelViewSet
+
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import TokenAuthentication
-from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.decorators import action
 
-from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from datetime import datetime, date, timedelta
 import locale
-from django.http import JsonResponse
 
 locale.setlocale(locale.LC_TIME, "es_ES")
 
 
-class MotivoViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (JWTAuthentication, TokenAuthentication)
+class MotivoViewSet(DynamicModelViewSet):
     queryset = Motivo.objects.all()
     serializer_class = MotivoVigilanciaSerializer
 
 
-class VigilanciaViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (JWTAuthentication, TokenAuthentication)
+class VigilanciaViewSet(DynamicModelViewSet):
     queryset = Vigilancia.objects.all()
     serializer_class = VigilanciaSerializerView
 
+    @action(detail=True, methods=['GET'])
     def list(self, request, *args, **kwargs):
         usuario = request.user
         inactivo = request.GET.get("inactivo")
@@ -81,8 +75,10 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
             except:
                 data["servicio"] = None
             data["fk_unidad_regional"] = UnidadRegionalSerializer(Dependencia.objects.get(id=vigilancia["fk_jurisdiccion"]).fk_unidad_regional).data["unidad_regional"]
-            data["fk_ente"] = EnteSerializer(Ente.objects.get(id=vigilancia["fk_ente"]))
-            data["fk_funcionario"] = FuncionarioSerializer(Funcionario.objects.get(id=vigilancia["fk_funcionario"]))
+            if vigilancia["fk_ente"]:
+                data["fk_ente"] = EnteSerializer(Ente.objects.get(id=vigilancia["fk_ente"])).data
+            if vigilancia["fk_funcionario"]:
+                data["fk_funcionario"] = FuncionarioSerializer(Funcionario.objects.get(id=vigilancia["fk_funcionario"]))
             data["objetivo"] = vigilancia["objetivo"]
             data["cant_dias"] = vigilancia["cant_dias"]
             data["fecha_inicio"] = vigilancia["fecha_inicio"]
@@ -99,6 +95,7 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
 
         return Response(resuesta)
 
+    @action(detail=True, methods=['GET'])
     def retrieve(self, request, pk=None):
         self.queryset = self.get_queryset()
         try:
@@ -154,6 +151,7 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
 
         return Response(data)
 
+    @action(detail=True, methods=['POST'])
     def create(self, request, *args, **kwargs):
         serializer = VigilanciaSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -192,44 +190,46 @@ class VigilanciaViewSet(viewsets.ModelViewSet):
         respuesta = {"msj": "Vigilancia creada exitosamente!"}
         return JsonResponse(respuesta, safe=False, status=status.HTTP_201_CREATED)
 
-    def destroy(self, request, pk=None):
-        try:
-            vigilancia = Vigilancia.objects.get(pk=pk)
-            vigilancia.delete()
-            return JsonResponse(
-                {"msj": "Vigilancia Eliminada Correctamente!!!"},
-                status=status.HTTP_200_OK,
-            )
-        except Vigilancia.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
 
-
-class RecursosVigilanciaViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (JWTAuthentication, TokenAuthentication)
+class RecursosVigilanciaViewSet(DynamicModelViewSet):
     queryset = RecursosVigilancia.objects.all()
     serializer_class = RecursosVigilanciaSerializer
     # la fecha que se tiene que enviar en la tea es la fecha de la vigilancia
     
+    @action(detail=True, methods=['post'])
+    def create(self, request, *args, **kwargs):
+        try:
+            vigilancia = Vigilancia.objects.get(id=kwargs['pk'])
+            serialier = RecursosVigilanciaSerializer(request.data).data
+            serialier['fk_vigilancia'] = vigilancia
+            serialier.save()
+        except:
+            return JsonResponse({'msj':'La vigilancia no existe'}, status=status.HTTP_404_NOT_FOUND)
+    
+    @action(detail=True, methods=['GET'])
     def list(self, request, *args, **kwargs):
-        if Vigilancia.objects.get(id=kwargs["pk"]):
-            if request.GET.get("fecha"):
-                recursos = RecursosVigilanciaSerializer(RecursosVigilancia.objects.filter(fk_vigilancia=kwargs["vigilancia_id"], fecha=request.GET["fecha"]), many=True).data
-            else:
-                recursos = RecursosVigilanciaSerializer(RecursosVigilancia.objects.filter(fk_vigilancia=kwargs["vigilancia_id"]), many=True).data
-            if recursos != []:
-                resp=[]
-                for dato in recursos:
-                    recurso={}
-                    recurso["id"] = dato["id"]
-                    recurso["recurso"] = TipoRecurso.objects.get(id=dato["fk_tipo_recurso"]).tipo_recurso
-                    recurso["fecha"]  = dato["fecha"]
-                    recurso["cantidad"] = dato["cantidad"]
-                    resp.append(recurso)
-                return JsonResponse(resp, status=status.HTTP_200_OK)
-            return JsonResponse({"msj":"La vigilancia no tiene recursos asignados"}, status=status.HTTP_403_FORBIDDEN)
-        return JsonResponse({"msj":f"La vigilancia de ID: {kwargs['vigilancia_id']} no existe"}, status=status.HTTP_404_NOT_FOUND)
+        try:
+            if Vigilancia.objects.get(id=kwargs["vigilancia_id"]):
+                if request.GET.get("fecha"):
+                    recursos = RecursosVigilanciaSerializer(RecursosVigilancia.objects.filter(fk_vigilancia=kwargs["vigilancia_id"], fecha=request.GET["fecha"]), many=True).data
+                else:
+                    recursos = RecursosVigilanciaSerializer(RecursosVigilancia.objects.filter(fk_vigilancia=kwargs["vigilancia_id"]), many=True).data
+                if recursos != []:
+                    resp=[]
+                    for dato in recursos:
+                        recurso={}
+                        recurso["id"] = dato["id"]
+                        recurso["recurso"] = TipoRecurso.objects.get(id=dato["fk_tipo_recurso"]).tipo_recurso
+                        recurso["fecha"]  = dato["fecha"]
+                        recurso["cantidad"] = dato["cantidad"]
+                        resp.append(recurso)
+                    return JsonResponse(resp, status=status.HTTP_200_OK)
+                return JsonResponse({"error":"La vigilancia no tiene recursos asignados"}, status=status.HTTP_403_FORBIDDEN)
+        except:
+            return JsonResponse({"error":f"La vigilancia de ID: {kwargs['vigilancia_id']} no existe"}, status=status.HTTP_404_NOT_FOUND)
 
+
+    @action(detail=True, methods=['PUT'])
     def update(self, request, *args, **kwargs):
         try:
             if Vigilancia.objects.get(id=kwargs["vigilancia_id"]):
@@ -241,25 +241,46 @@ class RecursosVigilanciaViewSet(viewsets.ModelViewSet):
                     recurso.save()
                     JsonResponse({"msj":"El recurso se modifico correctamente"}, status=status.HTTP_200_OK)
                 return JsonResponse({"msj":"No existe el registro de recursos."}, status=status.HTTP_404_NOT_FOUND)
-            return JsonResponse({"msj":"La vigilancia no existe."}, status=status.HTTP_404_NOT_FOUND)
         except:
-            pass
+            return JsonResponse({"msj":"La vigilancia no existe."}, status=status.HTTP_404_NOT_FOUND)
         return super().update(request, *args, **kwargs)
 
 
-class TurnosVigilanciaViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (JWTAuthentication, TokenAuthentication)
+class TurnosVigilanciaViewSet(DynamicModelViewSet):
     queryset = TurnosVigilancia.objects.all()
     serializer_class = TurnosVigilanciaSerializer
-
-    def retrieve(self, request, *args, **kwargs):
-        turnoVigilancia = TurnosVigilanciaSerializer(TurnosVigilancia.objects.get(id=kwargs["pk"])).data
+    
+    @action(detail=True, methods=['GET'])
+    def  list(self, request, *args, **kwargs):
+        turnoVigilancia = TurnosVigilanciaSerializer(TurnosVigilancia.objects.get(fk_vigilancia=kwargs["vigilancia_id"])).data
         turnos = []
         for fecha in turnoVigilancia["turno"]:
             if not PersonalVigilancia.objects.filter(fecha=fecha).first():
                 turnos.append(fecha)
         turnoVigilancia["turno"] = turnos
+        respuesta = turnoVigilancia
+        return JsonResponse(respuesta, status=status.HTTP_200_OK)
+    
+    @action(detail=True, methods=['GET'])
+    def retrieve(self, request, *args, **kwargs):
+        turnoVigilancia = TurnosVigilanciaSerializer(TurnosVigilancia.objects.get(id=kwargs["pk"])).data
+        del(turnoVigilancia["id"])
+        del(turnoVigilancia["fk_vigilancia"])
+        fecha=request.GET.get("fecha")
+        if fecha:
+            if fecha in turnoVigilancia["turno"]:
+                turnoVigilancia["fecha"] = fecha
+                turnoVigilancia["personal_asignado"] = False
+                if PersonalVigilancia.objects.filter(fecha=fecha).first():
+                    turnoVigilancia["personal_asignado"] = True
+                del(turnoVigilancia["turno"])
+            else:
+                return JsonResponse({},status=status.HTTP_404_NOT_FOUND)
+        # else:
+        #     for fecha in turnoVigilancia["turno"]:
+        #         if not PersonalVigilancia.objects.filter(fecha=fecha).first():
+        #             turnos.append(fecha)
+        #     turnoVigilancia["turno"] = turnos
         respuesta = turnoVigilancia
         return JsonResponse(respuesta, status=status.HTTP_200_OK)
 
@@ -283,16 +304,17 @@ class TurnosVigilanciaViewSet(viewsets.ModelViewSet):
 
         return fechas_seleccionadas
 
+    @action(detail=True, methods=['POST'])
     def create(self, request, *args, **kwargs):
         serializer = TurnosVigilanciaSerializer
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        vigilancia = serializer.validated_data["fk_vigilancia"].id
+        vigilancia = Vigilancia.objects.get(id=kwargs["vigilancia_id"])
 
         fechas = self.seleccionar_fechas(
-            Vigilancia.objects.get(id=vigilancia).fecha_inicio,
-            Vigilancia.objects.get(id=vigilancia).fecha_fin,
+            vigilancia.fecha_inicio,
+            vigilancia.fecha_fin,
             serializer.validated_data["diario"],
             serializer.validated_data["turno"],
         )
@@ -316,10 +338,9 @@ class TurnosVigilanciaViewSet(viewsets.ModelViewSet):
                 diario=serializer.validated_data["diario"],
                 dia_completo=serializer.validated_data["dia_completo"],
             )
-            up_vigilancia = get_object_or_404(Vigilancia, pk=vigilancia)
-            up_vigilancia.turno_asignado = True
-            up_vigilancia.cant_dias = len(fechas)
-            up_vigilancia.save()
+            vigilancia.turno_asignado = True
+            vigilancia.cant_dias = len(fechas)
+            vigilancia.save()
 
             respuesta = {"msj": "Turnos Asignados Correctamente!!!"}
             return JsonResponse(respuesta, safe=False, status=status.HTTP_201_CREATED)
@@ -329,23 +350,23 @@ class TurnosVigilanciaViewSet(viewsets.ModelViewSet):
                 respuesta, safe=False, status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
-    # def partial_update(self, request, *args, **kwargs):
-    #     turnoVigilancia =TurnosVigilanciaSerializer(TurnosVigilancia.objects.get(id=kwargs['pk'])).data
-    #     turnoVigilancia=request.data
-    #     serializer = TurnosVigilancia(data = turnoVigilancia, partial=True)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return JsonResponse({"msj":'Turno Modificado correctamente!!'},status=status.HTTP_200_OK)
-    #     else:
-    #         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    @action(detail=True, methods=['PATCH'])
+    def partial_update(self, request, *args, **kwargs):
+        turnoVigilancia =TurnosVigilanciaSerializer(TurnosVigilancia.objects.get(fk_vigilancia=kwargs['vigilancia_id'])).data
+        turnoVigilancia=request.data
+        serializer = TurnosVigilancia(data = turnoVigilancia, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse({"msj":'Turno Modificado correctamente!!'},status=status.HTTP_200_OK)
+        else:
+            return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class PersonalVigilanciaViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (JWTAuthentication, TokenAuthentication)
+class PersonalVigilanciaViewSet(DynamicModelViewSet):
     queryset = PersonalVigilancia.objects.all()
     serializer_class = PersonalVigilanciaSerializer
 
+    @action(detail=True, methods=['GET'])
     def list(self, *args, **kwargs):
         self.queryset = self.get_queryset()
         try:
@@ -375,9 +396,9 @@ class PersonalVigilanciaViewSet(viewsets.ModelViewSet):
                                 # persona['hora_fin'] = turno['hora_fin']
                             persona = {}
                             persona["id"] = turno["id"]
-                            persona["personal"] = personal
-                            persona["duracion"] = turno["duracion"]
                             persona["fecha"] = fecha
+                            persona["duracion"] = turno["duracion"]
+                            persona["personal"] = personal
                             horarios.append(persona)
                             # horarios[fecha].append(persona)
                             turnos["turnos"].append(horarios)
@@ -397,6 +418,7 @@ class PersonalVigilanciaViewSet(viewsets.ModelViewSet):
                 {"msj": "La vigilancia no existe"}, status=status.HTTP_400_BAD_REQUEST
             )
 
+    @action(detail=True, methods=['POST'])
     def create(self, request, *args, **kwargs):
         fk_vigilancia = kwargs["vigilancia_id"]
 
@@ -451,6 +473,7 @@ class PersonalVigilanciaViewSet(viewsets.ModelViewSet):
             {"msj": "Personal Asignado Correctamente"}, status=status.HTTP_201_CREATED
         )
 
+    @action(detail=True, methods=['PUT'])
     def update(self, request, pk=None):
         personalVigilancia = self.get_object(pk)
         serializer = PersonalVigilancia(data=personalVigilancia)

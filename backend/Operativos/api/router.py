@@ -1,14 +1,44 @@
-from rest_framework import routers
+from django.urls import path
 from .views import OperativoViewSet, OperativoPersonalViewSet
 
-router = routers.DefaultRouter()
-
-# [GET] [POST] api/operativos_policiales/
-# [UPDATE] [DELETE] api/operativos_policiales/{id}
-router.register("operativos_policiales", OperativoViewSet, "operativo_policials")
-
-# [GET] [POST] api/policial_operativo/
-# [UPDATE] [DELETE] api/policial_operativo/{id}
-router.register("policial_operativo", OperativoPersonalViewSet, "personal_operativo")
-
-urlpatterns = router.urls
+urlpatterns = [
+    # Operativos
+    path(
+        "operativos_policiales/",
+        OperativoViewSet.as_view({"get": "list", "post": "create"}),
+        name="operativos_policiales_list",
+    ),
+    path(
+        "operativos_policiales/<int:pk>/",
+        OperativoViewSet.as_view(
+            {
+                "get": "retrieve",
+                "patch": "update",
+                "put": "update",
+                "delete": "destroy",
+                "post": "softRestore",
+            }
+        ),
+        name="detail_operativos_policiales",
+    ),
+    
+    # Operativo-Personal
+    path(
+        "personal_operativo/",
+        OperativoPersonalViewSet.as_view({"get": "list", "post": "create"}),
+        name="personal_operativo_list",
+    ),
+    path(
+        "personal_operativo/<int:pk>/",
+        OperativoPersonalViewSet.as_view(
+            {
+                "get": "retrieve",
+                "patch": "update",
+                "put": "update",
+                "delete": "destroy",
+                "post": "softRestore",
+            }
+        ),
+        name="detail_personal_operativo",
+    ),
+]

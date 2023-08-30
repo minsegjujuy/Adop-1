@@ -1,10 +1,11 @@
 from django.db import models
 from Personal.models import Personal
 from Dependencia.models import Dependencia
+from BaseModel.models import BaseModel
 
 
 # Create your models here.
-class Operativo(models.Model):
+class Operativo(BaseModel):
     jefe_cargo = models.IntegerField()
     hora_inicio = models.TimeField(null=False)
     hora_final = models.TimeField(null=False)
@@ -20,6 +21,6 @@ class Operativo(models.Model):
     # personal = models.ManyToManyField('OperativoPersonal', db_table='operativo_personal', related_name='personal') #comentar para la primera migracion
 
 
-class OperativoPersonal(models.Model):
+class OperativoPersonal(BaseModel):
     fk_operativo = models.ForeignKey("Operativos.Operativo", on_delete=models.CASCADE)
     fk_personal = models.ForeignKey(Personal, on_delete=models.CASCADE)

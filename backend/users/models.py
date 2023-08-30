@@ -1,14 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from BaseModel.models import BaseModel
 from .manager import UsuarioManager
 from Dependencia.models import Dependencia, UnidadRegional
 
 
-class Rol(models.Model):
+class Rol(BaseModel):
     rol = models.CharField(max_length=13, unique=True)
 
 
-class Usuario(AbstractBaseUser, PermissionsMixin):
+class Usuario(AbstractBaseUser, PermissionsMixin, BaseModel):
     id = models.AutoField(primary_key=True)
     username = models.CharField("Nombre de Usuario", max_length=100, unique=True)
     email = models.EmailField("Correo Electronico", max_length=254, unique=True)

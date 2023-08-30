@@ -1,27 +1,15 @@
 from django.db import models
 from Dependencia.models import Dependencia, UnidadRegional
 from Persona.models import Persona
+from BaseModel.models import BaseModel
 
 
-class Estrato(models.Model):
+class Jerarquia(BaseModel):
     nombre = models.CharField(max_length=100)
-    activo = models.BooleanField(default=True, null=True)
-
-    def activar(self):
-        self.activo = True
-
-    def desactivar(self):
-        self.activo = False
-
-    class Meta:
-        abstract = True
-
-
-class Jerarquia(Estrato):
     nombre_largo = models.CharField(max_length=255)
 
 
-class Personal(models.Model):
+class Personal(BaseModel):
     legajo = models.IntegerField(primary_key=True)
     fk_persona = models.ForeignKey(Persona, on_delete=models.CASCADE, default=None)
     # fk_tipo_funcion = models.ForeignKey('TipoFuncion', on_delete=models.CASCADE)
@@ -32,15 +20,16 @@ class Personal(models.Model):
     )
 
 
-class Categoria(Estrato):
-    pass
+class Categoria(BaseModel):
+    nombre = models.CharField(max_length=100)
 
 
-class SubCategoria(Estrato):
+class SubCategoria(BaseModel):
+    nombre = models.CharField(max_length=100)
     fk_categoria = models.ForeignKey("Categoria", on_delete=models.CASCADE)
 
 
-class Funcionario(models.Model):
+class Funcionario(BaseModel):
     fk_persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
     fk_categoria = models.ForeignKey("SubCategoria", on_delete=models.CASCADE)
     fecha_inicio = models.DateField(null=False)

@@ -1,9 +1,10 @@
 from django.db import models
 from Persona.models import Persona
 from Servicio.models import Servicio
+from BaseModel.models import BaseModel
 
 
-class Procedimiento(models.Model):
+class Procedimiento(BaseModel):
     fk_servicio = models.ForeignKey(Servicio, on_delete=models.CASCADE)
     descripcion = models.TextField(blank=False, null=False)
     hora = models.TimeField()
@@ -14,17 +15,17 @@ class Procedimiento(models.Model):
     cant_arrestados = models.IntegerField()
 
 
-class ProcedimientoPersona(models.Model):
+class ProcedimientoPersona(BaseModel):
     fk_procedimiento = models.ForeignKey("Procedimiento", on_delete=models.CASCADE)
     fk_persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
     detenido = models.BooleanField()
 
 
-class TipoProcedimiento(models.Model):
+class TipoProcedimiento(BaseModel):
     tipo_procedimiento = models.CharField(null=False, max_length=50)
 
 
-class DetalleProcedimiento(models.Model):
+class DetalleProcedimiento(BaseModel):
     fk_procedimiento = models.ForeignKey("Procedimiento", on_delete=models.CASCADE)
     fk_tipo_procedimiento = models.ForeignKey(TipoProcedimiento, on_delete=models.CASCADE)
     detalle_articulo = models.TextField(null=False)

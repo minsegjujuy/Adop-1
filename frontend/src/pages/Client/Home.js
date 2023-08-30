@@ -1,4 +1,5 @@
 import React from "react";
+import { BASE_APP } from "../../utils/contants";
 import { useAuth } from "../../hooks/useAuth";
 
 export function Home() {
@@ -6,9 +7,9 @@ export function Home() {
   const redireccionar = () => {
     if (auth)
       if (auth?.usuario?.rol === "administrador")
-        window.location.replace("http://localhost:3000/admin/users");
-      else window.location.replace("http://localhost:3000/admin/vigilancia");
-    else window.location.replace("http://localhost:3000/login");
+        window.location.replace(`${BASE_APP}/admin/users`);
+      else window.location.replace(`${BASE_APP}/admin/vigilancia`);
+    else window.location.replace(`${BASE_APP}/login`);
   };
   return redireccionar();
 }

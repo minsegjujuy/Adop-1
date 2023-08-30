@@ -1,15 +1,16 @@
 from django.db import models
+from BaseModel.models import BaseModel
 
 
-class Inspectora(models.Model):
-    pass
+class Inspectora(BaseModel):
+    nombre_inspectora = models.CharField(max_length=255, null=True, blank=True)
 
 
-class UnidadRegional(models.Model):
+class UnidadRegional(BaseModel):
     unidad_regional = models.CharField(max_length=23, default="")
 
 
-class Dependencia(models.Model):
+class Dependencia(BaseModel):
     fk_unidad_regional = models.ForeignKey("UnidadRegional", on_delete=models.CASCADE)
     fk_inspectora = models.ForeignKey("Inspectora", on_delete=models.CASCADE, null=True)
     jurisdiccion = models.CharField(null=False, max_length=100)
@@ -17,6 +18,6 @@ class Dependencia(models.Model):
     # operativos = models.ManyToManyField('DependenciaOperativos', db_table='dependencia_operativos', related_name='operativos') #comentar para la primera migracion
 
 
-class DependenciaOperativos(models.Model):
+class DependenciaOperativos(BaseModel):
     fk_dependencia = models.ForeignKey("Dependencia.Dependencia", on_delete=models.CASCADE)
     fk_operativo = models.ForeignKey("Operativos.Operativo", on_delete=models.CASCADE)

@@ -1,13 +1,43 @@
-from rest_framework import routers
+from django.urls import path
 from .views import SecuestroViewSet, TipoSecuestroViewSet
 
-router = routers.DefaultRouter()
-
-# [GET] [POST] api/tipos_secuestros/
-# [UPDATE] [DELETE] api/tipos_secuestros/{id}
-router.register("tipos_secuestros", TipoSecuestroViewSet, "tipos_secuestros")
-# [GET] [POST] api/secuestros/
-# [UPDATE] [DELETE] api/secuestros/{id}
-router.register("secuestros", SecuestroViewSet, "secuestros")
-
-urlpatterns = router.urls
+urlpatterns = [
+    # Tipos de Secuestro
+    path(
+        "tipos_secuestro/",
+        TipoSecuestroViewSet.as_view({"get": "list", "post": "create"}),
+        name="tipos_secuestros_list",
+    ),
+    path(
+        "tipos_secuestro/<int:pk>/",
+        TipoSecuestroViewSet.as_view(
+            {
+                "get": "retrieve",
+                "patch": "update",
+                "put": "update",
+                "delete": "destroy",
+                "post": "softRestore",
+            }
+        ),
+        name="detail_tipos_secuestro",
+    ),
+    # Secuestros
+    path(
+        "secuestros/",
+        SecuestroViewSet.as_view({"get": "list", "post": "create"}),
+        name="secuestros_list",
+    ),
+    path(
+        "secuestros/<int:pk>/",
+        SecuestroViewSet.as_view(
+            {
+                "get": "retrieve",
+                "patch": "update",
+                "put": "update",
+                "delete": "destroy",
+                "post": "softRestore",
+            }
+        ),
+        name="detail_secuestro",
+    ),
+]

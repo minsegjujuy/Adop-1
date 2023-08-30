@@ -1,3 +1,4 @@
+import { BASE_APP } from "../../../../utils/contants";
 import { useFormik } from "formik";
 import { Form, Button, Checkbox } from "semantic-ui-react";
 import { useVigilancia } from "../../../../hooks";
@@ -54,7 +55,7 @@ export const CargaHorario = (props) => {
           duracion: formValue.turno_completo ? null : formValue.duracion,
         };
 
-        const response = await add_turnos(formValue2);
+        const response = await add_turnos(formValue2, id);
         if (response.msj) {
           Swal.fire({
             title: "Exito!",
@@ -63,7 +64,7 @@ export const CargaHorario = (props) => {
             timer: 3000,
             showConfirmButton: true,
           });
-          window.location.replace("http://localhost:3000/admin/vigilancia");
+          window.location.replace(`${BASE_APP}/admin/vigilancia`);
         } else {
           Swal.fire({
             title: "Algunos datos ingresados no son validos!",
