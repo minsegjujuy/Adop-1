@@ -2,6 +2,7 @@ from django.db import models
 from Personal.models import Personal
 from Dependencia.models import Dependencia
 from BaseModel.models import BaseModel
+from auditlog.registry import auditlog
 
 
 # Create your models here.
@@ -24,3 +25,7 @@ class Operativo(BaseModel):
 class OperativoPersonal(BaseModel):
     fk_operativo = models.ForeignKey("Operativos.Operativo", on_delete=models.CASCADE)
     fk_personal = models.ForeignKey(Personal, on_delete=models.CASCADE)
+
+
+auditlog.register(Operativo, exclude_fields=["updated_at", "created_at", "deleted_at"])
+auditlog.register(OperativoPersonal, exclude_fields=["updated_at", "created_at", "deleted_at"])

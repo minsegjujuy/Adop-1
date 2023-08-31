@@ -161,7 +161,7 @@ class Login(TokenObtainPairView):
             if user:
                 if user.usuario_activo:
                     login_serializer = self.serializer_class(data=request.data)
-                    if login_serializer.is_valid():
+                    if login_serializer.is_valid:
                         token, created = Token.objects.get_or_create(user=user)
                         user_data = UserSerializer(user).data
                         if created:

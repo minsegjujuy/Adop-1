@@ -6,6 +6,7 @@ from Dependencia.models import Dependencia, UnidadRegional
 from Personal.models import Funcionario
 from Ente.models import Ente
 from BaseModel.models import BaseModel
+from auditlog.registry import auditlog
 
 
 class Motivo(BaseModel):
@@ -60,3 +61,10 @@ class PersonalVigilancia(BaseModel):
     hora_fin = models.TimeField(null=False)
     duracion = models.IntegerField(null=False)
     asignado = models.BooleanField(default=False)
+
+
+auditlog.register(Motivo, exclude_fields=['updated_at','created_at', 'deleted_at'])
+auditlog.register(Vigilancia, exclude_fields=['updated_at','created_at', 'deleted_at'])
+auditlog.register(RecursosVigilancia, exclude_fields=['updated_at','created_at', 'deleted_at'])
+auditlog.register(TurnosVigilancia, exclude_fields=['updated_at','created_at', 'deleted_at'])
+auditlog.register(PersonalVigilancia, exclude_fields=['updated_at','created_at', 'deleted_at'])

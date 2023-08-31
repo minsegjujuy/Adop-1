@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from BaseModel.models import BaseModel
 from .manager import UsuarioManager
 from Dependencia.models import Dependencia, UnidadRegional
+from auditlog.registry import auditlog
 
 
 class Rol(BaseModel):
@@ -52,3 +53,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin, BaseModel):
     @property
     def is_staff(self):
         return self.is_superuser
+
+
+auditlog.register(Rol, exclude_fields=['updated_at','created_at', 'deleted_at'])
+auditlog.register(Usuario, exclude_fields=['updated_at','created_at', 'deleted_at'])

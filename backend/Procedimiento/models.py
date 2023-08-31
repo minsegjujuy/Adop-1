@@ -2,6 +2,7 @@ from django.db import models
 from Persona.models import Persona
 from Servicio.models import Servicio
 from BaseModel.models import BaseModel
+from auditlog.registry import auditlog
 
 
 class Procedimiento(BaseModel):
@@ -27,8 +28,16 @@ class TipoProcedimiento(BaseModel):
 
 class DetalleProcedimiento(BaseModel):
     fk_procedimiento = models.ForeignKey("Procedimiento", on_delete=models.CASCADE)
-    fk_tipo_procedimiento = models.ForeignKey(TipoProcedimiento, on_delete=models.CASCADE)
+    fk_tipo_procedimiento = models.ForeignKey(
+        TipoProcedimiento, on_delete=models.CASCADE
+    )
     detalle_articulo = models.TextField(null=False)
     detalle_inciso = models.TextField(null=False)
     detalle_tipo_procedimiento = models.TextField(null=False)
     detalle_ley = models.TextField(null=False)
+
+
+auditlog.register(Procedimiento, exclude_fields=["updated_at", "created_at", "deleted_at"])
+auditlog.register(ProcedimientoPersona, exclude_fields=["updated_at", "created_at", "deleted_at"])
+auditlog.register(TipoProcedimiento, exclude_fields=["updated_at", "created_at", "deleted_at"])
+auditlog.register(DetalleProcedimiento, exclude_fields=["updated_at", "created_at", "deleted_at"])

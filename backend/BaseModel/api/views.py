@@ -21,16 +21,16 @@ class DynamicModelViewSet(viewsets.GenericViewSet):
 
     @action(detail=True, methods=["post"])
     def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        if serializer.validated_data["is_deleted"]:
+        instance = self.get_serializer(data=request.data)
+        instance.is_valid(raise_exception=True)
+        if instance.validated_data["is_deleted"]:
             return JsonResponse(
                 {"detail": "No se encuentra el elemento."},
                 status=status.HTTP_404_NOT_FOUND,
             )
-        serializer.new_save(usuario=request.user)
+        instance.new_save(usuario=request.user)
         return JsonResponse(
-            {"msj": "Dependencia creada correctamente"}, status=status.HTTP_201_CREATED
+            {"msj": "Elemento creado correctamente"}, status=status.HTTP_201_CREATED
         )
 
     @action(detail=True, methods=["get"])
@@ -52,12 +52,15 @@ class DynamicModelViewSet(viewsets.GenericViewSet):
                 {"detail": "No se encuentra el elemento."},
                 status=status.HTTP_404_NOT_FOUND,
             )
+        
         serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
+        serializer.save()  # Guarda los datos actualizados en la instancia
+
         if request.user.is_authenticated:
-            serializer.save(usuario=request.user)
+            instance.persist(usuario=request.user)
         else:
-            serializer.save()
+            instance.persist()
         return JsonResponse(
             {"msj": "Elemento actualizado correctamente"}, status=status.HTTP_200_OK
         )

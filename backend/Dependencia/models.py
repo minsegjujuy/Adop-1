@@ -1,5 +1,6 @@
 from django.db import models
 from BaseModel.models import BaseModel
+from auditlog.registry import auditlog
 
 
 class Inspectora(BaseModel):
@@ -21,3 +22,8 @@ class Dependencia(BaseModel):
 class DependenciaOperativos(BaseModel):
     fk_dependencia = models.ForeignKey("Dependencia.Dependencia", on_delete=models.CASCADE)
     fk_operativo = models.ForeignKey("Operativos.Operativo", on_delete=models.CASCADE)
+
+auditlog.register(Inspectora, exclude_fields=['updated_at','created_at', 'deleted_at'])
+auditlog.register(UnidadRegional, exclude_fields=['updated_at','created_at', 'deleted_at'])
+auditlog.register(Dependencia, exclude_fields=['updated_at','created_at', 'deleted_at'])
+auditlog.register(DependenciaOperativos, exclude_fields=['updated_at','created_at', 'deleted_at'])

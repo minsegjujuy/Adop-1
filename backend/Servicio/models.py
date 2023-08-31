@@ -1,6 +1,7 @@
 from django.db import models
 from Operativos.models import Operativo
 from BaseModel.models import BaseModel
+from auditlog.registry import auditlog
 
 
 class TipoServicio(BaseModel):
@@ -20,3 +21,7 @@ class Servicio(BaseModel):
         "TipoRecurso", on_delete=models.CASCADE, null=True
     )
     cant_recursos = models.IntegerField()
+
+auditlog.register(TipoRecurso, exclude_fields=['updated_at','created_at', 'deleted_at'])
+auditlog.register(TipoServicio, exclude_fields=['updated_at','created_at', 'deleted_at'])
+auditlog.register(Servicio, exclude_fields=['updated_at','created_at', 'deleted_at'])

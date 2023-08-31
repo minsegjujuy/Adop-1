@@ -2,6 +2,7 @@ from django.db import models
 from Dependencia.models import Dependencia, UnidadRegional
 from Persona.models import Persona
 from BaseModel.models import BaseModel
+from auditlog.registry import auditlog
 
 
 class Jerarquia(BaseModel):
@@ -34,3 +35,10 @@ class Funcionario(BaseModel):
     fk_categoria = models.ForeignKey("SubCategoria", on_delete=models.CASCADE)
     fecha_inicio = models.DateField(null=False)
     fecha_fin = models.DateField(null=True)
+
+
+auditlog.register(Jerarquia, exclude_fields=["updated_at", "created_at", "deleted_at"])
+auditlog.register(Personal, exclude_fields=["updated_at", "created_at", "deleted_at"])
+auditlog.register(Categoria, exclude_fields=["updated_at", "created_at", "deleted_at"])
+auditlog.register(SubCategoria, exclude_fields=["updated_at", "created_at", "deleted_at"])
+auditlog.register(Funcionario, exclude_fields=["updated_at", "created_at", "deleted_at"])
