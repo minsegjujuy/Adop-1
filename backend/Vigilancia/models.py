@@ -10,7 +10,7 @@ from auditlog.registry import auditlog
 
 
 class Motivo(BaseModel):
-    motivo = models.CharField(max_length=22)
+    motivo = models.CharField(max_length=22, unique=True)
 
 
 class Vigilancia(BaseModel):

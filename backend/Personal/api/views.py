@@ -73,14 +73,16 @@ class PersonalViewSet(DynamicModelViewSet):
     def create(self, request, *args, **kwargs):
         serializer = PersonalSerializer(data=request)
         serializer.is_valid(raise_exception=True)
-        Personal.objects.create(
-            legajo=serializer.validated_data["legajo"],
-            cuil=serializer.validated_data["fk_persona"],
-            # fk_tipo_funcion=serializer.validated_data['fk_tipo_funcion'],
-            fk_jerarquia=serializer.validated_data["fk_jerarquia"],
-            fk_destino=serializer.validated_data["fk_destino"],
-            fk_jurisdiccion=serializer.validated_data["fk_jurisdiccion"],
-        )
+        personal = Personal()
+        personal.legajo=serializer.validated_data["legajo"]
+        personal.cuil=serializer.validated_data["fk_persona"]
+        # personal.fk_tipo_funcion=serializer.validated_data['fk_tipo_funcion']
+        personal.fk_jerarquia=serializer.validated_data["fk_jerarquia"]
+        personal.fk_destino=serializer.validated_data["fk_destino"]
+        personal.fk_jurisdiccion=serializer.validated_data["fk_jurisdiccion"]
+
+        personal.new_save(usuario=request.user)
+
         return JsonResponse(
             {"msj": "Personal Creado Correctamente!!"}, status=status.HTTP_201_CREATED
         )

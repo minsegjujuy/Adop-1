@@ -132,7 +132,7 @@ class DocumentoViewSet(viewsets.ModelViewSet):
             documento = Documento.objects.get(id=kwargs["pk"])
             if path.exists(str(documento.file.path)):
                 # remove_file(str(documento.file.path))
-                documento.softDelete()
+                documento.softDelete(request.user)
                 return JsonResponse(
                     {"mensaje": "Archivo eliminado correctamente"}, status=200
                 )
@@ -147,7 +147,7 @@ class DocumentoViewSet(viewsets.ModelViewSet):
         try:
             documento = Documento.objects.get(id=kwargs["pk"])
             if path.exists(str(documento.file.path)):
-                documento.softRestore()
+                documento.softRestore(request.user)
                 return JsonResponse(
                     {"mensaje": "Archivo restaurado correctamente"}, status=200
                 )

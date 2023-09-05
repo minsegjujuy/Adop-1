@@ -51,16 +51,15 @@ class VigilanciaViewSet(DynamicModelViewSet):
     @action(detail=True, methods=['GET'])
     def list(self, request, *args, **kwargs):
         usuario = request.user
-        inactivo = request.GET.get("inactivo")
+        # inactivo = request.GET.get("inactivo")
         # print(inactivo)
         self.queryset = self.get_queryset()
         serializer = VigilanciaSerializerView(self.queryset, many=True)
-        # print(serializer.data)
         if usuario.rol.rol == "OPERADOR":
-            if inactivo:
-                datos = [x for x in serializer.data if x["fk_unidad_regional"] == usuario.unidad_regional.id and datetime.now() < x["fecha_fin"]]
-            else:
-                datos = [x for x in serializer.data if x["fk_unidad_regional"] == usuario.unidad_regional.id]
+            # if inactivo:
+            #     datos = [x for x in serializer.data if x["fk_unidad_regional"] == usuario.unidad_regional.id and datetime.now() < x["fecha_fin"]]
+            # else:
+            datos = [x for x in serializer.data if x["fk_unidad_regional"] == usuario.unidad_regional.id]
         else:
             datos = serializer.data
 
@@ -155,37 +154,11 @@ class VigilanciaViewSet(DynamicModelViewSet):
     def create(self, request, *args, **kwargs):
         serializer = VigilanciaSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        fk_jurisdiccion = serializer.validated_data.get("fk_jurisdiccion")
-        fk_motivo = serializer.validated_data.get("fk_motivo")
-        fk_tipo_servicio = serializer.validated_data.get("fk_tipo_servicio")
+        vigilancia = Vigilancia(**serializer.validated_data)
+        
         # fk_tipo_recurso = serializer.validated_data.get("fk_tipo_recurso")
-        fk_unidad_regional = serializer.validated_data.get("fk_unidad_regional")
-        fk_ente = serializer.validated_data.get("fk_ente")
-        fk_funcionario = serializer.validated_data.get("fk_funcionario")
-        objetivo = serializer.validated_data.get("objetivo")
-        cant_dias = serializer.validated_data.get("cant_dias")
-        fecha_inicio = serializer.validated_data.get("fecha_inicio")
-        fecha_fin = serializer.validated_data.get("fecha_fin")
-        destino = serializer.validated_data.get("destino")
-        longitud = serializer.validated_data.get("longitud")
-        latitud = serializer.validated_data.get("latitud")
-
-        Vigilancia.objects.create(
-            fk_jurisdiccion=fk_jurisdiccion,
-            fk_motivo=fk_motivo,
-            fk_tipo_servicio=fk_tipo_servicio,
-            # fk_tipo_recurso=fk_tipo_recurso,
-            fk_unidad_regional=fk_unidad_regional,
-            fk_ente=fk_ente,
-            fk_funcionario=fk_funcionario,
-            objetivo=objetivo,
-            cant_dias=cant_dias,
-            fecha_inicio=fecha_inicio,
-            fecha_fin=fecha_fin,
-            destino=destino,
-            longitud=longitud,
-            latitud=latitud,
-        )
+        
+        vigilancia.new_save(usuario=request.user)
 
         respuesta = {"msj": "Vigilancia creada exitosamente!"}
         return JsonResponse(respuesta, safe=False, status=status.HTTP_201_CREATED)
@@ -200,9 +173,12 @@ class RecursosVigilanciaViewSet(DynamicModelViewSet):
     def create(self, request, *args, **kwargs):
         try:
             vigilancia = Vigilancia.objects.get(id=kwargs['pk'])
-            serialier = RecursosVigilanciaSerializer(request.data).data
-            serialier['fk_vigilancia'] = vigilancia
-            serialier.save()
+            serializer = RecursosVigilanciaSerializer(request.data).data
+            serializer['fk_vigilancia'] = vigilancia
+            
+            recurso = RecursosVigilancia(**serializer)
+            
+            recurso.new_save(usuario=request.user)
         except:
             return JsonResponse({'msj':'La vigilancia no existe'}, status=status.HTTP_404_NOT_FOUND)
     
@@ -238,7 +214,7 @@ class RecursosVigilanciaViewSet(DynamicModelViewSet):
                     recurso.fk_tipo_recurso = request.POST["fk_tipo_recurso"]
                     recurso.fk_vigilancia = request.POST["fk_vigilancia"]
                     recurso.cantidad = request.POST["cantidad"]
-                    recurso.save()
+                    recurso.save(request.user)
                     JsonResponse({"msj":"El recurso se modifico correctamente"}, status=status.HTTP_200_OK)
                 return JsonResponse({"msj":"No existe el registro de recursos."}, status=status.HTTP_404_NOT_FOUND)
         except:
@@ -329,18 +305,19 @@ class TurnosVigilanciaViewSet(DynamicModelViewSet):
                 + timedelta(hours=serializer.validated_data["duracion"])
             ).time()
         try:
-            TurnosVigilancia.objects.create(
-                fk_vigilancia=serializer.validated_data["fk_vigilancia"],
-                turno=fechas,
-                hora_inicio=serializer.validated_data["hora_inicio"],
-                hora_fin=serializer.validated_data["hora_fin"],
-                duracion=serializer.validated_data["duracion"],
-                diario=serializer.validated_data["diario"],
-                dia_completo=serializer.validated_data["dia_completo"],
-            )
+            turno_vigilancia = TurnosVigilancia()
+            turno_vigilancia.fk_vigilancia=serializer.validated_data["fk_vigilancia"]
+            turno_vigilancia.turno=fechas
+            turno_vigilancia.hora_inicio=serializer.validated_data["hora_inicio"]
+            turno_vigilancia.hora_fin=serializer.validated_data["hora_fin"]
+            turno_vigilancia.duracion=serializer.validated_data["duracion"]
+            turno_vigilancia.diario=serializer.validated_data["diario"]
+            turno_vigilancia.dia_completo=serializer.validated_data["dia_completo"]
+            turno_vigilancia.new_save(usuario=request.user)
+            
             vigilancia.turno_asignado = True
             vigilancia.cant_dias = len(fechas)
-            vigilancia.save()
+            vigilancia.save(usuario=request.user)
 
             respuesta = {"msj": "Turnos Asignados Correctamente!!!"}
             return JsonResponse(respuesta, safe=False, status=status.HTTP_201_CREATED)
@@ -356,7 +333,8 @@ class TurnosVigilanciaViewSet(DynamicModelViewSet):
         turnoVigilancia=request.data
         serializer = TurnosVigilancia(data = turnoVigilancia, partial=True)
         if serializer.is_valid():
-            serializer.save()
+            turnos_vigilancia = TurnosVigilancia(**serializer.validated_data)
+            turnos_vigilancia.save(request.user)
             return JsonResponse({"msj":'Turno Modificado correctamente!!'},status=status.HTTP_200_OK)
         else:
             return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -460,15 +438,8 @@ class PersonalVigilanciaViewSet(DynamicModelViewSet):
         for dato in datos_agregar:
             serializer = PersonalVigilanciaSerializer(data=dato)
             serializer.is_valid(raise_exception=True)
-            PersonalVigilancia.objects.create(
-                fk_personal=serializer.validated_data["fk_personal"],
-                fk_turnoVigilancia=serializer.validated_data["fk_turnoVigilancia"],
-                fecha=serializer.validated_data["fecha"],
-                hora_inicio=serializer.validated_data["hora_inicio"],
-                hora_fin=serializer.validated_data["hora_fin"],
-                duracion=serializer.validated_data["duracion"],
-                asignado=serializer.validated_data["asignado"],
-            )
+            personal_vigilancia = PersonalVigilancia(**serializer.validated_data)
+            personal_vigilancia.new_save(request.user)
         return JsonResponse(
             {"msj": "Personal Asignado Correctamente"}, status=status.HTTP_201_CREATED
         )
@@ -484,7 +455,8 @@ class PersonalVigilanciaViewSet(DynamicModelViewSet):
                 else:
                     serializer.data["fk_personal"] = None
                     serializer.data["asignado"] = False
-                serializer.save()
+                personal_vigilancia = PersonalVigilancia(**serializer.data)
+                personal_vigilancia.save(request.user)
         return JsonResponse(
             {"msj": "Turno Modificado correctamente!!"}, status=status.HTTP_200_OK
         )

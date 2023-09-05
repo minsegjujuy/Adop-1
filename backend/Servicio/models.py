@@ -5,11 +5,11 @@ from auditlog.registry import auditlog
 
 
 class TipoServicio(BaseModel):
-    tipo_servicio = models.TextField()
+    tipo_servicio = models.TextField(unique=True)
 
 
 class TipoRecurso(BaseModel):
-    tipo_recurso = models.TextField()
+    tipo_recurso = models.TextField(unique=True)
 
 
 class Servicio(BaseModel):

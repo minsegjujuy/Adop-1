@@ -19,20 +19,20 @@ class InspectoraViewSet(DynamicModelViewSet):
     queryset = Inspectora.objects.all()
     serializer_class = InspectoraSerializer
 
-    @action(detail=True, methods=["post"])
-    def create(self, request):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        inspectora = Inspectora(
-            nombre_inspectora=serializer.validated_data["nombre_inspectora"]
-        )
-        if request.user.is_authenticated:
-            inspectora.new_save(usuario=request.user)
-        else:
-            inspectora.new_save()
-        return JsonResponse(
-            {"msj": "Inspectora creada correctamente"}, status=status.HTTP_201_CREATED
-        )
+    # @action(detail=True, methods=["post"])
+    # def create(self, request):
+    #     serializer = self.get_serializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     inspectora = Inspectora(
+    #         nombre_inspectora=serializer.validated_data["nombre_inspectora"]
+    #     )
+    #     if request.user.is_authenticated:
+    #         inspectora.new_save(usuario=request.user)
+    #     else:
+    #         inspectora.new_save()
+    #     return JsonResponse(
+    #         {"msj": "Inspectora creada correctamente"}, status=status.HTTP_201_CREATED
+    #     )
 
 
 class UnidadRegionalViewSet(DynamicModelViewSet):
@@ -55,7 +55,7 @@ class UnidadRegionalViewSet(DynamicModelViewSet):
             else:
                 datos = serializer.data
 
-            return JsonResponse(datos, status=status.HTTP_200_OK)
+            return JsonResponse(datos, safe=False, status=status.HTTP_200_OK)
         else:
             return JsonResponse(
                 {"error": "Carece de credenciales."},
@@ -65,18 +65,18 @@ class UnidadRegionalViewSet(DynamicModelViewSet):
     @action(detail=True, methods=["post"])
     def create(self, request, *args, **kwargs):
         self.queryset = self.get_queryset()
+        serialiser = self.get_serializer(data=request.data)
+        serialiser.is_valid(raise_exception=True)
         usuario = request.user
         if usuario.rol.rol == "ADMINISTRADOR":
             if (
                 UnidadRegional.objects.filter(
-                    unidad_regional=request.POST.get("unidad_regional")
+                    unidad_regional=serialiser.validated_data["unidad_regional"]
                 ).first()
                 is None
             ):
-                unidad_regional = UnidadRegional(
-                    unidad_regional=request.POST.get("unidad_regional")
-                )
-                unidad_regional.new_save(usuario=request.user)
+                unidad_regional = UnidadRegional(**serialiser.validated_data)
+                unidad_regional.new_save(usuario=usuario)
                 return JsonResponse(
                     {"msj": "Unidad Regional creada con exito!!!"},
                     status=status.HTTP_201_CREATED,

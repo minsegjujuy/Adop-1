@@ -5,7 +5,7 @@ from auditlog.registry import auditlog
 
 class Persona(BaseModel):
     cuil = models.BigIntegerField(primary_key=True)
-    dni = models.BigIntegerField()
+    dni = models.BigIntegerField(unique=True)
     nombre_apellido = models.CharField(max_length=100, null=False)
     fecha_nacimiento = models.DateField(null=True)
 

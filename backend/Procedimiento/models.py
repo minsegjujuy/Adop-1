@@ -23,7 +23,7 @@ class ProcedimientoPersona(BaseModel):
 
 
 class TipoProcedimiento(BaseModel):
-    tipo_procedimiento = models.CharField(null=False, max_length=50)
+    tipo_procedimiento = models.CharField(null=False, max_length=50, unique=True)
 
 
 class DetalleProcedimiento(BaseModel):

@@ -4,11 +4,11 @@ from auditlog.registry import auditlog
 
 
 class Inspectora(BaseModel):
-    nombre_inspectora = models.CharField(max_length=255, null=True, blank=True)
+    nombre_inspectora = models.CharField(max_length=255, null=True, blank=True, unique=True)
 
 
 class UnidadRegional(BaseModel):
-    unidad_regional = models.CharField(max_length=23, default="")
+    unidad_regional = models.CharField(max_length=23, default="", unique=True)
 
 
 class Dependencia(BaseModel):

@@ -38,7 +38,8 @@ class UserViewSet(Authentication, DynamicModelViewSet):
         usuario = self.get_object(pk)
         serializer = UserSerializer(usuario, data=request.data, partial=True)
         if serializer.is_valid():
-            serializer.save()
+            usuario = Usuario(**serializer.validated_data)
+            usuario.save(request.user)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -94,7 +95,7 @@ class UserViewSet(Authentication, DynamicModelViewSet):
                 usuario.jurisdiccion = None
                 usuario.unidad_regional = None
 
-            usuario.save()
+            usuario.save(request.user)
             respuesta = {"msj": "Usuario Actualizado Correctamente!!"}
             return Response(respuesta, status=status.HTTP_200_OK)
         else:
@@ -113,7 +114,6 @@ class UserViewSet(Authentication, DynamicModelViewSet):
         if is_superuser:
             Usuario.objects.create_superuser(username, email, 1, password)
         else:
-            # print(UnidadRegional.objects.get(id=datos.get('unidad_regional')))
             Usuario.objects.create_user(
                 email=email,
                 username=username,

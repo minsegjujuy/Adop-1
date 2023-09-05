@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import TipoServicioViewSet, ServicioViewSet, RecursoViewSet
+from .views import TipoServicioViewSet, ServicioViewSet, TipoRecursoViewSet
 
 urlpatterns = [
     # Tipos de Servicio
@@ -43,12 +43,12 @@ urlpatterns = [
     # Recursos
     path(
         "recursos/",
-        RecursoViewSet.as_view({"get": "list", "post": "create"}),
+        TipoRecursoViewSet.as_view({"get": "list", "post": "create"}),
         name="recursos_list",
     ),
     path(
         "recursos/<int:pk>/",
-        RecursoViewSet.as_view(
+        TipoRecursoViewSet.as_view(
             {
                 "get": "retrieve",
                 "patch": "update",

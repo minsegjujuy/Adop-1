@@ -13,6 +13,6 @@ class ServicioViewSet(DynamicModelViewSet):
     serializer_class = ServicioSerializer
 
 
-class RecursoViewSet(DynamicModelViewSet):
+class TipoRecursoViewSet(DynamicModelViewSet):
     queryset = TipoRecurso.objects.all()
     serializer_class = TipoRecursoSerializer

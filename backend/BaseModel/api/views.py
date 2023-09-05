@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+from django.apps import apps
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -8,10 +9,16 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 class DynamicModelViewSet(viewsets.GenericViewSet):
+    models = {}
     permission_classes = (IsAuthenticated,)
     authentication_classes = (JWTAuthentication, TokenAuthentication)
     queryset = None
     serializer_class = None
+    
+    def __init__(self, *args, **kwargs):
+        all_models = apps.get_models()
+        for model in all_models:
+            self.models[model.__name__]=model._meta.app_label
 
     @action(detail=True, methods=["get"])
     def list(self, request, *args, **kwargs):
@@ -23,12 +30,13 @@ class DynamicModelViewSet(viewsets.GenericViewSet):
     def create(self, request, *args, **kwargs):
         instance = self.get_serializer(data=request.data)
         instance.is_valid(raise_exception=True)
-        if instance.validated_data["is_deleted"]:
-            return JsonResponse(
-                {"detail": "No se encuentra el elemento."},
-                status=status.HTTP_404_NOT_FOUND,
-            )
-        instance.new_save(usuario=request.user)
+        
+        modelo = type(self).__name__[:-7]
+        Modelo = apps.get_model(app_label=self.models[modelo], model_name=modelo)
+        
+        instancia = Modelo(**instance.validated_data)
+        
+        instancia.new_save(usuario=request.user)
         return JsonResponse(
             {"msj": "Elemento creado correctamente"}, status=status.HTTP_201_CREATED
         )

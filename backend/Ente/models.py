@@ -4,7 +4,7 @@ from auditlog.registry import auditlog
 
 
 class Ente(BaseModel):
-    nombre = models.CharField(max_length=150)
+    nombre = models.CharField(max_length=150, unique=True)
     # direccion = models.CharField(max_length=255)
 
 
