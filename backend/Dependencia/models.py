@@ -4,7 +4,9 @@ from auditlog.registry import auditlog
 
 
 class Inspectora(BaseModel):
-    nombre_inspectora = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    nombre_inspectora = models.CharField(
+        max_length=255, null=True, blank=True, unique=True
+    )
 
 
 class UnidadRegional(BaseModel):
@@ -23,7 +25,36 @@ class DependenciaOperativos(BaseModel):
     fk_dependencia = models.ForeignKey("Dependencia.Dependencia", on_delete=models.CASCADE)
     fk_operativo = models.ForeignKey("Operativos.Operativo", on_delete=models.CASCADE)
 
-auditlog.register(Inspectora, exclude_fields=['updated_at','created_at', 'deleted_at'])
-auditlog.register(UnidadRegional, exclude_fields=['updated_at','created_at', 'deleted_at'])
-auditlog.register(Dependencia, exclude_fields=['updated_at','created_at', 'deleted_at'])
-auditlog.register(DependenciaOperativos, exclude_fields=['updated_at','created_at', 'deleted_at'])
+
+auditlog.register(
+    Inspectora,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)
+auditlog.register(
+    UnidadRegional,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)
+auditlog.register(
+    Dependencia,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)
+auditlog.register(
+    DependenciaOperativos,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)

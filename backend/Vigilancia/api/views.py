@@ -77,7 +77,7 @@ class VigilanciaViewSet(DynamicModelViewSet):
             if vigilancia["fk_ente"]:
                 data["fk_ente"] = EnteSerializer(Ente.objects.get(id=vigilancia["fk_ente"])).data
             if vigilancia["fk_funcionario"]:
-                data["fk_funcionario"] = FuncionarioSerializer(Funcionario.objects.get(id=vigilancia["fk_funcionario"]))
+                data["fk_funcionario"] = FuncionarioSerializer(Funcionario.objects.get(id=vigilancia["fk_funcionario"])).data
             data["objetivo"] = vigilancia["objetivo"]
             data["cant_dias"] = vigilancia["cant_dias"]
             data["fecha_inicio"] = vigilancia["fecha_inicio"]

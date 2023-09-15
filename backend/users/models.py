@@ -55,5 +55,19 @@ class Usuario(AbstractBaseUser, PermissionsMixin, BaseModel):
         return self.is_superuser
 
 
-auditlog.register(Rol, exclude_fields=['updated_at','created_at', 'deleted_at'])
-auditlog.register(Usuario, exclude_fields=['updated_at','created_at', 'deleted_at'])
+auditlog.register(
+    Rol,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)
+auditlog.register(
+    Usuario,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)

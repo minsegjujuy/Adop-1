@@ -15,4 +15,12 @@ class Documento(BaseModel):
     nombre = models.CharField(max_length=100, default="")
     file = models.FileField(upload_to=directorio_dinamico)
 
-auditlog.register(Documento, exclude_fields=['updated_at','created_at', 'deleted_at'])
+
+auditlog.register(
+    Documento,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)

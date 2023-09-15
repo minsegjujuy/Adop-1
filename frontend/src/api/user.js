@@ -1,114 +1,44 @@
-import {BASE_API} from "../utils/contants"
+import {
+  getElementService,
+  getElementsService,
+  addElementService,
+  updateElementService,
+  deleteElementService,
+} from "./baseServides";
+
+import{
+  loginService,
+  logoutService,
+  getTokenService,
+} from './authServices';
 
 //* Authentication
-export async function loginApi(formValue){
-    try{
-       const url =`${BASE_API}/api/auth/login/`
-       const params={
-        method:"POST",
-        headers :{
-            "Content-Type":"application/json",
-        },
-        body: JSON.stringify(formValue),
-        
-       }
-       const response = await fetch(url, params);
-       if (response.status !== 200) {
-        throw new Error(response.error);
-      }
-      const result = await response.json();
-
-      return result;
-    }catch(error){
-        throw error
-    }
-
+export async function loginApi(formValue) {
+  return loginService(formValue)
 }
-export async function logoutApi(token){
-  try{
-    const url = `${BASE_API}/api/auth/logout/`
-    const params = {
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json",
-        "Authentication":token,
-      },
-      body: {"token": token,}
-    }
-    const response = await fetch(url,params);
-    if(response.status !== 200){
-      throw new Error(response.error)
-    }
-    const result = await response.json();
-
-    return result;
-    
-  } catch(error){
-    throw error
-  }
+export async function logoutApi(token) {
+  return logoutService(token);
 }
 export async function getTokenApi(usuario) {
-  try {
-    const url = `${BASE_API}/api/auth/refresh-token/?`+ new URLSearchParams({username:usuario});
-    const response = await fetch(url);
-    return await response.json();
-  } catch (error) {
-    throw error;
-  }
+  return getTokenService(usuario)
 }
 
 //* User
 export async function getUsersApi(token) {
-  try {
-    const url = `${BASE_API}/api/usuarios/`;
-    const params = {
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    };
-    const response = await fetch(url, params);
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    throw error;
-  }
+  return await getElementsService(token, "usuarios");
+}
+export async function getUserApi(token, id_usuario) {
+  return await getElementService(token, "usuarios", id_usuario);
 }
 export async function addUserApi(data, token) {
-  try {
-    const url = `${BASE_API}/api/usuarios/`;
-    const params = {
-      method: "POST",
-      headers: {
-        Authorization: `Token ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    };
+  return addElementService(token, data, "usuarios");
+}
 
-    const response = await fetch(url, params);
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    
-    throw error;
-  }
+export async function updateUserApi(token, data, id) {
+  return await updateElementService(token, data, "usuarios", id);
 }
 export async function deleteUserApi(id, token) {
-  try {
-    const url = `${BASE_API}/api/usuarios/${id}/`;
-    const params = {
-      method: "DELETE",
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    };
-
-    const response = await fetch(url, params);
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    throw error;
-  }
+  return await deleteElementService(token, "usuarios", id);
 }
 // export async function buscarEmpleadoIdApi(id, token) {
 //   try {

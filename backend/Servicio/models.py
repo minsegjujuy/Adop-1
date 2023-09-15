@@ -22,6 +22,28 @@ class Servicio(BaseModel):
     )
     cant_recursos = models.IntegerField()
 
-auditlog.register(TipoRecurso, exclude_fields=['updated_at','created_at', 'deleted_at'])
-auditlog.register(TipoServicio, exclude_fields=['updated_at','created_at', 'deleted_at'])
-auditlog.register(Servicio, exclude_fields=['updated_at','created_at', 'deleted_at'])
+
+auditlog.register(
+    TipoRecurso,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)
+auditlog.register(
+    TipoServicio,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)
+auditlog.register(
+    Servicio,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)

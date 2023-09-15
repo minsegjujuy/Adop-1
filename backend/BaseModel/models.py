@@ -1,7 +1,5 @@
 from datetime import datetime
 from django.db import models
-from django.contrib.auth import get_user_model
-from auditlog.context import set_actor
 
 
 class BaseModel(models.Model):

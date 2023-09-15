@@ -8,4 +8,11 @@ class Ente(BaseModel):
     # direccion = models.CharField(max_length=255)
 
 
-auditlog.register(Ente, exclude_fields=["updated_at", "created_at", "deleted_at"])
+auditlog.register(
+    Ente,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)

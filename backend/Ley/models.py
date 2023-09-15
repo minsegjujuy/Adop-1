@@ -21,6 +21,27 @@ class Inciso(BaseModel):
     inciso = models.TextField(unique=True)
 
 
-auditlog.register(Ley, exclude_fields=["updated_at", "created_at", "deleted_at"])
-auditlog.register(Articulo, exclude_fields=["updated_at", "created_at", "deleted_at"])
-auditlog.register(Inciso, exclude_fields=["updated_at", "created_at", "deleted_at"])
+auditlog.register(
+    Ley,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)
+auditlog.register(
+    Articulo,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)
+auditlog.register(
+    Inciso,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)

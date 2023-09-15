@@ -37,8 +37,43 @@ class Funcionario(BaseModel):
     fecha_fin = models.DateField(null=True)
 
 
-auditlog.register(Jerarquia, exclude_fields=["updated_at", "created_at", "deleted_at"])
-auditlog.register(Personal, exclude_fields=["updated_at", "created_at", "deleted_at"])
-auditlog.register(Categoria, exclude_fields=["updated_at", "created_at", "deleted_at"])
-auditlog.register(SubCategoria, exclude_fields=["updated_at", "created_at", "deleted_at"])
-auditlog.register(Funcionario, exclude_fields=["updated_at", "created_at", "deleted_at"])
+auditlog.register(
+    Jerarquia,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)
+auditlog.register(
+    Personal,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)
+auditlog.register(
+    Categoria,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)
+auditlog.register(
+    SubCategoria,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)
+auditlog.register(
+    Funcionario,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)

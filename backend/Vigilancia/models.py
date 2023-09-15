@@ -14,14 +14,22 @@ class Motivo(BaseModel):
 
 
 class Vigilancia(BaseModel):
-    fk_jurisdiccion = models.ForeignKey(Dependencia, on_delete=models.CASCADE, null=False)
+    fk_jurisdiccion = models.ForeignKey(
+        Dependencia, on_delete=models.CASCADE, null=False
+    )
     fk_motivo = models.ForeignKey("Motivo", on_delete=models.CASCADE, null=False)
-    fk_tipo_servicio = models.ForeignKey(TipoServicio, on_delete=models.CASCADE, null=False)
+    fk_tipo_servicio = models.ForeignKey(
+        TipoServicio, on_delete=models.CASCADE, null=False
+    )
     # fk_tipo_recurso = models.ForeignKey(TipoRecurso, on_delete=models.CASCADE, null=False)
     # fk_recursos = ArrayField(models.IntegerField(TipoRecurso, null=False), null=False, default=[])
-    fk_unidad_regional = models.ForeignKey(UnidadRegional, on_delete=models.CASCADE, null=False)
+    fk_unidad_regional = models.ForeignKey(
+        UnidadRegional, on_delete=models.CASCADE, null=False
+    )
 
-    fk_funcionario = models.ForeignKey(Funcionario, on_delete=models.CASCADE, null=True, default=None)
+    fk_funcionario = models.ForeignKey(
+        Funcionario, on_delete=models.CASCADE, null=True, default=None
+    )
     fk_ente = models.ForeignKey(Ente, on_delete=models.CASCADE, null=True, default=None)
 
     objetivo = models.TextField()
@@ -37,8 +45,12 @@ class Vigilancia(BaseModel):
 
 
 class RecursosVigilancia(BaseModel):
-    fk_tipo_recurso = models.ForeignKey(TipoRecurso, on_delete=models.CASCADE, null=False)
-    fk_vigilancia = models.ForeignKey("Vigilancia", on_delete=models.CASCADE, null=False)
+    fk_tipo_recurso = models.ForeignKey(
+        TipoRecurso, on_delete=models.CASCADE, null=False
+    )
+    fk_vigilancia = models.ForeignKey(
+        "Vigilancia", on_delete=models.CASCADE, null=False
+    )
     cantidad = models.IntegerField(null=False, default=0)
     fecha = models.DateField(null=False)
 
@@ -63,8 +75,43 @@ class PersonalVigilancia(BaseModel):
     asignado = models.BooleanField(default=False)
 
 
-auditlog.register(Motivo, exclude_fields=['updated_at','created_at', 'deleted_at'])
-auditlog.register(Vigilancia, exclude_fields=['updated_at','created_at', 'deleted_at'])
-auditlog.register(RecursosVigilancia, exclude_fields=['updated_at','created_at', 'deleted_at'])
-auditlog.register(TurnosVigilancia, exclude_fields=['updated_at','created_at', 'deleted_at'])
-auditlog.register(PersonalVigilancia, exclude_fields=['updated_at','created_at', 'deleted_at'])
+auditlog.register(
+    Motivo,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)
+auditlog.register(
+    Vigilancia,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)
+auditlog.register(
+    RecursosVigilancia,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)
+auditlog.register(
+    TurnosVigilancia,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)
+auditlog.register(
+    PersonalVigilancia,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)

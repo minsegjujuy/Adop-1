@@ -37,7 +37,35 @@ class DetalleProcedimiento(BaseModel):
     detalle_ley = models.TextField(null=False)
 
 
-auditlog.register(Procedimiento, exclude_fields=["updated_at", "created_at", "deleted_at"])
-auditlog.register(ProcedimientoPersona, exclude_fields=["updated_at", "created_at", "deleted_at"])
-auditlog.register(TipoProcedimiento, exclude_fields=["updated_at", "created_at", "deleted_at"])
-auditlog.register(DetalleProcedimiento, exclude_fields=["updated_at", "created_at", "deleted_at"])
+auditlog.register(
+    Procedimiento,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)
+auditlog.register(
+    ProcedimientoPersona,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)
+auditlog.register(
+    TipoProcedimiento,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)
+auditlog.register(
+    DetalleProcedimiento,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)

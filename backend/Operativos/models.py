@@ -27,5 +27,19 @@ class OperativoPersonal(BaseModel):
     fk_personal = models.ForeignKey(Personal, on_delete=models.CASCADE)
 
 
-auditlog.register(Operativo, exclude_fields=["updated_at", "created_at", "deleted_at"])
-auditlog.register(OperativoPersonal, exclude_fields=["updated_at", "created_at", "deleted_at"])
+auditlog.register(
+    Operativo,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)
+auditlog.register(
+    OperativoPersonal,
+    exclude_fields=[
+        "updated_at",
+        "created_at",
+        "deleted_at",
+    ],
+)

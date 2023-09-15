@@ -1,363 +1,85 @@
-import {BASE_API} from "../utils/contants"
+import {
+  getElementService,
+  getElementsService,
+  addElementService,
+  updateElementService,
+  deleteElementService,
+} from "./baseServides";
 
 //* Unidades Regionales
 export async function getRegionales(token) {
-  try {
-    const url = `${BASE_API}/api/unidades_regionales/`;
-    const params = {
-      method: "GET",
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    };
-    const response = await fetch(url, params);
-    const result = await response.json();
-    console.log(result);
-    return result;
-  } catch (error) {
-    throw error;
-  }
+  return await getElementsService(token, "unidades_regionales");
 }
 
 //* Jurisdicciones
-export async function getJurisdicciones(token,id) {
-  try {
-    const url = `${BASE_API}/api/dependencias/?uurr=${id}`;
-    const params = {
-      method: "GET",
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    };
-    const response = await fetch(url, params);
-    const result = await response.json();
-    console.log(result);
-    return result;
-  } catch (error) {
-    throw error;
-  }
+export async function getJurisdicciones(token, id) {
+  return await getElementsService(token, "dependencias", null, null, null, [{ uurr: id }]);
 }
 
 //* Motivos
 export async function getMotivos(token) {
-  try {
-    const url = `${BASE_API}/api/motivos/`;
-    const params = {
-      method: "GET",
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    };
-    const response = await fetch(url, params);
-    const result = await response.json();
-    console.log(result);
-    return result;
-  } catch (error) {
-    throw error;
-  }
+  return await getElementsService(token, "motivos");
 }
 
 //* Recursos
 export async function getTipoRecursos(token) {
-  try {
-    const url = `${BASE_API}/api/recursos/`;
-    const params = {
-      method: "GET",
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    };
-    const response = await fetch(url, params);
-    const result = await response.json();
-    console.log(result);
-    return result;
-  } catch (error) {
-    throw error;
-  }
+  return await getElementsService(token, "recursos");
 }
 
 //* Servicios
 export async function getTipoServicios(token) {
-  try {
-    const url = `${BASE_API}/api/tipo_servicios/`;
-    const params = {
-      method: "GET",
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    };
-    const response = await fetch(url, params);
-    const result = await response.json();
-    console.log(result);
-    return result;
-  } catch (error) {
-    throw error;
-  }
+  return await getElementsService(token, "tipo_servicios");
 }
 
 //* Vigilancias
 export async function addVigilanciaApi(data, token) {
-  try {
-    const url = `${BASE_API}/api/vigilancias/`;
-    const params = {
-      method: "POST",
-      headers: {
-        Authorization: `Token ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    };
-
-    const response = await fetch(url, params);
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    
-    throw error;
-  }
+  return addElementService(token, data, "vigilancias");
 }
 export async function getVigilancias(token) {
-  try {
-    const url = `${BASE_API}/api/vigilancias/`;
-    const params = {
-      method: "GET",
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    };
-    const response = await fetch(url, params);
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    throw error;
-  }
+  return await getElementsService(token, "vigilancias");
 }
-// export async function getVigilanciasInactivas(token) {
-//   try {
-//     const url = `${BASE_API}/api/vigilancias/?inactivo=${true}`;
-//     const params = {
-//       method: "GET",
-//       headers: {
-//         Authorization: `Token ${token}`,
-//       },
-//     };
-//     const response = await fetch(url, params);
-//     const result = await response.json();
-//     return result;
-//   } catch (error) {
-//     throw error;
-//   }
-// }
+export async function getVigilanciasInactivas(token) {
+  return await getElementsService(token, "vigilancias", null, null, null, [{ inactivo: true }]);
+}
 export async function deleteVigilanciaApi(id, token) {
-  try {
-    const url = `${BASE_API}/api/vigilancias/${id}/`;
-    const params = {
-      method: "DELETE",
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    };
-
-    const response = await fetch(url, params);
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    throw error;
-  }
+  return await deleteElementService(token, "vigilancias", id);
 }
 
 //* Turnos
-export async function getTurno(token,id) {
-  try {
-    const url = `${BASE_API}/api/vigilancia/turnos/${id}/`;
-    const params = {
-      method: "GET",
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    };
-    const response = await fetch(url, params);
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    throw error;
-  }
+export async function getTurno(token, id) {
+  return await getElementService(token, "vigilancia", null, "turnos", id);
 }
-export async function addTurnosApi(data,fk_vigilancia, token) {
-  try {
-    const url = `${BASE_API}/api/vigilancias/${fk_vigilancia}/turnos/`;
-    const params = {
-      method: "POST",
-      headers: {
-        Authorization: `Token ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    };
-
-    const response = await fetch(url, params);
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    
-    throw error;
-  }
+export async function addTurnosApi(data, fk_vigilancia, token) {
+  return await addElementService(token, data, "vigilancias", fk_vigilancia, "turnos");
 }
-export async function getTurnosApi(id,token) {
-  try {
-    const url = `${BASE_API}/api/vigilancias/${id}/turnos/`;
-    const params = {
-      method: "GET",
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    };
-    const response = await fetch(url, params);
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    throw error;
-  }
+export async function getTurnosApi(id, token) {
+  return await getElementsService(token, "vigilancias", id, "turnos");
 }
 export async function deleteHistorialApi(id, id_turno, token) {
-  try {
-    const url = `${BASE_API}/api/vigilancias/${id}/turnos/${id_turno}/`;
-    const params = {
-      method: "DELETE",
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    };
-
-    const response = await fetch(url, params);
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    throw error;
-  }
+  return await deleteElementService(token, "vigilancias", id, "turnos", id_turno);
 }
 
 //* Documentos
 export async function addDocumentoVigilancia(data, token) {
-  try {
-    const url = `${BASE_API}/api/vigilancias/documentos/`;
-    const params = {
-      method: "POST",
-      headers: {
-        Authorization: `Token ${token}`,
-        "Content-Type": "multipart/form-data",
-      },
-      body: JSON.stringify(data),
-    };
-    const response = await fetch(url, params);
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    throw error;
-  }
+  return await addElementService(token, data, "vigilancias",null, "documentos");
 }
 export async function getDocumentosVigilancia(id_vigilancia, token) {
-  try {
-    const url = `${BASE_API}/api/vigilancias/${id_vigilancia}/documentos/`;
-    const params = {
-      method: "GET",
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    };
-    const response = await fetch(url, params);
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    throw error;
-  }
+  return await getElementsService(token, "vigilancias", id_vigilancia, "documentos");
 }
 export async function getDocumentoVigilancia(id_vigilancia, id_documento, token) {
-  try {
-    const url = `${BASE_API}/api/vigilancias/${id_vigilancia}/documentos/${id_documento}`;
-    const params = {
-      method: "GET",
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    };
-    const response = await fetch(url, params);
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    throw error;
-  }
+  return await getElementService(token, "vigilancias", id_vigilancia, "documentos", id_documento );
 }
 export async function updateDocumentoVigilancia(data, id_documento, id_vigilancia, token) {
-  try {
-    const url = `${BASE_API}/api/vigilancias/${id_vigilancia}/documentos/${id_documento}`;
-    const params = {
-      method: "PUT",
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-      body: JSON.stringify(data)
-    };
-
-    const response = await fetch(url, params);
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    throw error;
-  }
+  return await updateElementService(token, data, "vigilancias", id_vigilancia, "documentos", id_documento);
 }
 export async function deleteDocumentoVigilancia(id_vigilancia, id_documento, token) {
-  try {
-    const url = `${BASE_API}/api/vigilancias/${id_vigilancia}/documentos/${id_documento}`;
-    const params = {
-      method: "DELETE",
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    };
-
-    const response = await fetch(url, params);
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    throw error;
-  }
+  return await deleteElementService(token, "vigilancias", id_vigilancia, "documentos", id_documento);
 }
 
 //* Personal Turno
 export async function getPersonal(token) {
-  try {
-    const url = `${BASE_API}/api/personal/`;
-    const params = {
-      method: "GET",
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    };
-    const response = await fetch(url, params);
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    throw error;
-  }
+  return await getElementsService(token, "personal");
 }
-export async function asignarPersonal(data, token,id) {
-  try {
-    const url = `${BASE_API}/api/vigilancias/${id}/turnos/`;
-    const params = {
-      method: "POST",
-      headers: {
-        Authorization: `Token ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    };
-
-    const response = await fetch(url, params);
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    
-    throw error;
-  }
+export async function asignarPersonal(data, token, id) {
+  return await addElementService(token, data, "vigilancias", id, "turnos");
 }
