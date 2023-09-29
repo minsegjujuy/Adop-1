@@ -52,7 +52,6 @@ export function useVigilancia() {
   const get_jurisdicciones = async (id) => {
     try {
       setLoading(true);
-      console.log(id);
       const resultado = await getJurisdicciones(auth.token, id);
       setLoading(false);
       return resultado;
@@ -165,7 +164,6 @@ export function useVigilancia() {
       setLoading(true);
       const resultado = await getTurno(auth.token, id);
       setTurno(resultado);
-      console.log(resultado);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -176,10 +174,8 @@ export function useVigilancia() {
     try {
       setLoading(true);
       const resultado = await getTurnosApi(id, auth.token);
-      console.log(resultado.turnos);
       setLoading(false);
       setHistorial(resultado.turnos);
-      console.log(historial);
     } catch (error) {
       setLoading(false);
       setError(error);

@@ -214,7 +214,7 @@ class RecursosVigilanciaViewSet(DynamicModelViewSet):
                     recurso.fk_tipo_recurso = request.POST["fk_tipo_recurso"]
                     recurso.fk_vigilancia = request.POST["fk_vigilancia"]
                     recurso.cantidad = request.POST["cantidad"]
-                    recurso.save(request.user)
+                    recurso.persist(request.user)
                     JsonResponse({"msj":"El recurso se modifico correctamente"}, status=status.HTTP_200_OK)
                 return JsonResponse({"msj":"No existe el registro de recursos."}, status=status.HTTP_404_NOT_FOUND)
         except:
@@ -228,37 +228,43 @@ class TurnosVigilanciaViewSet(DynamicModelViewSet):
     
     @action(detail=True, methods=['GET'])
     def  list(self, request, *args, **kwargs):
-        turnoVigilancia = TurnosVigilanciaSerializer(TurnosVigilancia.objects.get(fk_vigilancia=kwargs["vigilancia_id"])).data
-        turnos = []
-        for fecha in turnoVigilancia["turno"]:
-            if not PersonalVigilancia.objects.filter(fecha=fecha).first():
-                turnos.append(fecha)
-        turnoVigilancia["turno"] = turnos
-        respuesta = turnoVigilancia
-        return JsonResponse(respuesta, status=status.HTTP_200_OK)
+        try:
+            turnoVigilancia = TurnosVigilanciaSerializer(TurnosVigilancia.objects.get(fk_vigilancia=kwargs["vigilancia_id"])).data
+            turnos = []
+            for fecha in turnoVigilancia["turnos"]:
+                if not PersonalVigilancia.objects.filter(fecha=fecha).first():
+                    turnos.append(fecha)
+            turnoVigilancia["turnos"] = turnos
+            respuesta = turnoVigilancia
+            return JsonResponse(respuesta, status=status.HTTP_200_OK)
+        except:
+            return JsonResponse({"error": "El turno de vigilancia no existe."}, status=status.HTTP_404_NOT_FOUND)
     
     @action(detail=True, methods=['GET'])
     def retrieve(self, request, *args, **kwargs):
-        turnoVigilancia = TurnosVigilanciaSerializer(TurnosVigilancia.objects.get(id=kwargs["pk"])).data
-        del(turnoVigilancia["id"])
-        del(turnoVigilancia["fk_vigilancia"])
-        fecha=request.GET.get("fecha")
-        if fecha:
-            if fecha in turnoVigilancia["turno"]:
-                turnoVigilancia["fecha"] = fecha
-                turnoVigilancia["personal_asignado"] = False
-                if PersonalVigilancia.objects.filter(fecha=fecha).first():
-                    turnoVigilancia["personal_asignado"] = True
-                del(turnoVigilancia["turno"])
-            else:
-                return JsonResponse({},status=status.HTTP_404_NOT_FOUND)
-        # else:
-        #     for fecha in turnoVigilancia["turno"]:
-        #         if not PersonalVigilancia.objects.filter(fecha=fecha).first():
-        #             turnos.append(fecha)
-        #     turnoVigilancia["turno"] = turnos
-        respuesta = turnoVigilancia
-        return JsonResponse(respuesta, status=status.HTTP_200_OK)
+        try:
+            turnoVigilancia = TurnosVigilanciaSerializer(TurnosVigilancia.objects.get(id=kwargs["pk"])).data
+            del(turnoVigilancia["id"])
+            del(turnoVigilancia["fk_vigilancia"])
+            fecha=request.GET.get("fecha")
+            if fecha:
+                if fecha in turnoVigilancia["turnos"]:
+                    turnoVigilancia["fecha"] = fecha
+                    turnoVigilancia["personal_asignado"] = False
+                    if PersonalVigilancia.objects.filter(fecha=fecha).first():
+                        turnoVigilancia["personal_asignado"] = True
+                    del(turnoVigilancia["turnos"])
+                else:
+                    return JsonResponse({},status=status.HTTP_404_NOT_FOUND)
+            # else:
+            #     for fecha in turnoVigilancia["turnos"]:
+            #         if not PersonalVigilancia.objects.filter(fecha=fecha).first():
+            #             turnos.append(fecha)
+            #     turnoVigilancia["turnos"] = turnos
+            respuesta = turnoVigilancia
+            return JsonResponse(respuesta, status=status.HTTP_200_OK)
+        except:
+            return JsonResponse({"error": "El turno de vigilancia no existe."}, status=status.HTTP_404_NOT_FOUND)
 
     def seleccionar_fechas(self, fecha_inicio, fecha_fin, diario, dias_semana):
         fechas = []
@@ -285,14 +291,14 @@ class TurnosVigilanciaViewSet(DynamicModelViewSet):
         serializer = TurnosVigilanciaSerializer
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
+        print(kwargs["vigilancia_id"])
         vigilancia = Vigilancia.objects.get(id=kwargs["vigilancia_id"])
 
         fechas = self.seleccionar_fechas(
             vigilancia.fecha_inicio,
             vigilancia.fecha_fin,
             serializer.validated_data["diario"],
-            serializer.validated_data["turno"],
+            serializer.validated_data["turnos"],
         )
 
         if serializer.validated_data["dia_completo"]:
@@ -307,7 +313,7 @@ class TurnosVigilanciaViewSet(DynamicModelViewSet):
         try:
             turno_vigilancia = TurnosVigilancia()
             turno_vigilancia.fk_vigilancia=serializer.validated_data["fk_vigilancia"]
-            turno_vigilancia.turno=fechas
+            turno_vigilancia.turnos=fechas
             turno_vigilancia.hora_inicio=serializer.validated_data["hora_inicio"]
             turno_vigilancia.hora_fin=serializer.validated_data["hora_fin"]
             turno_vigilancia.duracion=serializer.validated_data["duracion"]
@@ -317,7 +323,7 @@ class TurnosVigilanciaViewSet(DynamicModelViewSet):
             
             vigilancia.turno_asignado = True
             vigilancia.cant_dias = len(fechas)
-            vigilancia.save(usuario=request.user)
+            vigilancia.persist(usuario=request.user)
 
             respuesta = {"msj": "Turnos Asignados Correctamente!!!"}
             return JsonResponse(respuesta, safe=False, status=status.HTTP_201_CREATED)
@@ -334,7 +340,7 @@ class TurnosVigilanciaViewSet(DynamicModelViewSet):
         serializer = TurnosVigilancia(data = turnoVigilancia, partial=True)
         if serializer.is_valid():
             turnos_vigilancia = TurnosVigilancia(**serializer.validated_data)
-            turnos_vigilancia.save(request.user)
+            turnos_vigilancia.persist(request.user)
             return JsonResponse({"msj":'Turno Modificado correctamente!!'},status=status.HTTP_200_OK)
         else:
             return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -355,7 +361,7 @@ class PersonalVigilanciaViewSet(DynamicModelViewSet):
                     turnos = {}
                     turnos["fk_vigilancia"] = turnos_vigilancia["fk_vigilancia"]
                     turnos["turnos"] = []
-                    for fecha in turnos_vigilancia["turno"]:
+                    for fecha in turnos_vigilancia["turnos"]:
                         horarios = {}
                         personal_vigilancia = PersonalVigilanciaSerializer(PersonalVigilancia.objects.filter(fecha=fecha), many=True).data
                         if personal_vigilancia:
@@ -456,7 +462,7 @@ class PersonalVigilanciaViewSet(DynamicModelViewSet):
                     serializer.data["fk_personal"] = None
                     serializer.data["asignado"] = False
                 personal_vigilancia = PersonalVigilancia(**serializer.data)
-                personal_vigilancia.save(request.user)
+                personal_vigilancia.persist(request.user)
         return JsonResponse(
             {"msj": "Turno Modificado correctamente!!"}, status=status.HTTP_200_OK
         )

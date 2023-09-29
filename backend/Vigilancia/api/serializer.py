@@ -74,8 +74,7 @@ class TurnosVigilanciaSerializer(serializers.ModelSerializer):
         model = TurnosVigilancia
         fields = (
             "id",
-            "fk_vigilancia",
-            "turno",
+            "turnos",
             "hora_inicio",
             "hora_fin",
             "duracion",

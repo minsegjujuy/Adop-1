@@ -28,7 +28,7 @@ export async function getTipoRecursos(token) {
 
 //* Servicios
 export async function getTipoServicios(token) {
-  return await getElementsService(token, "tipo_servicios");
+  return await getElementsService(token, "tipo_servicio");
 }
 
 //* Vigilancias
@@ -47,10 +47,10 @@ export async function deleteVigilanciaApi(id, token) {
 
 //* Turnos
 export async function getTurno(token, id) {
-  return await getElementService(token, "vigilancia", null, "turnos", id);
+  return await getElementService(token, "vigilancias", id, "turnos");
 }
-export async function addTurnosApi(data, fk_vigilancia, token) {
-  return await addElementService(token, data, "vigilancias", fk_vigilancia, "turnos");
+export async function addTurnosApi(data, id, token) {
+  return await addElementService(token, data, "vigilancias", id, "turnos");
 }
 export async function getTurnosApi(id, token) {
   return await getElementsService(token, "vigilancias", id, "turnos");
@@ -61,7 +61,7 @@ export async function deleteHistorialApi(id, id_turno, token) {
 
 //* Documentos
 export async function addDocumentoVigilancia(data, token) {
-  return await addElementService(token, data, "vigilancias",null, "documentos");
+  return await addElementService(token, data, "vigilancias", null, "documentos");
 }
 export async function getDocumentosVigilancia(id_vigilancia, token) {
   return await getElementsService(token, "vigilancias", id_vigilancia, "documentos");

@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { Button, Form, Icon, Checkbox, Input } from "semantic-ui-react";
 import { useVigilancia, useAuth } from "../../../hooks";
@@ -36,6 +38,7 @@ export function Personal(props) {
   for (let i = 6; i <= duracion; i++) {
     Horario.push({ key: `${i}`, text: `${i} hs`, value: i });
   }
+  if(turnos)
   for (let i = 0; i <= turnos.length; i++) {
     fechas.push({ key: `${i}`, text: turnos[i], value: turnos[i] });
   }
@@ -202,46 +205,52 @@ export function Personal(props) {
     );
   }
   return (
-    <Form onSubmit={formik.handleSubmit}>
-      {/* <h4 className="ui dividing header">Personal Asignado a la vigilancia</h4> */}
-      <h4 className="ui dividing header">
-        Ingrese la fecha para la vigilancia
-      </h4>
-      <div className="one field">
-        <Form.Select
-          name="fecha_vigilancia"
-          options={fechas ? fechas : Cargando}
-          placeholder="Seleccione la fecha para la vigilancia "
-          value={formik.values.fecha_vigilancia}
-          onChange={(_, data) =>
-            formik.setFieldValue("fecha_vigilancia", data.value)
-          }
-        />
-      </div>
+    <>
+      {turnos === null ? (
+        <p>Cargando turnos...</p>
+      ) : (
+        <Form onSubmit={formik.handleSubmit}>
+          {/* <h4 className="ui dividing header">Personal Asignado a la vigilancia</h4> */}
+          <h4 className="ui dividing header">
+            Ingrese la fecha para la vigilancia
+          </h4>
+          <div className="one field">
+            <Form.Select
+              name="fecha_vigilancia"
+              options={fechas ? fechas : Cargando}
+              placeholder="Seleccione la fecha para la vigilancia "
+              value={formik.values.fecha_vigilancia}
+              onChange={(_, data) =>
+                formik.setFieldValue("fecha_vigilancia", data.value)
+              }
+            />
+          </div>
 
-      <h4 className="ui dividing header">
-        Ingrese la cantidad de Turnos de la vigilancia:
-      </h4>
-      <div className="one field">
-        <input
-          type="number"
-          min={1}
-          max={6}
-          placeholder="Ingrese la cantidad de personal para la vigilancia (MAXIMO 6)"
-          value={numCampos}
-          onChange={handleInputChange}
-        />
-      </div>
-      {/* <h4 className="ui dividing header">Personal</h4> */}
-      <div>{campos}</div>
-      <div className="boton_crear_vigilancia">
-        <Button
-          className="positive button"
-          type="submit"
-          content={"Asignar Personal"}
-        />
-      </div>
-    </Form>
+          <h4 className="ui dividing header">
+            Ingrese la cantidad de Turnos de la vigilancia:
+          </h4>
+          <div className="one field">
+            <input
+              type="number"
+              min={1}
+              max={6}
+              placeholder="Ingrese la cantidad de personal para la vigilancia (MAXIMO 6)"
+              value={numCampos}
+              onChange={handleInputChange}
+            />
+          </div>
+          {/* <h4 className="ui dividing header">Personal</h4> */}
+          <div>{campos}</div>
+          <div className="boton_crear_vigilancia">
+            <Button
+              className="positive button"
+              type="submit"
+              content={"Asignar Personal"}
+            />
+          </div>
+        </Form>
+      )}
+    </>
   );
 }
 

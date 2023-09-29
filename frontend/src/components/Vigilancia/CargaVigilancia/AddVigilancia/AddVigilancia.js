@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BASE_APP } from "../../../../utils/contants";
-import { Button, Form, Checkbox, CustomSelect } from "semantic-ui-react";
+import { Button, Form, Checkbox } from "semantic-ui-react";
 import { useVigilancia, useAuth } from "../../../../hooks";
 import { MapView } from "../../Mapa/react-leaflet";
 import { useFormik } from "formik";
@@ -291,21 +291,13 @@ export function AddVigilancia(props) {
         <div className="field">
           <label>Recursos</label>
           <div className="field">
-            {/* <Form.Select
+            <Form.Select
               name="recursos"
               options={recursos}
               placeholder="Seleccione los recursos "
               value={formik.values.recursos}
               onChange={(_, data) => formik.setFieldValue("recursos", data.value)}
-              isMulti={true}
-            /> */}
-            <Form.Field
-              className="custom-select"
-              name="multiLanguages"
-              options={recursos}
-              component={CustomSelect}
-              placeholder="Select multi languages..."
-              isMulti={true}
+              multiple={true}
             />
           </div>
         </div>
@@ -340,7 +332,7 @@ function initialValues(auth) {
     // hora_inicio:"",
     // hora_fin:"",
     destino: "",
-    recursos: "",
+    recursos: [],
     latitud: "",
     longitud: "",
     file: "",

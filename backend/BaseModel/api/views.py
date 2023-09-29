@@ -26,7 +26,8 @@ class DynamicModelViewSet(viewsets.GenericViewSet):
     @action(detail=True, methods=["get"])
     def list(self, request, *args, **kwargs):
         self.queryset = self.get_queryset()
-        if request.GET["inactivo"] != None and request.GET["inactivo"] == True:
+        inactivo = request.GET.get("inactivo")
+        if inactivo is not None and inactivo == "True":
             datos = self.get_queryset().exclude(is_deleted=False)
         else:
             datos = self.get_queryset().exclude(is_deleted=True)

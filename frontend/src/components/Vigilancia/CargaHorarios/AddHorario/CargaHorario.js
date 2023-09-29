@@ -22,30 +22,30 @@ export const CargaHorario = (props) => {
     validateOnChange: false,
     onSubmit: async (formValue) => {
       try {
-        if (formValue.lunes === true) {
+        if (formValue.lunes === true || formValue.diario === true) {
           turnos.push("lunes");
         }
-        if (formValue.martes === true) {
+        if (formValue.martes === true || formValue.diario === true) {
           turnos.push("martes");
         }
-        if (formValue.miercoles === true) {
+        if (formValue.miercoles === true || formValue.diario === true) {
           turnos.push("miercoles");
         }
-        if (formValue.jueves === true) {
+        if (formValue.jueves === true || formValue.diario === true) {
           turnos.push("jueves");
         }
-        if (formValue.viernes === true) {
+        if (formValue.viernes === true || formValue.diario === true) {
           turnos.push("viernes");
         }
-        if (formValue.sabado === true) {
+        if (formValue.sabado === true || formValue.diario === true) {
           turnos.push("sabado");
         }
-        if (formValue.domingo === true) {
+        if (formValue.domingo === true || formValue.diario === true) {
           turnos.push("domingo");
         }
 
         const formValue2 = {
-          turno: formValue.diario === true ? null : turnos,
+          turno: turnos,
           dia_completo: formValue.turno_completo,
           fecha_fin: fecha_fin,
           fecha_inicio: fecha_inicio,
@@ -54,7 +54,7 @@ export const CargaHorario = (props) => {
           hora_inicio: formValue.turno_completo ? null : formValue.hora_inicio,
           duracion: formValue.turno_completo ? null : formValue.duracion,
         };
-
+        console.log(formValue2);
         const response = await add_turnos(formValue2, id);
         if (response.msj) {
           Swal.fire({

@@ -57,7 +57,7 @@ class RecursosVigilancia(BaseModel):
 
 class TurnosVigilancia(BaseModel):
     fk_vigilancia = models.ForeignKey("Vigilancia", on_delete=models.CASCADE)
-    turno = ArrayField(models.TextField())
+    turnos = ArrayField(models.TextField())
     hora_inicio = models.TimeField(null=True)
     hora_fin = models.TimeField(null=True)
     diario = models.BooleanField(default=False)

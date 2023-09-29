@@ -25,10 +25,11 @@ export function useUser() {
     }
   };
   const getUsers = async () => {
+    console.log(await getUsersApi(auth.token))
     try {
       setLoading(true);
       const response = await getUsersApi(auth.token);
-      // console.log(response);
+      console.log(response);
       if (response.expired) {
         let token;
         await getMeToken(auth?.usuario?.username).then(

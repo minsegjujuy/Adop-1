@@ -22,7 +22,8 @@ export function TableHistorial(props) {
   }, []);
   return (
     <>
-      {historial.length !== 0 ? (
+    {/* Buscar la secccion desde se cargan los legajos de los personales afectados */}
+      {historial && historial?.length !== 0 ? (
         <Card.Group className="custom-card-group">
           {Array.from(historial)
             .reverse()
@@ -67,7 +68,7 @@ export function TableHistorial(props) {
                   </Card.Content>
                   <Card.Content extra>
                     <Icon name="user" />
-                    {seguimiento[0].personal.length} Personales afectados a este
+                    {seguimiento[0].personal?.length} Personales afectados a este
                     turno
                   </Card.Content>
                 </Card>

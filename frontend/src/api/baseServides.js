@@ -3,24 +3,18 @@ import { BASE_API } from "../utils/contants";
 //* Base Services
 export async function getElementsService(token, model, id = null, subModel = null, subId = null, query = null) {
   try {
-    var parametros =
-      "" + query
-        ? `?${query.forEach((param) => {
-            const [key, value] = param;
-            parametros += `${key}=${value}`;
-          })}`
-        : "";
-
-    // var parametros = "";
-    // query.forEach((param) => {
-    //   const [key, value] = param;
-    //   parametros += `${key}=${value}`;
-    // });
-    // parametros = (query) ? `?${parametros}` :"";
-
-    const url = `${BASE_API}/api/${model}/${id ? id + "/" : ""}
-    ${subModel ? (subModel + "/" + subId ? subId + "/" : "") : ""}
-    ${parametros}`;
+    var parametros = query
+        ? `?${(() => {
+            let paramString = "";
+            query.forEach((param) => {
+              const key = Object.keys(param)[0]; // Obtiene la clave (primer elemento)
+              const value = param[key]; // Obtiene el valor asociado a la clave
+              paramString += `${key}=${value}`;
+          });
+            return paramString;
+          })()}`
+        : '';
+    const url = `${BASE_API}/api/${model.trim()}/${id ? id + "/" : ''}${subModel ? subModel.trim() + '/': ''}${subId ? subId + "/" : ''}${parametros.trim()}`;
     const headers = {
       method: "GET",
       headers: {
@@ -29,15 +23,16 @@ export async function getElementsService(token, model, id = null, subModel = nul
     };
     const response = await fetch(url, headers);
     const result = await response.json();
+    console.log(await result);
     return result;
   } catch (error) {
-    throw error;
+    // throw error;
+    return error;
   }
 }
 export async function getElementService(token, model, id = null, subModel = null, subId = null) {
   try {
-    const url = `${BASE_API}/api/${model}/${id ? id + "/" : ""}
-    ${subModel ? (subModel + "/" + subId ? subId + "/" : "") : ""}`;
+    const url = `${BASE_API}/api/${model.trim()}/${id ? id + "/" : ''}${subModel ? subModel.trim() + '/': ''}${subId ? subId + "/" : ''}`;
     const params = {
       method: "GET",
       headers: {
@@ -48,13 +43,13 @@ export async function getElementService(token, model, id = null, subModel = null
     const result = await response.json();
     return result;
   } catch (error) {
-    throw error;
+    // throw error;
+    return error;
   }
 }
 export async function addElementService(token, data, model, id = null, subModel = null) {
   try {
-    const url = `${BASE_API}/api/${model}/${id ? id + "/" : ""}
-    ${subModel ? subModel + "/" : ""}`;
+    const url = `${BASE_API}/api/${model.trim()}/${id ? id + "/" : ''}${subModel ? subModel.trim() + '/': ''}`;
     const params = {
       method: "POST",
       headers: {
@@ -67,13 +62,14 @@ export async function addElementService(token, data, model, id = null, subModel 
     const result = await response.json();
     return result;
   } catch (error) {
-    throw error;
+    // throw error;
+    return error;
   }
 }
 export async function updateElementService(token, data, model, id, subModel = null, subId = null) {
   try {
-    const url = `${BASE_API}/api/${model}/${id}/
-    ${subModel ? (subModel + "/" + subId ? subId + "/" : "") : ""}`;
+    const url = `${BASE_API}/api/${model.trim()}/${id}/${subModel ? subModel.trim() + '/': ''}${subId ? subId + "/" : ''}`;
+    console.log(url);
     const params = {
       method: "PUT",
       headers: {
@@ -86,13 +82,13 @@ export async function updateElementService(token, data, model, id, subModel = nu
     const result = await response.json();
     return result;
   } catch (error) {
-    throw error;
+    // throw error;
+    return error;
   }
 }
 export async function deleteElementService(token, model, id, subModel = null, subId = null) {
   try {
-    const url = `${BASE_API}/api/${model}/${id}/
-    ${subModel ? (subModel + "/" + subId ? subId + "/" : "") : ""}`;
+    const url = `${BASE_API}/api/${model}/${id}/${subModel ? subModel.trim() + '/': ''}${subId ? subId + "/" : ''}`;
     const params = {
       method: "DELETE",
       headers: {
@@ -104,6 +100,7 @@ export async function deleteElementService(token, model, id, subModel = null, su
     const result = await response.json();
     return result;
   } catch (error) {
-    throw error;
+    // throw error;
+    return error;
   }
 }
