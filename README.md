@@ -14,15 +14,16 @@ Python 3.10.12
     sudo apt install software-properties-common -y
     sudo add-apt-repository ppa:deadsnakes/ppa
     sudo apt install python3.10 -y
-python3.10-pip
-# instalacion
+
+# instalacion de python3.10-pip
     sudo apt install python3-pip -y
-    python3.10-venv
+# instalacion de python3.10-venv
     sudo apt install python3.10-venv -y
 
 # Alta de frontend
     cd frontend
     npm i
+    npm start
 
 # Alta de backend
     cd backend
@@ -33,6 +34,7 @@ python3.10-pip
   # instalacion de dependencias de python
     pip install -r requirements.txt
   # migracion de las tablas a la base de datos
+    python manager.py makemigrations
     python manager.py migrate
   # levantar el servidor
     python manager.py runserver
